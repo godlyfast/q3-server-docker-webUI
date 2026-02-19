@@ -59,6 +59,7 @@ The `build/` directory is populated by `build.sh` at build time for the **game s
 - `pak0.pk3` - `pak8.pk3` — Base game + official patches
 - `q3wpak1.pk3` — Point release data
 - `map_cpm*.pk3` — 38 CPM competition maps
+- 19 community maps from [..::LvL](https://lvlworld.com/) (top-rated FFA/TDM/Tourney maps)
 - `zzz_*.pk3`, `wtf-*.pk3` — Hires texture packs
 
 ### Client Downloads (ng-quake3-fe/downloads/)
@@ -91,6 +92,47 @@ The web UI at `/download` provides a complete setup page for LAN players with 6 
 6. **4K Neural Textures + CPMA Mod + CPM Maps** — ultimate quality + competitive mode
 
 All enhancement pk3s are self-hosted (no external ModDB dependency). Individual files can be downloaded separately or grab the all-in-one zip for the complete experience.
+
+## Community Maps
+
+19 top-rated maps from [..::LvL](https://lvlworld.com/) are included in the server and available via the web UI map switcher at `/map`:
+
+| BSP Name | Title | Author | Rating |
+|----------|-------|--------|--------|
+| rustgrad | Rustgrad | Hipshot | 4.85 |
+| q3gwdm1 | Achromatic | flipout | 4.80 |
+| trespass | Trespass | Cardigan | 4.75 |
+| phantq3dm3_rev | Corrosion | Phantazm11 | 4.75 |
+| hydra | Hydra | Cardigan | 4.70 |
+| phantq3dm6_mc | Geotechnic | Phantazm11 | 4.70 |
+| solitude | Solitude | jaj | 4.70 |
+| bst3dm1 | Terminatria | bst | 4.55 |
+| pukka3tourney2 | Evolution | Pukka | 4.55 |
+| phantq3dm4 | Windsong Keep | Phantazm11 | 4.55 |
+| akutadm1 | ALIEN | akuta | 4.55 |
+| map-katdm3 | Inner Sanctum | katarn | 4.50 |
+| map-13vast | The Vast And Furious | 13 | 4.50 |
+| zl3tourney1 | Hypersonic Tourney | ZaRR | 4.50 |
+| map-wintergames | Winter Games | FXRHD | 4.50 |
+| zih_roof | East Berlin Roofs | zih | 4.45 |
+| shad3dm2 | Deep Freeze | Shad | 4.45 |
+| map-13dream | Dreamscape | 13 | 4.45 |
+| revenga | Revenga! | psion | 4.45 |
+
+Maps are downloaded from the [FSS mirror](https://lvlworld.fast-stable-secure.net/) as zips, pk3s extracted into `build/` and `ng-quake3-fe/downloads/`. The download script is at `/tmp/q3maps/download_maps.sh` (not checked in).
+
+## Map Management (Web UI)
+
+The web UI at `/map` shows all available maps as cards with screenshots. Click a card to change the server map via RCON.
+
+**Map list is hardcoded** in `ng-quake3-be/src-vendored/src/api/maps/maps.utils.js`. To add a new map:
+
+1. Place the `.pk3` in `build/` (server) and `ng-quake3-fe/downloads/` (client download)
+2. Add a screenshot as `ng-quake3-fe/src-vendored/src/assets/images/{bspname}.jpg`
+3. Add an entry to `getMapList()` in `maps.utils.js` with `name`, `title`, `source`, `description`
+4. Rebuild and redeploy all 3 images
+
+Total maps: **64** (26 stock id + 19 community + 38 CPM + 1 OSP tourney)
 
 ## Server Config
 
