@@ -92,6 +92,7 @@ rm -f "$ALL_IN_ONE"
 BUNDLE_DIR="$(mktemp -d -p "${TMPDIR:-$HOME/.cache/podman-tmp}")"
 mkdir -p "$BUNDLE_DIR/baseq3" "$BUNDLE_DIR/cpma" "$BUNDLE_DIR/osp"
 cp "$DLDIR"/*.pk3 "$BUNDLE_DIR/baseq3/"
+cp "$DLDIR"/autoexec.cfg "$BUNDLE_DIR/baseq3/" 2>/dev/null || true
 cp "$DLDIR"/cpma/*.pk3 "$BUNDLE_DIR/cpma/" 2>/dev/null || true
 cp "$DLDIR"/osp/*.pk3 "$BUNDLE_DIR/osp/" 2>/dev/null || true
 (cd "$BUNDLE_DIR" && zip -0 -r "$ALL_IN_ONE" baseq3/ cpma/ osp/)
@@ -127,8 +128,8 @@ if $SYNC_DATA; then
     echo ""
     echo "--- Syncing game data to $HOST:$HOST_DATA ---"
 
-    RSYNC_RSH="sshpass -p '123456' ssh -o StrictHostKeyChecking=no"
-    SSH_CMD="sshpass -p '123456' ssh -o StrictHostKeyChecking=no tim@$HOST"
+    RSYNC_RSH="sshpass -p 123456 ssh -o StrictHostKeyChecking=no"
+    SSH_CMD=(sshpass -p 123456 ssh -o StrictHostKeyChecking=no "tim@$HOST")
 
     echo "Syncing server pk3s..."
     rsync -avz --progress -e "$RSYNC_RSH" "$SCRIPT_DIR/build/"*.pk3 "tim@$HOST:$HOST_DATA/server/baseq3/"
@@ -139,12 +140,12 @@ if $SYNC_DATA; then
 
     echo ""
     echo "Ensuring baseq3 symlink for sv_dlURL..."
-    $SSH_CMD "cd '$HOST_DATA/downloads' && ln -sfn . baseq3"
+    "${SSH_CMD[@]}" "cd '$HOST_DATA/downloads' && ln -sfn . baseq3"
 
     echo ""
     echo "--- Sync complete ---"
-    echo "Server pk3s: $(sshpass -p '123456' ssh -o StrictHostKeyChecking=no "tim@$HOST" "ls '$HOST_DATA/server/baseq3/'*.pk3 2>/dev/null | wc -l")"
-    echo "Download files: $(sshpass -p '123456' ssh -o StrictHostKeyChecking=no "tim@$HOST" "find '$HOST_DATA/downloads' -name '*.pk3' | wc -l") pk3s + zip + cfg"
+    echo "Server pk3s: $("${SSH_CMD[@]}" "ls '$HOST_DATA/server/baseq3/'*.pk3 2>/dev/null | wc -l")"
+    echo "Download files: $("${SSH_CMD[@]}" "find '$HOST_DATA/downloads' -name '*.pk3' | wc -l") pk3s + zip + cfg"
 fi
 
 echo ""
