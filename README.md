@@ -38,7 +38,7 @@ Images contain only code and config (~380 MB total). Game data (~15 GB) lives on
 │   ├── cpma/              # CPMA mod pk3
 │   ├── osp/               # 5 OSP mod pk3s
 │   ├── q3-all-in-one.zip  # Complete bundle (~6.3 GB)
-│   └── autoexec.cfg       # Max quality client config (com_hunkMegs 1024)
+│   └── autoexec.cfg       # Client config (hunkMegs 1024, autoswitch off, zoom, OpenGL2)
 └── downloads-nginx.conf   # nginx config for q3-downloads container (port 41960)
 ```
 
@@ -84,7 +84,7 @@ vim server.cfg
 
 ### Image Build (default)
 1. Stages pk3 files from Steam Q3 installation into `build/` and `ng-quake3-fe/downloads/` (local staging only)
-2. Builds all-in-one zip (`q3-all-in-one.zip`) with `baseq3/` and `cpma/` directories
+2. Builds all-in-one zip (`q3-all-in-one.zip`) with `baseq3/` (pk3s + autoexec.cfg), `cpma/`, and `osp/` directories
 3. Builds 3 lean Docker images (no game data baked in — just compiled binaries + configs)
 4. Pushes to the specified registry
 
@@ -255,14 +255,52 @@ insecure = true
 - Port 41960 (q3-downloads) serves only static files via nginx — no API, no RCON, safe to expose
 - DDNS hostname: `dczp.jsninjas.net` (used in `sv_dlURL` for client pk3 downloads)
 
-## Client Requirements
+## Client Setup
 
-For HD/4K texture packs, clients must set memory limits in `autoexec.cfg`:
+### Recommended Engine: ioquake3 with OpenGL2
+
+**ioquake3** with the OpenGL2 renderer provides the best visual quality with the HD texture packs:
+- HDR + tone mapping, bloom, normal/specular mapping, SSAO, cubemap reflections, volumetric sun rays
+- Alternative: **quake3e** (Vulkan) — faster/lower latency but fewer visual features
+
+The all-in-one bundle and downloads page include `autoexec.cfg` with:
+- `com_hunkMegs 1024` + `com_zoneMegs 128` — required for HD/4K textures (default 128 MB causes `Hunk_AllocateTempMemory: failed`)
+- `cg_autoswitch 0` — don't auto-switch weapon on pickup
+- `bind MOUSE2 "+zoom"` — right-click to zoom
+- OpenGL2 renderer settings (HDR, normal maps, SSAO, sun shadows)
+- Max texture quality, trilinear filtering, 16x anisotropic
+
+### Engine Comparison
+
+| Feature | ioquake3 OpenGL2 | quake3e Vulkan |
+|---------|:---:|:---:|
+| HDR + tone mapping | yes | basic |
+| Normal/specular mapping | yes | no |
+| Sun shadows + god rays | yes | no |
+| SSAO | yes | no |
+| Input latency | good | best |
+| Config path (Linux) | `~/.config/Quake3/` | `~/.config/Quake3/` |
+
+### Linux (ioquake3)
+
+```bash
+# Install (Arch Linux)
+yay -S ioquake3-git
+
+# Launch with Steam Q3 data (all pk3s + mods)
+ioquake3 +set fs_basepath "$HOME/.local/share/Steam/steamapps/common/Quake 3 Arena" +set cl_renderer opengl2
+
+# Connect to server
+/connect dczp.jsninjas.net:27960
 ```
-seta com_hunkMegs "1024"
-seta com_zoneMegs "128"
+
+### Steam Launch Options
+
+Replace the default Q3 launch command in Steam → Q3 Properties → Launch Options:
 ```
-The default 128 MB hunk memory causes `Hunk_AllocateTempMemory: failed` with the HD texture packs. The all-in-one bundle includes an `autoexec.cfg` with these settings pre-configured.
+./ioquake3-launch.sh; echo %command%
+```
+The `ioquake3-launch.sh` wrapper (included in the Q3 directory) sets `fs_basepath` and `cl_renderer opengl2`.
 
 ## Credits
 
