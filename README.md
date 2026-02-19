@@ -13,7 +13,7 @@ Quake 3 Arena dedicated server with a web-based admin dashboard. Forked from [ka
 |---------|-------|------|-------------|
 | `quake3` | `q3-server` | 27960/udp | ioquake3 dedicated server + OSP mod |
 | `ng-quake3-be` | `q3-backend` | 9009 (internal) | Node.js REST API + Socket.io RCON bridge |
-| `ng-quake3-fe` | `q3-frontend` | 8080/tcp | Angular web UI served by nginx |
+| `ng-quake3-fe` | `q3-frontend` | 8080/tcp | Angular web UI + game file downloads served by nginx |
 
 ## Prerequisites
 
@@ -46,8 +46,9 @@ vim server.cfg
 ## What build.sh Does
 
 1. Copies pk3 files from your Steam Q3 installation (base paks, CPM maps, hires textures)
-2. Builds all 3 Docker images (game server compiles ioquake3 from C source)
-3. Pushes to the specified registry
+2. Copies `pak0.pk3` + HD texture pk3s into `ng-quake3-fe/downloads/` for the client download page
+3. Builds all 3 Docker images (game server compiles ioquake3 from C source)
+4. Pushes to the specified registry
 
 ## Game Files
 
@@ -57,6 +58,20 @@ The `build/` directory is populated by `build.sh` at build time. These files are
 - `q3wpak1.pk3` — Weapons pack
 - `map_cpm*.pk3` — CPM competition maps (~40 maps)
 - `zzz_*.pk3`, `wtf-*.pk3` — Hires texture packs
+
+`build.sh` also copies `pak0.pk3` and HD texture pk3s to `ng-quake3-fe/downloads/` so the frontend can serve them to LAN clients at `/downloads/`.
+
+## Download Page
+
+The web UI at `/download` provides a one-stop setup page for LAN players:
+
+- **Game Data** — self-hosted `pak0.pk3` (~457 MB) from `/downloads/pak0.pk3`
+- **Engine downloads** — links to `files.ioquake3.org` for Windows, macOS, Linux (+ Steam Deck notes)
+- **Android** — link to sdlioq3a on Google Play
+- **OSP Mod** — optional competitive mod from `osp.dget.cc`
+- **HD Textures** — self-hosted Q3Q HD Upscale 4x (~982 MB) and wtf-q3a v3 (~136 MB)
+
+All self-hosted files are served directly by nginx with `Content-Disposition: attachment`.
 
 ## Server Config
 
