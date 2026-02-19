@@ -25,13 +25,16 @@ COPY --from=builder /root/ioquake3 /home/ioq3srv/ioquake3
 # Copy all pk3 files (base game pak0-8, CPM maps, hires textures from Steam)
 COPY ./build/*.pk3 /home/ioq3srv/ioquake3/baseq3/
 
-# Bake server.cfg into OSP directory
+# Copy server.cfg template (RCON password substituted at startup)
 COPY ./server.cfg /home/ioq3srv/ioquake3/osp/server.cfg
+
+# Copy entrypoint (substitutes env vars into server.cfg, then execs ioq3ded)
+COPY ./docker-entrypoint.sh /usr/local/bin/docker-entrypoint.sh
 
 # Fix ownership so ioq3srv can write logs/configs
 RUN chown -R ioq3srv:ioq3srv /home/ioq3srv/ioquake3
 
 USER ioq3srv
 EXPOSE 27960/udp
-ENTRYPOINT ["/home/ioq3srv/ioquake3/ioq3ded"]
+ENTRYPOINT ["docker-entrypoint.sh"]
 CMD ["+set", "fs_game", "osp", "+exec", "server.cfg"]

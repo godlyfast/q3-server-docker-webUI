@@ -5,12 +5,18 @@
 #   quake3       - ioquake3 dedicated server + OSP mod (UDP 27960)
 #   ng-quake3-be - Node.js REST API + Socket.io RCON bridge (internal 9009)
 #   ng-quake3-fe - Angular web UI served by nginx (HTTP 8080)
+#
+# Set RCON_PASSWORD in both services to the same value.
+# The game server substitutes it into server.cfg at startup;
+# the backend uses it for RCON commands.
 
 services:
   quake3:
     image: 192.168.55.100:5000/q3-server:latest
     container_name: q3-server
     restart: unless-stopped
+    environment:
+      - RCON_PASSWORD=CHANGEME
     ports:
       - "27960:27960/udp"
     networks:
