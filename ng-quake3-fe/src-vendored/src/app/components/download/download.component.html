@@ -175,7 +175,7 @@
     </div>
   </div>
 
-  <!-- Row 3: HD Textures -->
+  <!-- Row 3: Enhancements (HD Textures, HD Weapons, QC Sounds) -->
   <div class="row" style="margin-top: 20px">
     <div class="col-lg-4">
       <mat-card class="example-card">
@@ -192,7 +192,7 @@
             <li><a href="/downloads/zzz_Q3Q_HD_Upscale-4x-v03b.pk3"><strong>Q3Q HD Upscale 4x</strong></a> (~982 MB)</li>
             <li><a href="/downloads/wtf-q3a_v3.pk3"><strong>wtf-q3a v3</strong></a> (~136 MB)</li>
           </ul>
-          <p><em>These are client-side only. The server runs <kbd>sv_pure 0</kbd> so any texture pk3s are allowed.</em></p>
+          <p><em>Client-side only. The server runs <kbd>sv_pure 0</kbd>.</em></p>
         </mat-card-content>
         <mat-card-actions>
           <a mat-raised-button color="accent" href="/downloads/zzz_Q3Q_HD_Upscale-4x-v03b.pk3">
@@ -200,6 +200,57 @@
           </a>
           <a mat-raised-button color="accent" href="/downloads/wtf-q3a_v3.pk3" style="margin-left: 8px">
             wtf-q3a (136 MB)
+          </a>
+        </mat-card-actions>
+      </mat-card>
+    </div>
+
+    <div class="col-lg-4">
+      <mat-card class="example-card">
+        <mat-card-header>
+          <div mat-card-avatar class="example-header-image"></div>
+          <mat-card-title>HD Weapons</mat-card-title>
+          <mat-card-subtitle>Optional &mdash; remodeled weapons by CZ45</mat-card-subtitle>
+        </mat-card-header>
+        <img mat-card-image src="./assets/quake-3-icon.png" alt="HD Weapons">
+        <mat-card-content>
+          <p>Modern high-poly weapon models that look great at high resolutions
+            while staying faithful to the originals. All weapons remade.</p>
+          <ol>
+            <li>Download from <a href="https://www.moddb.com/mods/cz45modbundle/addons/cz45-q3a-weapon-model-remake-v10" target="_blank" rel="noopener">ModDB</a></li>
+            <li>Extract <kbd>zzczhdwr1.pk3</kbd> and <kbd>zzczhdwr3.pk3</kbd> into <kbd>baseq3/</kbd></li>
+            <li>Optional: <kbd>zzczhdwr2.pk3</kbd> for widescreen weapon positions</li>
+          </ol>
+          <p><em>Client-side only. The server runs <kbd>sv_pure 0</kbd>.</em></p>
+        </mat-card-content>
+        <mat-card-actions>
+          <a mat-raised-button color="accent" href="https://www.moddb.com/mods/cz45modbundle/addons/cz45-q3a-weapon-model-remake-v10" target="_blank" rel="noopener">
+            ModDB Download
+          </a>
+        </mat-card-actions>
+      </mat-card>
+    </div>
+
+    <div class="col-lg-4">
+      <mat-card class="example-card">
+        <mat-card-header>
+          <div mat-card-avatar class="example-header-image"></div>
+          <mat-card-title>QC Sounds</mat-card-title>
+          <mat-card-subtitle>Optional &mdash; Quake Champions announcer &amp; sounds</mat-card-subtitle>
+        </mat-card-header>
+        <img mat-card-image src="./assets/quake-3-icon.png" alt="QC Sounds">
+        <mat-card-content>
+          <p>Replaces the classic Q3A announcer and sound effects with
+            the modern Quake Champions versions. Single pk3 drop-in.</p>
+          <ol>
+            <li>Download from <a href="https://www.moddb.com/mods/quake-champions-sounds-for-quake-iii-arena/addons/quakechampions-sounds-for-quake-iii" target="_blank" rel="noopener">ModDB</a></li>
+            <li>Drop the pk3 file into your <kbd>baseq3/</kbd> folder</li>
+          </ol>
+          <p><em>Client-side only. The server runs <kbd>sv_pure 0</kbd>.</em></p>
+        </mat-card-content>
+        <mat-card-actions>
+          <a mat-raised-button color="accent" href="https://www.moddb.com/mods/quake-champions-sounds-for-quake-iii-arena/addons/quakechampions-sounds-for-quake-iii" target="_blank" rel="noopener">
+            ModDB Download
           </a>
         </mat-card-actions>
       </mat-card>
