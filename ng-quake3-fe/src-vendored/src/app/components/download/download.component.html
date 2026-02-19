@@ -7,11 +7,11 @@
         <mat-card-header>
           <div mat-card-avatar class="example-header-image"></div>
           <mat-card-title>Quick Start &mdash; All-in-One Bundle</mat-card-title>
-          <mat-card-subtitle>Game data + HD textures + HD weapons + models + sounds + HUD (~2.4 GB)</mat-card-subtitle>
+          <mat-card-subtitle>Complete Q3 experience: game data + 38 CPM maps + CPMA mod + 4K textures + HD weapons + models + sounds (~5.4 GB)</mat-card-subtitle>
         </mat-card-header>
         <mat-card-content>
-          <p>Everything you need in a single download. Extract the <kbd>baseq3/</kbd> folder
-            into your ioquake3 directory, launch, and connect.
+          <p>Everything you need in a single download. Extract the <kbd>baseq3/</kbd> and
+            <kbd>cpma/</kbd> folders into your ioquake3 directory, launch, and connect.
             Grab the engine for your platform below.</p>
           <p style="text-align:center; font-size:1.1em">
             <kbd>/connect 192.168.55.100:27960</kbd>
@@ -19,7 +19,7 @@
         </mat-card-content>
         <mat-card-actions>
           <a mat-raised-button color="primary" href="/downloads/q3-all-in-one.zip">
-            Download All-in-One (2.4 GB)
+            Download All-in-One (5.4 GB)
           </a>
         </mat-card-actions>
       </mat-card>
@@ -371,6 +371,94 @@
           </a>
           <a mat-raised-button color="accent" href="/downloads/Xsprites.pk3" style="margin-left: 8px">
             FX Replacer (14 MB)
+          </a>
+        </mat-card-actions>
+      </mat-card>
+    </div>
+  </div>
+
+  <!-- Row 5: 4K Neural Textures + CPMA Mod + CPM Maps -->
+  <div class="row" style="margin-top: 20px">
+    <div class="col-lg-4">
+      <mat-card class="example-card">
+        <mat-card-header>
+          <div mat-card-avatar class="example-header-image"></div>
+          <mat-card-title>4K Neural Textures</mat-card-title>
+          <mat-card-subtitle>Optional &mdash; 4x AI-upscaled maps, models &amp; world textures</mat-card-subtitle>
+        </mat-card-header>
+        <img mat-card-image src="./assets/quake-3-icon.png" alt="4K Neural Textures">
+        <mat-card-content>
+          <p>Custom Map 4K pack: neural-upscaled textures for all stock maps, models, and third-party content.
+            Stacks with the other HD packs for the ultimate visual upgrade.</p>
+          <ul>
+            <li><a href="/downloads/zz-q3-4x-textures.pk3"><strong>Map Textures 4K</strong></a> (1.9 GB)</li>
+            <li><a href="/downloads/zzz-3w-4x-textures.pk3"><strong>3rd Party Textures 4K</strong></a> (621 MB)</li>
+            <li><a href="/downloads/zz-q3-4x-models.pk3"><strong>Model Textures 4K</strong></a> (338 MB)</li>
+            <li><a href="/downloads/zz-q3-hqq.pk3">HQQ Upscale</a> (29 MB)</li>
+          </ul>
+          <p><em>Client-side only. Needs a GPU with 2+ GB VRAM.</em></p>
+        </mat-card-content>
+        <mat-card-actions>
+          <a mat-raised-button color="accent" href="/downloads/zz-q3-4x-textures.pk3">
+            Maps 4K (1.9 GB)
+          </a>
+          <a mat-raised-button color="accent" href="/downloads/zz-q3-4x-models.pk3" style="margin-left: 8px">
+            Models 4K (338 MB)
+          </a>
+        </mat-card-actions>
+      </mat-card>
+    </div>
+
+    <div class="col-lg-4">
+      <mat-card class="example-card">
+        <mat-card-header>
+          <div mat-card-avatar class="example-header-image"></div>
+          <mat-card-title>CPMA Mod</mat-card-title>
+          <mat-card-subtitle>Optional &mdash; Challenge ProMode Arena</mat-card-subtitle>
+        </mat-card-header>
+        <img mat-card-image src="./assets/quake-3-icon.png" alt="CPMA">
+        <mat-card-content>
+          <p>Challenge ProMode Arena adds advanced movement physics (air control, strafe jumping),
+            competitive game modes, and a superior HUD.
+            The definitive competitive Q3 experience.</p>
+          <ol>
+            <li>Download <a href="/downloads/cpma/z-cpma-pak153.pk3"><strong>CPMA 1.53</strong></a> (16 MB)</li>
+            <li>Place in a <kbd>cpma/</kbd> folder next to <kbd>baseq3/</kbd></li>
+            <li>Launch with <kbd>+set fs_game cpma</kbd></li>
+          </ol>
+          <p><em>Included in the all-in-one bundle.</em></p>
+        </mat-card-content>
+        <mat-card-actions>
+          <a mat-raised-button color="accent" href="/downloads/cpma/z-cpma-pak153.pk3">
+            CPMA 1.53 (16 MB)
+          </a>
+        </mat-card-actions>
+      </mat-card>
+    </div>
+
+    <div class="col-lg-4">
+      <mat-card class="example-card">
+        <mat-card-header>
+          <div mat-card-avatar class="example-header-image"></div>
+          <mat-card-title>CPM Competition Maps</mat-card-title>
+          <mat-card-subtitle>38 maps &mdash; included in all-in-one bundle</mat-card-subtitle>
+        </mat-card-header>
+        <img mat-card-image src="./assets/quake-3-icon.png" alt="CPM Maps">
+        <mat-card-content>
+          <p>38 CPM competition maps designed for ProMode gameplay.
+            Includes duel, FFA, and CTF arenas used in competitive play.
+            All maps are in the all-in-one bundle.</p>
+          <ul>
+            <li>Duel: cpm1a&ndash;cpm29 (25 maps)</li>
+            <li>Arena: cpma3</li>
+            <li>CTF: cpmctf1&ndash;cpmctf5 (5 maps)</li>
+            <li>Variants: cpm3a, cpm4a, cpm11a, cpm18r, cpm26</li>
+          </ul>
+          <p><em>Drop <kbd>map_cpm*.pk3</kbd> files into <kbd>baseq3/</kbd>.</em></p>
+        </mat-card-content>
+        <mat-card-actions>
+          <a mat-raised-button color="primary" href="/downloads/q3-all-in-one.zip">
+            All-in-One Bundle (5.4 GB)
           </a>
         </mat-card-actions>
       </mat-card>

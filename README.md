@@ -45,33 +45,52 @@ vim server.cfg
 
 ## What build.sh Does
 
-1. Copies pk3 files from your Steam Q3 installation (base paks, CPM maps, hires textures)
-2. Copies `pak0.pk3` + HD texture pk3s into `ng-quake3-fe/downloads/` for the client download page
-3. Builds all 3 Docker images (game server compiles ioquake3 from C source)
-4. Pushes to the specified registry
+1. Copies pk3 files from your Steam Q3 installation (base paks, CPM maps, hires textures, enhancements)
+2. Copies **all 68 baseq3 pk3s + CPMA mod** into `ng-quake3-fe/downloads/` for the client download page
+3. Builds a 5.4 GB all-in-one zip (`q3-all-in-one.zip`) with `baseq3/` and `cpma/` directories
+4. Builds all 3 Docker images (game server compiles ioquake3 from C source)
+5. Pushes to the specified registry
 
 ## Game Files
 
-The `build/` directory is populated by `build.sh` at build time. These files are **not checked into git** (too large):
+The `build/` directory is populated by `build.sh` at build time for the **game server**. The `ng-quake3-fe/downloads/` directory holds the **complete client download bundle**. Neither is checked into git (too large).
 
+### Server (build/)
 - `pak0.pk3` - `pak8.pk3` — Base game + official patches
-- `q3wpak1.pk3` — Weapons pack
-- `map_cpm*.pk3` — CPM competition maps (~40 maps)
+- `q3wpak1.pk3` — Point release data
+- `map_cpm*.pk3` — 38 CPM competition maps
 - `zzz_*.pk3`, `wtf-*.pk3` — Hires texture packs
 
-`build.sh` also copies `pak0.pk3` and HD texture pk3s to `ng-quake3-fe/downloads/` so the frontend can serve them to LAN clients at `/downloads/`.
+### Client Downloads (ng-quake3-fe/downloads/)
+
+All files served by nginx at `/downloads/` with `Content-Disposition: attachment`:
+
+| Category | Files | Size |
+|----------|-------|------|
+| Base game | pak0-pak8, q3wpak1 | ~530 MB |
+| CPM maps | 38 `map_cpm*.pk3` files | ~100 MB |
+| HD textures | Q3Q HD 4x, wtf-q3a v3, Kpax Hires | ~1.4 GB |
+| 4K neural textures | Custom Map 4K (maps, models, 3rd party) | ~2.9 GB |
+| HD weapons | CZ45 weapons + BFG remodel | ~22 MB |
+| Sounds | QC Sounds pack + QL Announcer | ~23 MB |
+| Neural upscale | HD Players + HD Objects | ~340 MB |
+| Bug fixes/HUD | TUP + HQQ | ~29 MB |
+| QL content | QL Player Models + FX Replacer | ~200 MB |
+| CPMA mod | z-cpma-pak153.pk3 (in `cpma/` subdir) | ~16 MB |
+| **All-in-one zip** | **q3-all-in-one.zip** (baseq3/ + cpma/) | **~5.4 GB** |
 
 ## Download Page
 
-The web UI at `/download` provides a one-stop setup page for LAN players:
+The web UI at `/download` provides a complete setup page for LAN players with 6 rows of cards:
 
-- **Game Data** — self-hosted `pak0.pk3` (~457 MB) from `/downloads/pak0.pk3`
-- **Engine downloads** — links to `files.ioquake3.org` for Windows, macOS, Linux (+ Steam Deck notes)
-- **Android** — link to sdlioq3a on Google Play
-- **OSP Mod** — optional competitive mod from `osp.dget.cc`
-- **HD Textures** — self-hosted Q3Q HD Upscale 4x (~982 MB) and wtf-q3a v3 (~136 MB)
+1. **Quick Start** — All-in-one bundle (5.4 GB) with everything included
+2. **Game Data + Windows + macOS** — pak0.pk3 + ioquake3 engine downloads
+3. **Linux/Steam Deck + Android + OSP** — platform engines + competitive mod
+4. **HD Textures + HD Weapons + QC Sounds** — visual and audio enhancements
+5. **Neural Upscale + Bug Fixes + QL Models** — AI upscaled textures + patches
+6. **4K Neural Textures + CPMA Mod + CPM Maps** — ultimate quality + competitive mode
 
-All self-hosted files are served directly by nginx with `Content-Disposition: attachment`.
+All enhancement pk3s are self-hosted (no external ModDB dependency). Individual files can be downloaded separately or grab the all-in-one zip for the complete experience.
 
 ## Server Config
 
