@@ -37,10 +37,24 @@ cp "$Q3DIR"/zzz_*.pk3 "$Q3DIR"/wtf-*.pk3 "$SCRIPT_DIR/build/" 2>/dev/null || tru
 
 echo "Copied $(ls "$SCRIPT_DIR/build/"*.pk3 2>/dev/null | wc -l) pk3 files"
 
-# Copy pak0 + HD textures for frontend download page
+# Copy pak0 + HD textures + mods for frontend download page
 mkdir -p "$SCRIPT_DIR/ng-quake3-fe/downloads"
 cp "$SCRIPT_DIR/build/pak0.pk3" "$SCRIPT_DIR/ng-quake3-fe/downloads/"
 cp "$SCRIPT_DIR/build/"zzz_*.pk3 "$SCRIPT_DIR/build/"wtf-*.pk3 "$SCRIPT_DIR/ng-quake3-fe/downloads/" 2>/dev/null || true
+# CZ45 HD Weapons + QC Sounds (copy from Steam baseq3 if present)
+cp "$Q3DIR"/zzczhdwr*.pk3 "$SCRIPT_DIR/ng-quake3-fe/downloads/" 2>/dev/null || true
+cp "$Q3DIR"/zzzz-Quake_Champions_Sounds.pk3 "$SCRIPT_DIR/ng-quake3-fe/downloads/" 2>/dev/null || true
+
+# Build all-in-one zip (pak0 + all enhancements) for quick LAN setup
+echo "--- Building all-in-one download bundle ---"
+ALL_IN_ONE="$SCRIPT_DIR/ng-quake3-fe/downloads/q3-all-in-one.zip"
+rm -f "$ALL_IN_ONE"
+BUNDLE_DIR="$(mktemp -d)"
+mkdir -p "$BUNDLE_DIR/baseq3"
+cp "$SCRIPT_DIR/ng-quake3-fe/downloads/"*.pk3 "$BUNDLE_DIR/baseq3/"
+(cd "$BUNDLE_DIR" && zip -0 -r "$ALL_IN_ONE" baseq3/)
+rm -rf "$BUNDLE_DIR"
+echo "Created $(du -h "$ALL_IN_ONE" | cut -f1) all-in-one bundle"
 
 # Step 2: Build images
 # Use disk-backed TMPDIR to avoid tmpfs size limits on large pk3 COPY layers
