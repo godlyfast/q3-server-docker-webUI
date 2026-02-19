@@ -22,8 +22,8 @@ RUN adduser ioq3srv -D
 # Copy ioquake3 + OSP from builder
 COPY --from=builder /root/ioquake3 /home/ioq3srv/ioquake3
 
-# Copy all pk3 files (base game pak0-8, CPM maps, hires textures from Steam)
-COPY ./build/*.pk3 /home/ioq3srv/ioquake3/baseq3/
+# baseq3 dir populated via host bind mount (pk3s synced by build.sh)
+RUN mkdir -p /home/ioq3srv/ioquake3/baseq3
 
 # Copy server.cfg template (RCON password substituted at startup)
 COPY ./server.cfg /home/ioq3srv/ioquake3/osp/server.cfg

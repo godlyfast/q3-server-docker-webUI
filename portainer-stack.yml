@@ -5,6 +5,7 @@
 #   quake3       - ioquake3 dedicated server + OSP mod (UDP 27960)
 #   ng-quake3-be - Node.js REST API + Socket.io RCON bridge (internal 9009)
 #   ng-quake3-fe - Angular web UI served by nginx (HTTP 8080)
+#   q3-downloads - Static pk3 file server for sv_dlURL (HTTP 41960, internet-safe)
 #
 # Set RCON_PASSWORD in both services to the same value.
 # The game server substitutes it into server.cfg at startup;
@@ -19,6 +20,8 @@ services:
       - RCON_PASSWORD=CHANGEME
     ports:
       - "27960:27960/udp"
+    volumes:
+      - /home/tim/q3-data/server/baseq3:/home/ioq3srv/ioquake3/baseq3:ro
     networks:
       - q3net
 
@@ -43,8 +46,22 @@ services:
     restart: unless-stopped
     ports:
       - "8080:8080"
+    volumes:
+      - /home/tim/q3-data/downloads:/usr/share/nginx/html/downloads:ro
     depends_on:
       - ng-quake3-be
+    networks:
+      - q3net
+
+  q3-downloads:
+    image: nginx:1.24-alpine
+    container_name: q3-downloads
+    restart: unless-stopped
+    ports:
+      - "41960:41960"
+    volumes:
+      - /home/tim/q3-data/downloads:/usr/share/nginx/html:ro
+      - /home/tim/q3-data/downloads-nginx.conf:/etc/nginx/conf.d/default.conf:ro
     networks:
       - q3net
 

@@ -25,8 +25,8 @@ RUN rm -rf /usr/share/nginx/html/*
 # Copy built Angular app from builder
 COPY --from=builder /ng-app/dist /usr/share/nginx/html
 
-# Copy pak0.pk3 for client download page
-COPY downloads/ /usr/share/nginx/html/downloads/
+# downloads dir populated via host bind mount (pk3s synced by build.sh)
+RUN mkdir -p /usr/share/nginx/html/downloads
 
 EXPOSE 8080
 

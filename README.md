@@ -7,19 +7,47 @@ Quake 3 Arena dedicated server with a web-based admin dashboard. Forked from [ka
 
 ## Architecture
 
-3-service Docker stack:
+4-service Docker stack with game data stored on the host via bind mounts (not baked into images):
+
+```
+Workstation (build machine)              Target Host (192.168.55.100)
+  Podman build + push ──────────────────► registry:5000
+  rsync game data ──────────────────────► /home/tim/q3-data/
+                                          ├── server/baseq3/    → q3-server container (:ro)
+                                          ├── downloads/        → q3-frontend container (:ro)
+                                          └── downloads/        → q3-downloads container (:ro)
+```
 
 | Service | Image | Port | Description |
 |---------|-------|------|-------------|
-| `quake3` | `q3-server` | 27960/udp | ioquake3 dedicated server + OSP mod |
-| `ng-quake3-be` | `q3-backend` | 9009 (internal) | Node.js REST API + Socket.io RCON bridge |
-| `ng-quake3-fe` | `q3-frontend` | 8080/tcp | Angular web UI + game file downloads served by nginx |
+| `quake3` | `q3-server` (~135 MB) | 27960/udp | ioquake3 dedicated server + OSP mod |
+| `ng-quake3-be` | `q3-backend` (~190 MB) | 9009 (internal) | Node.js REST API + Socket.io RCON bridge |
+| `ng-quake3-fe` | `q3-frontend` (~55 MB) | 8080/tcp | Angular web UI + LAN downloads (has RCON — LAN only!) |
+| `q3-downloads` | `nginx:1.24-alpine` | 41960/tcp | Static pk3 file server for `sv_dlURL` (internet-safe) |
+
+Images contain only code and config (~380 MB total). Game data (~15 GB) lives on the host at `/home/tim/q3-data/` and is bind-mounted read-only into containers.
+
+### Host Data Directory
+
+```
+/home/tim/q3-data/
+├── server/baseq3/         # 139 pk3s (game server reads these)
+├── downloads/             # 160+ pk3s + mods + all-in-one zip + config
+│   ├── *.pk3              # Individual map/texture pk3s
+│   ├── baseq3 → .         # Symlink for sv_dlURL path resolution
+│   ├── cpma/              # CPMA mod pk3
+│   ├── osp/               # 5 OSP mod pk3s
+│   ├── q3-all-in-one.zip  # Complete bundle (~6.3 GB)
+│   └── autoexec.cfg       # Max quality client config (com_hunkMegs 1024)
+└── downloads-nginx.conf   # nginx config for q3-downloads container (port 41960)
+```
 
 ## Prerequisites
 
 - **Quake 3 Arena** installed via Steam (need `pak0.pk3` at minimum)
 - **Podman** or **Docker** on the build machine
 - **Docker registry** accessible at your target (default: `192.168.55.100:5000`)
+- **sshpass** on the build machine (for `--sync-data` rsync to host)
 - **Portainer** (optional) for stack deployment
 
 ## Quick Start
@@ -35,34 +63,49 @@ export Q3DIR="$HOME/.local/share/Steam/steamapps/common/Quake 3 Arena/baseq3"
 # 3. Edit server.cfg — set rconPassword, server name, etc.
 vim server.cfg
 
-# 4. Build and push all 3 images
-./build.sh                     # Default registry: 192.168.55.100:5000
-./build.sh myregistry:5000     # Override registry
+# 4. Build images + sync game data to host (first time)
+./build.sh --sync-data                # Default registry: 192.168.55.100:5000
+./build.sh --sync-data myregistry:5000  # Override registry
 
 # 5. Deploy via Portainer (paste portainer-stack.yml) or docker compose
-#    Make sure Q3SERV_PASS in the stack matches rconPassword in server.cfg
+#    Make sure RCON_PASSWORD and Q3SERV_PASS in the stack match
 ```
 
 ## What build.sh Does
 
-1. Copies pk3 files from your Steam Q3 installation (base paks, CPM maps, hires textures, enhancements)
-2. Copies **all 68 baseq3 pk3s + CPMA mod** into `ng-quake3-fe/downloads/` for the client download page
-3. Builds a 5.4 GB all-in-one zip (`q3-all-in-one.zip`) with `baseq3/` and `cpma/` directories
-4. Builds all 3 Docker images (game server compiles ioquake3 from C source)
-5. Pushes to the specified registry
+`build.sh` separates image builds (code/config) from game data sync (pk3s):
+
+```bash
+./build.sh                # Build + push images only (no data sync)
+./build.sh --sync-data    # Build + push images + rsync game data to host
+./build.sh --sync-only    # Rsync game data only (skip image build)
+./build.sh --sync-data myregistry:5000  # Override registry
+```
+
+### Image Build (default)
+1. Stages pk3 files from Steam Q3 installation into `build/` and `ng-quake3-fe/downloads/` (local staging only)
+2. Builds all-in-one zip (`q3-all-in-one.zip`) with `baseq3/` and `cpma/` directories
+3. Builds 3 lean Docker images (no game data baked in — just compiled binaries + configs)
+4. Pushes to the specified registry
+
+### Data Sync (`--sync-data` or `--sync-only`)
+5. Rsyncs `build/*.pk3` → host `/home/tim/q3-data/server/baseq3/`
+6. Rsyncs `ng-quake3-fe/downloads/` → host `/home/tim/q3-data/downloads/`
+
+Uses `sshpass` + `rsync` for password-authenticated transfer. Set `Q3_HOST` env var to override the target host (default: `192.168.55.100`).
 
 ## Game Files
 
-The `build/` directory is populated by `build.sh` at build time for the **game server**. The `ng-quake3-fe/downloads/` directory holds the **complete client download bundle**. Neither is checked into git (too large).
+Game data is **not checked into git** (too large). `build.sh` copies files from your Steam Q3 installation to local staging directories, then optionally syncs them to the target host.
 
-### Server (build/)
+### Server (build/ → host:/home/tim/q3-data/server/baseq3/)
 - `pak0.pk3` - `pak8.pk3` — Base game + official patches
 - `q3wpak1.pk3` — Point release data
 - `map_cpm*.pk3` — 38 CPM competition maps
 - 19 community maps from [..::LvL](https://lvlworld.com/) (top-rated FFA/TDM/Tourney maps)
 - `zzz_*.pk3`, `wtf-*.pk3` — Hires texture packs
 
-### Client Downloads (ng-quake3-fe/downloads/)
+### Client Downloads (ng-quake3-fe/downloads/ → host:/home/tim/q3-data/downloads/)
 
 All files served by nginx at `/downloads/` with `Content-Disposition: attachment`:
 
@@ -78,13 +121,14 @@ All files served by nginx at `/downloads/` with `Content-Disposition: attachment
 | Bug fixes/HUD | TUP + HQQ | ~29 MB |
 | QL content | QL Player Models + FX Replacer | ~200 MB |
 | CPMA mod | z-cpma-pak153.pk3 (in `cpma/` subdir) | ~16 MB |
-| **All-in-one zip** | **q3-all-in-one.zip** (baseq3/ + cpma/) | **~5.4 GB** |
+| OSP mod | 5 pk3s in `osp/` (zz-osp-pak0 through zz-osp-server3a) | ~7 MB |
+| **All-in-one zip** | **q3-all-in-one.zip** (baseq3/ + cpma/ + osp/) | **~6.3 GB** |
 
 ## Download Page
 
 The web UI at `/download` provides a complete setup page for LAN players with 6 rows of cards:
 
-1. **Quick Start** — All-in-one bundle (5.4 GB) with everything included
+1. **Quick Start** — All-in-one bundle (6.3 GB) with everything included
 2. **Game Data + Windows + macOS** — pak0.pk3 + ioquake3 engine downloads
 3. **Linux/Steam Deck + Android + OSP** — platform engines + competitive mod
 4. **HD Textures + HD Weapons + QC Sounds** — visual and audio enhancements
@@ -127,24 +171,55 @@ The web UI at `/map` shows all available maps as cards with screenshots. Click a
 
 **Map list is hardcoded** in `ng-quake3-be/src-vendored/src/api/maps/maps.utils.js`. To add a new map:
 
-1. Place the `.pk3` in `build/` (server) and `ng-quake3-fe/downloads/` (client download)
+1. Place the `.pk3` in your Steam Q3 `baseq3/` directory (build.sh copies it to staging and syncs to host)
 2. Add a screenshot as `ng-quake3-fe/src-vendored/src/assets/images/{bspname}.jpg`
 3. Add an entry to `getMapList()` in `maps.utils.js` with `name`, `title`, `source`, `description`
-4. Rebuild and redeploy all 3 images
+4. Run `./build.sh --sync-data` (syncs pk3s to host + rebuilds backend/frontend for updated map list)
+5. Redeploy via Portainer
 
-Total maps: **64** (26 stock id + 19 community + 38 CPM + 1 OSP tourney)
+Total maps: **135** in web UI (29 stock + 4 id pro + 12 OSP + 90 community). CPM maps are pk3s on server but not in the map switcher.
 
 ## Server Config
 
-`server.cfg` is baked into the game server image at `/home/ioq3srv/ioquake3/osp/server.cfg`. Key settings:
+`server.cfg` is baked into the game server image at `/home/ioq3srv/ioquake3/osp/server.cfg`. The `__RCON_PASSWORD__` placeholder is substituted by `docker-entrypoint.sh` at container startup from the `RCON_PASSWORD` environment variable (no rebuild needed to change the password).
+
+Key settings:
 
 - **Game type**: FFA (g_gametype 0)
 - **sv_pure**: 0 (required for hires textures — clients don't need matching pk3s)
+- **sv_dlURL**: `http://dczp.jsninjas.net:41960` (HTTP redirect download via q3-downloads container)
 - **Bot fill**: 4 minimum players
 - **Mod**: OSP (Orange Smoothie Productions)
 - **Map rotation**: 10-map cycle via `vstr` chain
 
+The `sv_dlURL` setting enables fast HTTP map downloads. When a client joins and needs pk3 files, ioquake3 fetches them from the q3-downloads container at port 41960 (instead of the slow ~30 KB/s UDP game protocol). The `baseq3 → .` symlink in the downloads directory resolves the `/baseq3/{file}.pk3` URL path.
+
 To change the config, edit `server.cfg`, rebuild the game server image, and redeploy.
+
+## Docker Compose (portainer-stack.yml)
+
+The compose file defines bind mounts for game data:
+
+```yaml
+services:
+  quake3:
+    volumes:
+      - /home/tim/q3-data/server/baseq3:/home/ioq3srv/ioquake3/baseq3:ro
+
+  ng-quake3-fe:
+    volumes:
+      - /home/tim/q3-data/downloads:/usr/share/nginx/html/downloads:ro
+
+  q3-downloads:
+    image: nginx:1.24-alpine
+    ports:
+      - "41960:41960"
+    volumes:
+      - /home/tim/q3-data/downloads:/usr/share/nginx/html:ro
+      - /home/tim/q3-data/downloads-nginx.conf:/etc/nginx/conf.d/default.conf:ro
+```
+
+All game data mounted `:ro` (read-only). The `q3-downloads` service is an internet-safe nginx serving only static pk3 files on port 41960 — no API, no RCON, safe to port-forward.
 
 ## Insecure Registry Setup
 
@@ -169,13 +244,25 @@ insecure = true
 | `no space left on device` during game server build | Podman uses tmpfs for layers. `build.sh` sets `TMPDIR=~/.cache/podman-tmp` to use disk instead |
 | `ENOENT spawn git` during frontend build | Frontend Dockerfile includes `apk add git` for buble npm dependency |
 | ioquake3 binary name wrong | CMake builds install as `ioq3ded` (not `ioq3ded.x86_64` like old Makefile builds) |
+| rsync auth failure (exit 255) | `build.sh` uses `sshpass` for rsync authentication — install `sshpass` on the build machine |
 
 ## Security Notes
 
-- `server.cfg` in this repo uses placeholder `CHANGEME` for rconPassword — set the real password before building
-- `portainer-stack.yml` also uses `CHANGEME` for `Q3SERV_PASS` — update when deploying
+- `server.cfg` in this repo uses placeholder `CHANGEME` for rconPassword — the real password is injected via `RCON_PASSWORD` env var at container startup
+- `portainer-stack.yml` also uses `CHANGEME` for `RCON_PASSWORD` and `Q3SERV_PASS` — update when deploying
 - **Do NOT expose port 8080 to the internet** — the web UI has no authentication and gives full RCON control
-- Only forward **UDP 27960** for internet play
+- Port forwarding for internet play: **UDP 27960** (game) + **TCP 41960** (HTTP downloads)
+- Port 41960 (q3-downloads) serves only static files via nginx — no API, no RCON, safe to expose
+- DDNS hostname: `dczp.jsninjas.net` (used in `sv_dlURL` for client pk3 downloads)
+
+## Client Requirements
+
+For HD/4K texture packs, clients must set memory limits in `autoexec.cfg`:
+```
+seta com_hunkMegs "1024"
+seta com_zoneMegs "128"
+```
+The default 128 MB hunk memory causes `Hunk_AllocateTempMemory: failed` with the HD texture packs. The all-in-one bundle includes an `autoexec.cfg` with these settings pre-configured.
 
 ## Credits
 

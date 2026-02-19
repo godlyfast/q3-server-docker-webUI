@@ -384,6 +384,439 @@ export function getMapList() {
                 title: 'Revenga!',
                 source: '..::LvL (Strahlemann)',
                 description: 'A compact gothic arena designed for FFA and Tourney with 2-4 players. Features tight corridors and vertical combat spaces with careful item placement. Fast-paced and intense gameplay in a well-polished environment.'
+            },
+            // === Popular Maps (lvlworld.com/popularmaps) ===
+            // Batch 1: High total downloads (classic popular maps)
+            {
+                name: 'ztn3dm1',
+                title: 'Blood Run',
+                source: '..::LvL (ztn)',
+                description: 'One of the most legendary Q3 custom maps. A masterfully designed tourney/DM arena with perfect item placement and flow. Supports DM, Tourney, and CPM for 3-6 players. Over 27,000 downloads. Also includes ztn3dm1-ho variant with High-Octane item layout.'
+            },
+            {
+                name: 'lun3dm1',
+                title: 'Coriolis Storm v2',
+                source: '..::LvL (Lunaran)',
+                description: 'A sprawling industrial DM map by acclaimed mapper Lunaran. Excellent flow with multiple paths and levels for 4-9 players. Over 28,000 downloads. One of the most popular custom maps ever made.'
+            },
+            {
+                name: 'runtfest',
+                title: 'Runtfest',
+                source: '..::LvL (Xzed)',
+                description: 'A classic fan-favorite DM arena with over 28,000 downloads. Large-scale combat with multiple areas connected by corridors and jump pads. A staple of Q3 custom map servers.'
+            },
+            {
+                name: 'japandm',
+                title: 'Japanese Castles (DM)',
+                source: '..::LvL (g1zm0)',
+                description: 'A beautifully themed Japanese castle environment supporting DM and CTF for 3-8 players. Over 25,000 downloads. Features traditional architecture with cherry blossoms and pagodas. One of the most visually distinctive Q3 maps.'
+            },
+            {
+                name: 'japanctf',
+                title: 'Japanese Castles (CTF)',
+                source: '..::LvL (g1zm0)',
+                description: 'The CTF version of the iconic Japanese Castles map. Symmetric layout with beautiful traditional architecture, perfect for team-based flag capture.'
+            },
+            {
+                name: 'lae3dm1',
+                title: 'Nothing At All',
+                source: '..::LvL (Laerth)',
+                description: 'A tight DM and Tourney arena for 4-5 players with excellent sightlines and item placement. Over 24,000 downloads. Clean gothic design with fast-paced vertical gameplay.'
+            },
+            {
+                name: 'pom_bots',
+                title: 'Pyramid of the Magician',
+                source: '..::LvL (Sock)',
+                description: 'A stunning Mesoamerican-themed arena by legendary mapper Sock. DM and Tourney for 2-5 players. Rated 4.6/5. Over 20,000 downloads. Features incredible architectural detail and atmosphere with bot support.'
+            },
+            {
+                name: 'mvdm01',
+                title: 'The Very End Of You Too',
+                source: '..::LvL (Munyul Verminard)',
+                description: 'A compact Tourney and DM arena for 2-3 players. Over 20,000 downloads. Tight, fast-paced gameplay in a well-crafted space gothic environment.'
+            },
+            {
+                name: 'overkill',
+                title: 'Overkill!',
+                source: '..::LvL (Wiebo de Wit)',
+                description: 'A large-scale DM and TDM arena for 5-16 players. Over 19,000 downloads. Perfect for big FFA matches with multiple combat zones and heavy weapon placement.'
+            },
+            {
+                name: 'fr3dm1',
+                title: 'Iron Yard',
+                source: '..::LvL (Friction)',
+                description: 'An industrial DM arena for 3-7 players rated 4.3/5. Over 19,000 downloads. Gritty industrial theme with excellent gameplay flow and item balance.'
+            },
+            {
+                name: 'lloydmdm2',
+                title: 'Ancient Archipelago',
+                source: '..::LvL (Lloyd Morris)',
+                description: 'A sprawling DM map for 5-12 players. Over 19,000 downloads. Features a unique island/archipelago theme with bridges and open areas for large-scale combat.'
+            },
+            {
+                name: 't8dm5',
+                title: 'Kihaku (Intensity)',
+                source: '..::LvL (Mr.CleaN)',
+                description: 'A polished DM arena for 3-6 players. Over 18,000 downloads. Clean design with excellent flow and item placement. A tournament-quality map.'
+            },
+            {
+                name: 'simetrik',
+                title: "Si'Metrik",
+                source: '..::LvL (Sock)',
+                description: 'An elegant DM arena by Sock for 3-8 players. Over 18,000 downloads. Features clean symmetrical design with excellent flow. Also included in the PlanetQuake Pack.'
+            },
+            {
+                name: 'auh3dm1',
+                title: 'OverWhelming Hostility',
+                source: '..::LvL (Auhsan)',
+                description: 'A DM and Tourney arena with CPM support for 2-5 players. Over 18,000 downloads. Dark gothic theme with tight corridors and vertical combat.'
+            },
+            {
+                name: 'estatica',
+                title: 'Estatica',
+                source: '..::LvL (Cardigan)',
+                description: 'A beautiful DM, Tourney, and FFA arena by Cardigan (also creator of Trespass and Hydra). Rated 4.4/5 with over 18,000 downloads. Elegant design with excellent gameplay.'
+            },
+            {
+                name: 'lun3dm5',
+                title: "You'll Shoot Your Eye Out",
+                source: '..::LvL (Lunaran & KungFuSquirrel)',
+                description: 'A collaborative masterpiece by Lunaran and KungFuSquirrel. DM, Tourney, and CPM for 2-6 players. Rated 4.6/5 with over 13,000 downloads. Incredible visual quality and level design.'
+            },
+            {
+                name: 'nor3ctf1',
+                title: "Derwyll's Castle 2",
+                source: '..::LvL (Noruen)',
+                description: 'A grand CTF and TDM castle map for 8+ players. Rated 4.6/5 with over 10,000 downloads. Massive medieval castle with epic flag runs and team combat.'
+            },
+            {
+                name: 'illdm2',
+                title: 'The Hive',
+                source: '..::LvL (redRum)',
+                description: 'A compact DM and Tourney arena for 2-4 players. Organic hive-like architecture with tight combat spaces and good vertical gameplay.'
+            },
+            {
+                name: 'spikectf3',
+                title: 'New Disease',
+                source: '..::LvL (Spike)',
+                description: 'A CTF map for 2-6 players with modern design sensibilities. Clean layout with well-designed flag runs and chokepoints.'
+            },
+            // Batch 2: All remaining popular maps
+            {
+                name: 'simpsons_q3',
+                title: 'The Simpsons Map',
+                source: '..::LvL (Maggu)',
+                description: 'The most downloaded custom Q3 map ever with 84,000+ downloads! A fun recreation of Springfield locations from The Simpsons. Supports CTF, DM, and TDM. A classic novelty map that everyone should try.'
+            },
+            {
+                name: 'yan_test',
+                title: "Yan's Test",
+                source: '..::LvL (Yan)',
+                description: 'A DM and Tourney arena for 2-3 players. Includes two BSP variants with different teleport exit locations and lava pit configurations.'
+            },
+            {
+                name: 'backrooms_arena',
+                title: 'Backrooms Arena',
+                source: '..::LvL (M00nbot)',
+                description: 'An FFA arena inspired by the Backrooms creepypasta. Eerie yellow-tinted corridors and liminal spaces create a unique and unsettling combat environment.'
+            },
+            {
+                name: 'smo1v1',
+                title: 'Red, Yellow, Green, Blue',
+                source: '..::LvL (Tim Smulders)',
+                description: 'A colorful DM and Tourney arena with a vibrant color-coded design. Clean layout for 2-4 players with distinct visual zones.'
+            },
+            {
+                name: 'reqapartament',
+                title: 'Blast from the Past',
+                source: '..::LvL (Requiem)',
+                description: 'A large DM, TDM, and Tourney arena with CPM support for 2-8 players. Rated 4.9/5. Features a detailed apartment/building theme with multiple combat areas.'
+            },
+            {
+                name: 'rockshellwill',
+                title: 'Rockshellwill',
+                source: '..::LvL (Maxell)',
+                description: 'A DM arena for 3-7 players with rocky, industrial aesthetics. Multiple elevation levels and interconnected rooms.'
+            },
+            {
+                name: '13night',
+                title: 'Vanilla Nights',
+                source: '..::LvL (sst13)',
+                description: 'A DM, TDM, and Tourney arena with CPM support for 2-6 players. Rated 4.3/5. Night-themed setting with atmospheric lighting and clean gameplay.'
+            },
+            {
+                name: 'amon3tourney02',
+                title: 'SILENT PLACE',
+                source: '..::LvL (AmonG0D)',
+                description: 'A DM and Tourney arena with a minimalist, eerie atmosphere. Quiet corridors and open spaces create tension-filled combat encounters.'
+            },
+            {
+                name: 'acid3dm11',
+                title: 'Rostwind',
+                source: '..::LvL (acid)',
+                description: 'A DM, TDM, and Tourney arena. Rated 4.3/5. Clean industrial design with excellent flow and tight combat spaces.'
+            },
+            {
+                name: 'redwar',
+                title: 'Red Warrior Shot The Food!',
+                source: '..::LvL (Foo)',
+                description: 'A CPM, DM, and Tourney arena for 2-3 players. A remake of a GeoComp 4 entry with vibrant red-themed visuals and fast-paced combat.'
+            },
+            {
+                name: 'rv3sfi1',
+                title: 'VIOLENCE INTERDICTION',
+                source: '..::LvL (Rynvord)',
+                description: 'A DM arena for 3-6 players. Sci-fi themed with dramatic lighting and multiple combat zones connected by corridors and verticality.'
+            },
+            {
+                name: 'tsh3dm2_v2',
+                title: 'Rust and Chrome v2',
+                source: '..::LvL (tehSandwich)',
+                description: 'A DM and TDM arena rated 4.8/5. Industrial rust-and-metal aesthetic with excellent flow. Updated version with improved gameplay and visuals.'
+            },
+            {
+                name: 'mxl_school',
+                title: 'School',
+                source: '..::LvL (Maxell)',
+                description: 'A massive exploration-friendly DM map for 4-12 players. Rated 5.0/5. Detailed school building environment with classrooms, hallways, and outdoor areas. Includes bot support.'
+            },
+            {
+                name: 'oxodm1',
+                title: 'de_dust2 for Quake 3',
+                source: '..::LvL (OXOTHuK)',
+                description: 'A faithful recreation of Counter-Strike\'s iconic de_dust2 in Q3. Supports CPM, DM, TDM, and Tourney for 4-6 players. Rated 4.6/5. A must-play for CS fans.'
+            },
+            {
+                name: 'exhumed',
+                title: 'Exhumed - Humiliation Redux',
+                source: '..::LvL (Foo)',
+                description: 'A CPM, DM, and Tourney arena with dark gothic aesthetics. Tight corridors and combat spaces with intense close-quarters action.'
+            },
+            {
+                name: 'shivaportal',
+                title: 'PORTALS OF SHIVA',
+                source: '..::LvL (Bung Fluff)',
+                description: 'A DM arena for 2-8 players with mystical Eastern-themed architecture. Portal-based connectivity creates unique combat dynamics.'
+            },
+            {
+                name: 'acid3dm12',
+                title: 'Mondkind',
+                source: '..::LvL (acid)',
+                description: 'A CPM, DM, TDM, and Tourney arena for 2-4 players. Rated 4.4/5. Part of the Q3 25th Anniversary Pack. Clean, modern design with excellent competitive flow.'
+            },
+            {
+                name: 'rv3dm3',
+                title: 'VELOCITY SHIFT',
+                source: '..::LvL (Rynvord)',
+                description: 'A DM, TDM, and DeFRaG arena for 2-6 players. Sci-fi speed-focused design with wide corridors and jump pad chains for high-velocity combat.'
+            },
+            {
+                name: 'atomized',
+                title: 'Atomized - Rebirth Of Mayhem',
+                source: '..::LvL (Shub-Niggurath)',
+                description: 'A DM and Tourney arena with dark, industrial aesthetics. Tight layout focused on close-quarters combat and map control.'
+            },
+            {
+                name: 'oildm1',
+                title: 'Elbow Room',
+                source: '..::LvL (BoilingOil)',
+                description: 'A compact DM and Tourney arena for 2-3 players. Tight spaces and minimal room to maneuver create intense 1v1 encounters.'
+            },
+            {
+                name: 'quake3stuff',
+                title: 'Quake3Stuff',
+                source: '..::LvL (Senn)',
+                description: 'A DM and Tourney arena for 2-5 players. Over 22,000 downloads. A quirky, fun map that has remained popular for over two decades.'
+            },
+            // === LvL Pack: The cream off the top ===
+            {
+                name: 'auh3dm2',
+                title: 'The BackStab',
+                source: '..::LvL Pack (Auhsan)',
+                description: 'A dark gothic DM arena from the legendary LvL Pack. Tight corridors with ambush opportunities and vertical combat. Companion map to OverWhelming Hostility.'
+            },
+            {
+                name: 'bal3dm2',
+                title: 'Golconda',
+                source: '..::LvL Pack (Bal)',
+                description: 'An elegant DM arena from the LvL Pack. Clean architecture with good flow and item placement.'
+            },
+            {
+                name: 'd3xf1',
+                title: 'Up Close and Personal',
+                source: '..::LvL Pack (DruZli)',
+                description: 'A tight Tourney arena from the LvL Pack designed for intense 1v1 combat. Minimal space, maximum action.'
+            },
+            {
+                name: 'devdm3',
+                title: 'Infernal Genesis',
+                source: '..::LvL Pack (DeV)',
+                description: 'A lava-themed DM arena from the LvL Pack. Hellish environment with dramatic lighting and dangerous terrain.'
+            },
+            {
+                name: 'fff',
+                title: 'fff',
+                source: '..::LvL Pack (stecki)',
+                description: 'A compact DM arena from the LvL Pack. Clean, minimalist design focused on pure gameplay.'
+            },
+            {
+                name: 'ik3dm1',
+                title: 'Future Brownie',
+                source: '..::LvL Pack (Fingers)',
+                description: 'A futuristic DM arena from the LvL Pack. Sci-fi architecture with smooth gameplay flow.'
+            },
+            {
+                name: 'lun3dm2',
+                title: "Let's Drink Beer and Shoot Things",
+                source: '..::LvL Pack (Lunaran)',
+                description: 'A fun DM arena by Lunaran from the LvL Pack. Relaxed but competitive design with excellent craftsmanship.'
+            },
+            {
+                name: 'natedm2',
+                title: "Natestah's Beotch",
+                source: '..::LvL Pack (Nathan Silvers)',
+                description: 'A DM arena from the LvL Pack. Well-designed combat spaces with good item distribution.'
+            },
+            {
+                name: 'mrcq3t3',
+                title: 'Heavy Duty',
+                source: '..::LvL Pack (Mr.CleaN)',
+                description: 'A Tourney arena from the LvL Pack by Mr.CleaN. Solid competitive layout designed for skilled 1v1 play.'
+            },
+            {
+                name: 'shortcircuit',
+                title: 'Short Circuit',
+                source: '..::LvL Pack (Binaryshi)',
+                description: 'A tech-themed DM arena from the LvL Pack. Electronic/circuit board aesthetic with tight combat flow.'
+            },
+            {
+                name: 'tig_den',
+                title: "Tig's Den",
+                source: '..::LvL Pack (Tigger-oN)',
+                description: 'A cozy DM arena by Tigger-oN (founder of ..::LvL) from the LvL Pack. A personal favorite of the community.'
+            },
+            // === PlanetQuake Pack: Space Madness ===
+            {
+                name: 'distonic_small',
+                title: 'Distonic_Small',
+                source: 'PQ Pack (nunuk)',
+                description: 'A compact space-themed DM arena from the PlanetQuake Space Madness pack. Zero-gravity combat in a tight space station environment.'
+            },
+            {
+                name: 'htourney1',
+                title: 'Space Jam',
+                source: 'PQ Pack (}{ammer)',
+                description: 'A space-themed Tourney arena from the PlanetQuake pack. Designed for intense 1v1 duels in a space station setting.'
+            },
+            {
+                name: 'klhights',
+                title: 'Kleskonian Heights',
+                source: 'PQ Pack (nunuk)',
+                description: 'A DM arena from the PlanetQuake Space Madness pack. Features elevated platforms and long sightlines in a space environment.'
+            },
+            {
+                name: 'unitooldm3a',
+                title: 'Cosmik Debris',
+                source: 'PQ Pack (unitool)',
+                description: 'A space-themed DM arena from the PlanetQuake pack. Floater gameplay with debris and asteroid-like structures.'
+            },
+            {
+                name: 'mrcq3t2',
+                title: 'Mutually Assured Destruction',
+                source: 'PQ Pack (Mr.CleaN)',
+                description: 'A Tourney arena from the PlanetQuake pack by Mr.CleaN. Tournament edition with balanced competitive layout.'
+            },
+            {
+                name: 'nedmaj',
+                title: 'Majesty',
+                source: 'PQ Pack (Ned Man)',
+                description: 'A majestic DM arena from the PlanetQuake Space Madness pack. Grand architecture with space vistas.'
+            },
+            {
+                name: 'plutonians',
+                title: 'Flying Plutonians',
+                source: 'PQ Pack (nunuk)',
+                description: 'A floater-style DM arena from the PlanetQuake pack. Zero-gravity combat with flying platforms and space jumps.'
+            },
+            // === Q3 25th Anniversary Pack ===
+            {
+                name: 'caustic',
+                title: 'Caustic',
+                source: '25th Anniversary (StormCatcher.77)',
+                description: 'A DM arena from the Q3 25th Anniversary Pack. Toxic/caustic industrial theme with hazardous terrain elements.'
+            },
+            {
+                name: 'jam3dm3_25',
+                title: 'Knoblauch',
+                source: '25th Anniversary (Jameson)',
+                description: 'A DM arena from the Q3 25th Anniversary Pack. Clean design celebrating 25 years of Quake 3 Arena.'
+            },
+            {
+                name: '13castle',
+                title: 'Castle Of Aaargh!',
+                source: '25th Anniversary (sst13)',
+                description: 'A medieval castle DM arena from the Q3 25th Anniversary Pack. Grand castle architecture with multiple levels and combat zones.'
+            },
+            {
+                name: 'ori_apt',
+                title: 'ori_apt',
+                source: '25th Anniversary (an_origamian)',
+                description: 'A DM arena from the Q3 25th Anniversary Pack. Modern apartment-themed environment with clean geometry.'
+            },
+            {
+                name: 'q325_deck',
+                title: 'The Deck (Q3 Edition)',
+                source: '25th Anniversary (Neon_Knight)',
+                description: 'A Q3 recreation of the classic Unreal Tournament map "Deck" for the 25th Anniversary Pack. Industrial multi-level arena faithful to the UT original.'
+            },
+            {
+                name: 'q3ctfchnu01',
+                title: 'Porcelain',
+                source: '25th Anniversary (Chnucki Erdbeer)',
+                description: 'A CTF map from the Q3 25th Anniversary Pack. Clean white porcelain-themed architecture with symmetric flag layouts.'
+            },
+            {
+                name: 'quadctf',
+                title: 'Quadranscentennial CTF',
+                source: '25th Anniversary (Foo)',
+                description: 'A CTF map from the Q3 25th Anniversary Pack. Designed to celebrate 25 years of Q3 with balanced competitive CTF gameplay.'
+            },
+            {
+                name: 'spikedm1c',
+                title: 'The Fragpit Remastered',
+                source: '25th Anniversary (Spike)',
+                description: 'A remastered DM arena from the Q3 25th Anniversary Pack. Updated version of a classic map with modern polish.'
+            },
+            {
+                name: 'spikedm9',
+                title: 'Shaft 25',
+                source: '25th Anniversary (Spike)',
+                description: 'A DM arena from the Q3 25th Anniversary Pack. Vertical shaft-themed combat with multiple elevation levels.'
+            },
+            {
+                name: 'tsh3dm2',
+                title: 'Rust and Chrome',
+                source: '25th Anniversary (tehSandwich)',
+                description: 'The original version of Rust and Chrome from the 25th Anniversary Pack. Industrial rust-metal aesthetic. See also the standalone v2 update.'
+            },
+            // === Threewave CTF ===
+            {
+                name: 'q3wctf1',
+                title: 'Bloodlust (Threewave)',
+                source: 'Threewave CTF (Zoid & Casey)',
+                description: 'The first map from the legendary Threewave CTF pack. A classic 16-player CTF arena. Over 20,000 downloads. One of the most iconic Q3 CTF experiences.'
+            },
+            {
+                name: 'q3wctf2',
+                title: 'Courtyard Conundrum (Threewave)',
+                source: 'Threewave CTF (Zoid & Casey)',
+                description: 'The second Threewave CTF map. A 10-player CTF arena with courtyard-based combat and flag defense.'
+            },
+            {
+                name: 'q3wctf3',
+                title: "Finnegan's Revenge (Threewave)",
+                source: 'Threewave CTF (Zoid & Casey)',
+                description: 'The third Threewave CTF map. A 12-player CTF arena completing the legendary Threewave trilogy.'
             }
         ])
     })
