@@ -7,7 +7,7 @@
         <mat-card-header>
           <div mat-card-avatar class="example-header-image"></div>
           <mat-card-title>Quick Start &mdash; All-in-One Bundle</mat-card-title>
-          <mat-card-subtitle>Game data + HD textures + HD weapons + QC sounds (~1.6 GB)</mat-card-subtitle>
+          <mat-card-subtitle>Game data + HD textures + HD weapons + models + sounds + HUD (~2.4 GB)</mat-card-subtitle>
         </mat-card-header>
         <mat-card-content>
           <p>Everything you need in a single download. Extract the <kbd>baseq3/</kbd> folder
@@ -19,7 +19,7 @@
         </mat-card-content>
         <mat-card-actions>
           <a mat-raised-button color="primary" href="/downloads/q3-all-in-one.zip">
-            Download All-in-One (1.6 GB)
+            Download All-in-One (2.4 GB)
           </a>
         </mat-card-actions>
       </mat-card>
@@ -201,7 +201,7 @@
     </div>
   </div>
 
-  <!-- Row 3: Enhancements (HD Textures, HD Weapons, QC Sounds) -->
+  <!-- Row 3: HD Textures + HD Weapons + QC Sounds -->
   <div class="row" style="margin-top: 20px">
     <div class="col-lg-4">
       <mat-card class="example-card">
@@ -213,19 +213,20 @@
         <img mat-card-image src="./assets/quake-3-icon.png" alt="HD Textures">
         <mat-card-content>
           <p>AI-upscaled texture packs that dramatically improve visual quality.
-            Drop them into your <kbd>baseq3/</kbd> folder alongside <kbd>pak0.pk3</kbd> &mdash; no config needed.</p>
+            Drop into <kbd>baseq3/</kbd> &mdash; no config needed.</p>
           <ul>
-            <li><a href="/downloads/zzz_Q3Q_HD_Upscale-4x-v03b.pk3"><strong>Q3Q HD Upscale 4x</strong></a> (~982 MB)</li>
-            <li><a href="/downloads/wtf-q3a_v3.pk3"><strong>wtf-q3a v3</strong></a> (~136 MB)</li>
+            <li><a href="/downloads/zzz_Q3Q_HD_Upscale-4x-v03b.pk3"><strong>Q3Q HD Upscale 4x</strong></a> (982 MB)</li>
+            <li><a href="/downloads/wtf-q3a_v3.pk3"><strong>wtf-q3a v3</strong></a> (136 MB)</li>
+            <li><a href="/downloads/xcsv_bq3hi-res.pk3"><strong>Kpax Hires</strong></a> (240 MB)</li>
           </ul>
-          <p><em>Client-side only. The server runs <kbd>sv_pure 0</kbd>.</em></p>
+          <p><em>Client-side only. <kbd>sv_pure 0</kbd>.</em></p>
         </mat-card-content>
         <mat-card-actions>
           <a mat-raised-button color="accent" href="/downloads/zzz_Q3Q_HD_Upscale-4x-v03b.pk3">
             Q3Q HD (982 MB)
           </a>
-          <a mat-raised-button color="accent" href="/downloads/wtf-q3a_v3.pk3" style="margin-left: 8px">
-            wtf-q3a (136 MB)
+          <a mat-raised-button color="accent" href="/downloads/xcsv_bq3hi-res.pk3" style="margin-left: 8px">
+            Kpax (240 MB)
           </a>
         </mat-card-actions>
       </mat-card>
@@ -236,22 +237,25 @@
         <mat-card-header>
           <div mat-card-avatar class="example-header-image"></div>
           <mat-card-title>HD Weapons</mat-card-title>
-          <mat-card-subtitle>Optional &mdash; remodeled weapons by CZ45</mat-card-subtitle>
+          <mat-card-subtitle>Optional &mdash; CZ45 remodeled weapons + BFG</mat-card-subtitle>
         </mat-card-header>
         <img mat-card-image src="./assets/quake-3-icon.png" alt="HD Weapons">
         <mat-card-content>
-          <p>Modern high-poly weapon models that look great at high resolutions
-            while staying faithful to the originals. All weapons remade.</p>
-          <ol>
-            <li>Download from <a href="https://www.moddb.com/mods/cz45modbundle/addons/cz45-q3a-weapon-model-remake-v10" target="_blank" rel="noopener">ModDB</a></li>
-            <li>Extract <kbd>zzczhdwr1.pk3</kbd> and <kbd>zzczhdwr3.pk3</kbd> into <kbd>baseq3/</kbd></li>
-            <li>Optional: <kbd>zzczhdwr2.pk3</kbd> for widescreen weapon positions</li>
-          </ol>
-          <p><em>Client-side only. The server runs <kbd>sv_pure 0</kbd>.</em></p>
+          <p>High-poly weapon models faithful to the originals. All weapons remade including BFG.</p>
+          <ul>
+            <li><a href="/downloads/zzczhdwr1.pk3"><strong>HD Weapons</strong></a> (14 MB) &mdash; required</li>
+            <li><a href="/downloads/zzczhdwr3.pk3">Weapon sounds</a> (725 KB)</li>
+            <li><a href="/downloads/zzczhdwr2.pk3">Widescreen positions</a> (13 KB)</li>
+            <li><a href="/downloads/zzczremBFG.pk3"><strong>HD BFG10k</strong></a> (7 MB)</li>
+          </ul>
+          <p><em>Client-side only. <kbd>sv_pure 0</kbd>.</em></p>
         </mat-card-content>
         <mat-card-actions>
-          <a mat-raised-button color="accent" href="https://www.moddb.com/mods/cz45modbundle/addons/cz45-q3a-weapon-model-remake-v10" target="_blank" rel="noopener">
-            ModDB Download
+          <a mat-raised-button color="accent" href="/downloads/zzczhdwr1.pk3">
+            HD Weapons (14 MB)
+          </a>
+          <a mat-raised-button color="accent" href="/downloads/zzczremBFG.pk3" style="margin-left: 8px">
+            HD BFG (7 MB)
           </a>
         </mat-card-actions>
       </mat-card>
@@ -267,16 +271,106 @@
         <img mat-card-image src="./assets/quake-3-icon.png" alt="QC Sounds">
         <mat-card-content>
           <p>Replaces the classic Q3A announcer and sound effects with
-            the modern Quake Champions versions. Single pk3 drop-in.</p>
-          <ol>
-            <li>Download from <a href="https://www.moddb.com/mods/quake-champions-sounds-for-quake-iii-arena/addons/quakechampions-sounds-for-quake-iii" target="_blank" rel="noopener">ModDB</a></li>
-            <li>Drop the pk3 file into your <kbd>baseq3/</kbd> folder</li>
-          </ol>
-          <p><em>Client-side only. The server runs <kbd>sv_pure 0</kbd>.</em></p>
+            modern Quake Champions versions. Single pk3 drop-in.</p>
+          <ul>
+            <li><a href="/downloads/zzzz-Quake_Champions_Sounds.pk3"><strong>QC Full Pack</strong></a> (17 MB)</li>
+            <li><a href="/downloads/zzzz-QL-Default-Announcer.pk3"><strong>QL Announcer</strong></a> (5.8 MB)</li>
+          </ul>
+          <p><em>Pick one announcer. QL announcer overrides QC if both installed (alphabetical load order).</em></p>
         </mat-card-content>
         <mat-card-actions>
-          <a mat-raised-button color="accent" href="https://www.moddb.com/mods/quake-champions-sounds-for-quake-iii-arena/addons/quakechampions-sounds-for-quake-iii" target="_blank" rel="noopener">
-            ModDB Download
+          <a mat-raised-button color="accent" href="/downloads/zzzz-Quake_Champions_Sounds.pk3">
+            QC Sounds (17 MB)
+          </a>
+          <a mat-raised-button color="accent" href="/downloads/zzzz-QL-Default-Announcer.pk3" style="margin-left: 8px">
+            QL Announcer (6 MB)
+          </a>
+        </mat-card-actions>
+      </mat-card>
+    </div>
+  </div>
+
+  <!-- Row 4: Neural Upscale + Bug Fixes & HUD + FX Replacer -->
+  <div class="row" style="margin-top: 20px">
+    <div class="col-lg-4">
+      <mat-card class="example-card">
+        <mat-card-header>
+          <div mat-card-avatar class="example-header-image"></div>
+          <mat-card-title>Neural Upscale</mat-card-title>
+          <mat-card-subtitle>Optional &mdash; AI-upscaled player &amp; object textures</mat-card-subtitle>
+        </mat-card-header>
+        <img mat-card-image src="./assets/quake-3-icon.png" alt="Neural Upscale">
+        <mat-card-content>
+          <p>Neural network upscaled textures that keep the vanilla look at higher resolution.
+            Covers player skins and objects that the map texture packs miss.</p>
+          <ul>
+            <li><a href="/downloads/pak9hdplayers.pk3"><strong>HD Players</strong></a> (265 MB)</li>
+            <li><a href="/downloads/pak9hdobjects.pk3"><strong>HD Objects</strong></a> (74 MB)</li>
+          </ul>
+          <p><em>Client-side only. <kbd>sv_pure 0</kbd>.</em></p>
+        </mat-card-content>
+        <mat-card-actions>
+          <a mat-raised-button color="accent" href="/downloads/pak9hdplayers.pk3">
+            HD Players (265 MB)
+          </a>
+          <a mat-raised-button color="accent" href="/downloads/pak9hdobjects.pk3" style="margin-left: 8px">
+            HD Objects (74 MB)
+          </a>
+        </mat-card-actions>
+      </mat-card>
+    </div>
+
+    <div class="col-lg-4">
+      <mat-card class="example-card">
+        <mat-card-header>
+          <div mat-card-avatar class="example-header-image"></div>
+          <mat-card-title>Bug Fixes &amp; HD HUD</mat-card-title>
+          <mat-card-subtitle>Recommended &mdash; TUP + HQQ</mat-card-subtitle>
+        </mat-card-header>
+        <img mat-card-image src="./assets/quake-3-icon.png" alt="Bug Fixes">
+        <mat-card-content>
+          <p>The Unofficial Patch fixes broken textures and icons.
+            HQQ replaces the entire HUD, menus, and 2D elements with high-res versions.</p>
+          <ul>
+            <li><a href="/downloads/pak9tup.pk3"><strong>TUP v1.8</strong></a> (8 MB) &mdash; bug fixes</li>
+            <li><a href="/downloads/pak9hqq37.pk3"><strong>HQQ v3.7</strong></a> (21 MB) &mdash; HD HUD &amp; menus</li>
+          </ul>
+          <p><em>TUP is a no-brainer. HQQ includes TUP fixes and adds HD interface.</em></p>
+        </mat-card-content>
+        <mat-card-actions>
+          <a mat-raised-button color="primary" href="/downloads/pak9hqq37.pk3">
+            HQQ v3.7 (21 MB)
+          </a>
+          <a mat-raised-button color="accent" href="/downloads/pak9tup.pk3" style="margin-left: 8px">
+            TUP v1.8 (8 MB)
+          </a>
+        </mat-card-actions>
+      </mat-card>
+    </div>
+
+    <div class="col-lg-4">
+      <mat-card class="example-card">
+        <mat-card-header>
+          <div mat-card-avatar class="example-header-image"></div>
+          <mat-card-title>QL Models &amp; FX</mat-card-title>
+          <mat-card-subtitle>Optional &mdash; Quake Live player models + new effects</mat-card-subtitle>
+        </mat-card-header>
+        <img mat-card-image src="./assets/quake-3-icon.png" alt="QL Models">
+        <mat-card-content>
+          <p>Quake Live character models ported to Q3A, plus enhanced explosions,
+            projectiles, and blood effects.</p>
+          <ul>
+            <li><a href="/downloads/ql-playermodels-ioquake3-ql.pk3"><strong>QL Player Models</strong></a> (185 MB)</li>
+            <li><a href="/downloads/Xsprites.pk3"><strong>FX Replacer</strong></a> (14 MB)</li>
+          </ul>
+          <p><em>Select QL models in Player settings. FX active automatically.</em></p>
+        </mat-card-content>
+        <mat-card-actions>
+          <a mat-raised-button color="accent" href="/downloads/ql-playermodels-ioquake3-ql.pk3">
+            QL Models (185 MB)
+          </a>
+          <a mat-raised-button color="accent" href="/downloads/Xsprites.pk3" style="margin-left: 8px">
+            FX Replacer (14 MB)
           </a>
         </mat-card-actions>
       </mat-card>

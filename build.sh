@@ -41,15 +41,22 @@ echo "Copied $(ls "$SCRIPT_DIR/build/"*.pk3 2>/dev/null | wc -l) pk3 files"
 mkdir -p "$SCRIPT_DIR/ng-quake3-fe/downloads"
 cp "$SCRIPT_DIR/build/pak0.pk3" "$SCRIPT_DIR/ng-quake3-fe/downloads/"
 cp "$SCRIPT_DIR/build/"zzz_*.pk3 "$SCRIPT_DIR/build/"wtf-*.pk3 "$SCRIPT_DIR/ng-quake3-fe/downloads/" 2>/dev/null || true
-# CZ45 HD Weapons + QC Sounds (copy from Steam baseq3 if present)
+# Enhancement pk3s (copy from Steam baseq3 if present)
 cp "$Q3DIR"/zzczhdwr*.pk3 "$SCRIPT_DIR/ng-quake3-fe/downloads/" 2>/dev/null || true
+cp "$Q3DIR"/zzczremBFG*.pk3 "$SCRIPT_DIR/ng-quake3-fe/downloads/" 2>/dev/null || true
 cp "$Q3DIR"/zzzz-Quake_Champions_Sounds.pk3 "$SCRIPT_DIR/ng-quake3-fe/downloads/" 2>/dev/null || true
+cp "$Q3DIR"/zzzz-QL-Default-Announcer.pk3 "$SCRIPT_DIR/ng-quake3-fe/downloads/" 2>/dev/null || true
+cp "$Q3DIR"/pak9tup.pk3 "$Q3DIR"/pak9hqq37.pk3 "$SCRIPT_DIR/ng-quake3-fe/downloads/" 2>/dev/null || true
+cp "$Q3DIR"/pak9hdplayers.pk3 "$Q3DIR"/pak9hdobjects.pk3 "$SCRIPT_DIR/ng-quake3-fe/downloads/" 2>/dev/null || true
+cp "$Q3DIR"/xcsv_bq3hi-res.pk3 "$SCRIPT_DIR/ng-quake3-fe/downloads/" 2>/dev/null || true
+cp "$Q3DIR"/ql-playermodels-ioquake3-ql.pk3 "$SCRIPT_DIR/ng-quake3-fe/downloads/" 2>/dev/null || true
+cp "$Q3DIR"/Xsprites.pk3 "$SCRIPT_DIR/ng-quake3-fe/downloads/" 2>/dev/null || true
 
 # Build all-in-one zip (pak0 + all enhancements) for quick LAN setup
 echo "--- Building all-in-one download bundle ---"
 ALL_IN_ONE="$SCRIPT_DIR/ng-quake3-fe/downloads/q3-all-in-one.zip"
 rm -f "$ALL_IN_ONE"
-BUNDLE_DIR="$(mktemp -d)"
+BUNDLE_DIR="$(mktemp -d -p "${TMPDIR:-$HOME/.cache/podman-tmp}")"
 mkdir -p "$BUNDLE_DIR/baseq3"
 cp "$SCRIPT_DIR/ng-quake3-fe/downloads/"*.pk3 "$BUNDLE_DIR/baseq3/"
 (cd "$BUNDLE_DIR" && zip -0 -r "$ALL_IN_ONE" baseq3/)
