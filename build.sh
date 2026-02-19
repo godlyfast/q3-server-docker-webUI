@@ -37,6 +37,11 @@ cp "$Q3DIR"/zzz_*.pk3 "$Q3DIR"/wtf-*.pk3 "$SCRIPT_DIR/build/" 2>/dev/null || tru
 
 echo "Copied $(ls "$SCRIPT_DIR/build/"*.pk3 2>/dev/null | wc -l) pk3 files"
 
+# Copy pak0 + HD textures for frontend download page
+mkdir -p "$SCRIPT_DIR/ng-quake3-fe/downloads"
+cp "$SCRIPT_DIR/build/pak0.pk3" "$SCRIPT_DIR/ng-quake3-fe/downloads/"
+cp "$SCRIPT_DIR/build/"zzz_*.pk3 "$SCRIPT_DIR/build/"wtf-*.pk3 "$SCRIPT_DIR/ng-quake3-fe/downloads/" 2>/dev/null || true
+
 # Step 2: Build images
 # Use disk-backed TMPDIR to avoid tmpfs size limits on large pk3 COPY layers
 export TMPDIR="${TMPDIR:-$HOME/.cache/podman-tmp}"
