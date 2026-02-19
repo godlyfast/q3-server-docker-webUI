@@ -270,6 +270,120 @@ export function getMapList() {
                 title: 'Vertical Vengeance II',
                 source: 'Id Software, Inc.',
                 description: ''
+            },
+            {
+                name: 'rustgrad',
+                title: 'Rustgrad',
+                source: '..::LvL (Hipshot)',
+                description: 'A stunning industrial ruins environment with incredible visual detail. Features multiple levels connected by corridors, catwalks, and jump pads. Excellent flow for FFA and TDM with 3-6 players. One of the highest-rated community maps ever created.'
+            },
+            {
+                name: 'q3gwdm1',
+                title: 'Achromatic',
+                source: '..::LvL (flipout)',
+                description: 'A beautifully crafted gothic arena with clean sightlines and excellent item placement. Supports FFA, TDM, and Tourney for 2-8 players. The monochromatic palette creates a striking visual style while maintaining competitive readability.'
+            },
+            {
+                name: 'trespass',
+                title: 'Trespass',
+                source: '..::LvL (Pat Howard)',
+                description: 'A medium-sized gothic arena with tight corridors and vertical gameplay. Designed primarily for FFA and Tourney (2-5 players). Features strong flow and satisfying combat spaces with careful weapon placement throughout.'
+            },
+            {
+                name: 'phantq3dm3_rev',
+                title: 'Corrosion',
+                source: '..::LvL (Phantazm11)',
+                description: 'An industrial-themed arena with excellent connectivity and multiple routes between areas. Supports FFA, TDM, and Clan Arena for 4-10 players. Features a revised layout optimized for competitive play with balanced item distribution.'
+            },
+            {
+                name: 'hydra',
+                title: 'Hydra',
+                source: '..::LvL (Pat Howard)',
+                description: 'A large gothic arena with impressive architecture and varied combat spaces. Supports FFA, Tourney, and TDM for 2-6 players. Features multi-level areas connected by corridors and teleporters with strategic item placement.'
+            },
+            {
+                name: 'phantq3dm6_mc',
+                title: 'Geotechnic',
+                source: '..::LvL (Phantazm11)',
+                description: 'A massive industrial complex with interconnected rooms and corridors. Best for FFA with 3-8 players. Features expansive vertical spaces, heavy machinery aesthetics, and strategic power-up placement that rewards map knowledge.'
+            },
+            {
+                name: 'solitude',
+                title: 'Solitude',
+                source: '..::LvL (Hipshot)',
+                description: 'An atmospheric gothic arena designed for intimate combat. Ideal for Tourney and small FFA with 2-4 players. Features tight spaces with exceptional lighting and architectural detail from one of the community\'s most respected mappers.'
+            },
+            {
+                name: 'bst3dm1',
+                title: 'Terminatria',
+                source: '..::LvL (bst)',
+                description: 'A well-balanced arena suitable for FFA, TDM, and Tourney with 2-8 players. Features a mix of open areas and tight corridors with multiple height levels. Clean design with strong gameplay flow and satisfying combat encounters.'
+            },
+            {
+                name: 'pukka3tourney2',
+                title: 'Evolution',
+                source: '..::LvL (thefury)',
+                description: 'One of the highest-rated tournament maps in Q3 history. Designed specifically for 1v1 Tourney and CPM with 2-4 players. Features perfectly balanced weapon placement, multiple routes, and intense vertical gameplay. A must-play for competitive duelers.'
+            },
+            {
+                name: 'phantq3dm4',
+                title: 'Windsong Keep',
+                source: '..::LvL (Phantazm11)',
+                description: 'A medieval castle arena with atmospheric lighting and detailed architecture. Supports FFA, TDM, and Tourney for 2-8 players. Features interconnected rooms with catwalks, jump pads, and strategic vantage points.'
+            },
+            {
+                name: 'akutadm1',
+                title: 'ALIEN',
+                source: '..::LvL (AKUTA)',
+                description: 'A sci-fi horror themed arena inspired by the Alien franchise. Supports FFA, TDM, and Tourney for 2-8 players. Dark corridors and atmospheric lighting create tension while maintaining competitive gameplay flow.'
+            },
+            {
+                name: 'map-katdm3',
+                title: 'Inner Sanctum',
+                source: '..::LvL (kat)',
+                description: 'A compact, beautifully detailed arena optimized for 4-player FFA. One of the most consistently highly-rated maps on ..::LvL. Features tight, interconnected spaces with excellent weapon balance and satisfying combat flow.'
+            },
+            {
+                name: 'map-13vast',
+                title: 'The Vast And Furious',
+                source: '..::LvL (sst13)',
+                description: 'A versatile arena supporting CTF, FFA, and TDM for 3-7 players. Features a spacious layout with multiple routes and excellent flag placement for CTF mode. The 13th remix with refined gameplay and improved visuals.'
+            },
+            {
+                name: 'zl3tourney1',
+                title: 'Hypersonic Tourney',
+                source: '..::LvL (zeal0r)',
+                description: 'A fast-paced tourney map designed for intense 1v1 duels with support for 2-5 players in FFA. Features clean architecture, precise item timing, and multiple engagement distances for varied combat styles.'
+            },
+            {
+                name: 'map-wintergames',
+                title: 'Winter Games',
+                source: '..::LvL (Comic Relief)',
+                description: 'A unique snow-themed arena with a skiing and skating motif. Supports FFA for 3-8 players. A fun novelty map that combines solid gameplay with a distinctive winter sports aesthetic. Great for casual sessions.'
+            },
+            {
+                name: 'zih_roof',
+                title: 'East Berlin Roofs',
+                source: '..::LvL (Zihaben & Alex Vishnevsky)',
+                description: 'Fight across the rooftops of East Berlin in this atmospheric open-air arena. Best with 4-12 players for chaotic FFA action. Features custom music, dramatic skybox, and a unique urban setting unlike any other Q3 map.'
+            },
+            {
+                name: 'shad3dm2',
+                title: 'Deep Freeze',
+                source: '..::LvL (Shadowdane)',
+                description: 'An ice-themed arena with excellent flow for FFA, TDM, Tourney, and CPM with 2-6 players. One of the most popular community maps, featuring clean layout, balanced items, and satisfying combat at all skill levels.'
+            },
+            {
+                name: 'map-13dream',
+                title: 'Dreamscape',
+                source: '..::LvL (sst13)',
+                description: 'A surreal, dreamlike arena supporting CTF, FFA, and TDM for 6-10 players. Features unique visual design with floating platforms and ethereal atmosphere. Excellent CTF layout with well-designed flag runs and defensive positions.'
+            },
+            {
+                name: 'revenga',
+                title: 'Revenga!',
+                source: '..::LvL (Strahlemann)',
+                description: 'A compact gothic arena designed for FFA and Tourney with 2-4 players. Features tight corridors and vertical combat spaces with careful item placement. Fast-paced and intense gameplay in a well-polished environment.'
             }
         ])
     })
