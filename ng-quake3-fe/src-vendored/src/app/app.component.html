@@ -1,0 +1,43 @@
+<!--The content below is only a placeholder and can be replaced.-->
+
+<mat-sidenav-container class="example-container">
+  <mat-sidenav #drawer mode="side" opened role="navigation">
+    <mat-nav-list>
+      <div style="text-align: center;"> <img style="padding-bottom: 30px; padding-top: 30px" height="200px" src="./assets/quake-3-icon.png"></div>
+       <a mat-list-item routerLink='/'>
+         <i class="material-icons">home</i>
+         <span style=" padding-left: 10px;">Home</span>
+       </a>
+
+      <a mat-list-item routerLink='/map'>
+        <i class="material-icons">map</i>
+        <span style=" padding-left: 10px;">Map</span>
+      </a>
+
+      <a mat-list-item routerLink='/status'>
+        <i class="material-icons">code</i>
+        <span style=" padding-left: 10px;">Server Info</span>
+      </a>
+
+      <a mat-list-item routerLink='/download'>
+        <i class="material-icons">arrow_downward</i>
+        <span style=" padding-left: 10px;">Download client</span>
+      </a>
+
+    </mat-nav-list>
+  </mat-sidenav>
+  <mat-sidenav-content>
+    <div style="text-align:center; margin-top: 80px">
+      <h1>
+        {{ title }}
+      </h1>
+      <img  class="app-central-pic" height="300" alt="Central Pic" [src]="mapSrc">
+    </div>
+    <router-outlet></router-outlet>
+  </mat-sidenav-content>
+</mat-sidenav-container>
+
+
+
+
+

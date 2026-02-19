@@ -1,0 +1,26 @@
+<div class="container-fluid">
+  <div class="row" *ngIf="maps && maps.length > 0">
+    <div class="col-lg-3" *ngFor="let map of maps">
+      <mat-card class="example-card" style="margin-bottom: 30px">
+        <mat-card-header>
+          <div mat-card-avatar class="example-header-image"></div>
+          <mat-card-title>{{map.title}}</mat-card-title>
+          <mat-card-subtitle>{{map.name}}</mat-card-subtitle>
+        </mat-card-header>
+        <img mat-card-image src="./assets/images/{{map.name}}.jpg" alt="Photo of a Shiba Inu">
+        <mat-card-content>
+          <p>
+            {{map.description}}
+          </p>
+
+          <p>Source: <em>{{map.source}}<br>
+          </em></p>
+
+        </mat-card-content>
+        <mat-card-actions>
+          <button mat-button (click)="setMap(map.name)">Play!</button>
+        </mat-card-actions>
+      </mat-card>
+    </div>
+  </div>
+</div>

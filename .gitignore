@@ -1,0 +1,15 @@
+# Game data (too large for git, copied from Steam at build time)
+build/*.pk3
+
+# Node modules (installed at build time)
+node_modules/
+
+# Build artifacts
+dist/
+lib/
+
+# IDE files
+.idea/
+
+# OS files
+.DS_Store
