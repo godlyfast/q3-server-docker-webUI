@@ -11,8 +11,17 @@
         </mat-card-header>
         <mat-card-content>
           <p>Everything you need in a single download. Extract the <kbd>baseq3/</kbd>
-            and <kbd>cpma/</kbd> folders into your ioquake3 directory, launch, and connect.
+            and <kbd>cpma/</kbd> folders into your ioquake3 directory.
             Grab the engine for your platform below.</p>
+          <div class="launch-warning">
+            <strong>IMPORTANT &mdash; Memory flags required!</strong>
+            <p>The bundle includes 157+ pk3 files. You <strong>must</strong> launch with extra memory flags
+              or the game will crash on startup (<kbd>Z_Malloc</kbd> error).
+              These cannot be set in config files &mdash; they must be on the command line:</p>
+            <div class="launch-cmd">ioquake3 +set com_hunkMegs 1024 +set com_zoneMegs 512</div>
+            <p class="launch-hint">See platform-specific instructions below for exact commands.
+              The included <kbd>autoexec.cfg</kbd> handles all other settings.</p>
+          </div>
           <p style="text-align:center; font-size:1.1em">
             <kbd>/connect dczp.jsninjas.net:27960</kbd>
           </p>
@@ -42,7 +51,7 @@
           <ol>
             <li>Download <a href="/downloads/pak0.pk3"><strong>pak0.pk3</strong></a> (~500 MB)</li>
             <li>Copy it into the engine's <kbd>baseq3/</kbd> folder (see platform instructions)</li>
-            <li>Launch the game and connect:</li>
+            <li>Launch with memory flags (see platform cards) and connect:</li>
           </ol>
           <p style="text-align:center; font-size:1.1em">
             <kbd>/connect dczp.jsninjas.net:27960</kbd>
@@ -69,7 +78,9 @@
             <li>Download <a href="https://files.ioquake3.org/Windows.zip">ioquake3 for Windows</a> (~2.5 MB)</li>
             <li>Extract the zip anywhere (e.g. <kbd>C:\ioquake3</kbd>)</li>
             <li>Copy <kbd>pak0.pk3</kbd> into the <kbd>baseq3\</kbd> folder</li>
-            <li>Run <kbd>ioquake3.exe</kbd></li>
+            <li>Create a shortcut to <kbd>ioquake3.exe</kbd> and add to Target:<br>
+              <div class="launch-cmd">ioquake3.exe +set com_hunkMegs 1024 +set com_zoneMegs 512</div>
+              <small>Or run from Command Prompt in the ioquake3 folder.</small></li>
           </ol>
           <p>Open the console (<kbd>~</kbd>) and type:</p>
           <p style="text-align:center">
@@ -98,7 +109,8 @@
             <li>Extract and move <kbd>ioquake3.app</kbd> to Applications</li>
             <li>Copy <kbd>pak0.pk3</kbd> to:<br>
               <kbd>~/Library/Application Support/Quake3/baseq3/</kbd></li>
-            <li>Launch <kbd>ioquake3.app</kbd></li>
+            <li>Launch from Terminal:<br>
+              <div class="launch-cmd">open -a ioquake3 --args +set com_hunkMegs 1024 +set com_zoneMegs 512</div></li>
           </ol>
           <p>Open the console (<kbd>~</kbd>) and type:</p>
           <p style="text-align:center">
@@ -129,10 +141,12 @@
             <li>Download <a href="https://files.ioquake3.org/Linux.zip">ioquake3 for Linux</a></li>
             <li>Extract and <kbd>chmod +x ioquake3.x86_64</kbd></li>
             <li>Copy <kbd>pak0.pk3</kbd> to <kbd>~/.q3a/baseq3/</kbd></li>
-            <li>Run <kbd>./ioquake3.x86_64</kbd></li>
+            <li>Run:
+              <div class="launch-cmd">./ioquake3.x86_64 +set com_hunkMegs 1024 +set com_zoneMegs 512</div></li>
           </ol>
           <p><strong>Steam Deck:</strong> Switch to Desktop mode, then follow the steps above.
-            Add ioquake3 as a non-Steam game to launch from Gaming mode.</p>
+            Add as a non-Steam game with launch options:<br>
+            <kbd>+set com_hunkMegs 1024 +set com_zoneMegs 512</kbd></p>
           <p style="text-align:center">
             <kbd>/connect dczp.jsninjas.net:27960</kbd>
           </p>
@@ -178,18 +192,19 @@
         <mat-card-header>
           <div mat-card-avatar class="example-header-image"></div>
           <mat-card-title>CPMA Mod</mat-card-title>
-          <mat-card-subtitle>Required &mdash; server runs CPMA</mat-card-subtitle>
+          <mat-card-subtitle>Required when server is in CPMA mode</mat-card-subtitle>
         </mat-card-header>
         <img mat-card-image src="./assets/quake-3-icon.png" alt="CPMA">
         <mat-card-content>
           <p>
-            This server runs CPMA (Challenge ProMode Arena). You need the CPMA pk3
+            When the server runs CPMA (Challenge ProMode Arena), you need the CPMA pk3
             to connect. Included in the all-in-one bundle above.
           </p>
           <ol>
             <li>Download <a href="/downloads/cpma/z-cpma-pak153.pk3"><strong>CPMA 1.53</strong></a> (16 MB)</li>
             <li>Place in a <kbd>cpma/</kbd> folder next to your <kbd>baseq3/</kbd> folder</li>
-            <li>Launch with <kbd>+set fs_game cpma</kbd></li>
+            <li>Add to your launch command:<br>
+              <div class="launch-cmd">+set fs_game cpma +set com_hunkMegs 1024 +set com_zoneMegs 512</div></li>
           </ol>
           <p><small>Source: <a href="https://playmorepromode.com/downloads" target="_blank" rel="noopener">playmorepromode.com</a></small></p>
         </mat-card-content>

@@ -1,0 +1,37 @@
+.launch-warning {
+  background: #332200;
+  border: 1px solid #665500;
+  border-left: 4px solid #ffaa00;
+  border-radius: 4px;
+  padding: 12px 16px;
+  margin: 12px 0;
+}
+
+.launch-warning strong {
+  color: #ffaa00;
+  display: block;
+  margin-bottom: 6px;
+  font-size: 1.05em;
+}
+
+.launch-warning p {
+  margin: 6px 0;
+}
+
+.launch-warning .launch-hint {
+  font-size: 0.9em;
+  opacity: 0.8;
+}
+
+.launch-cmd {
+  background: #1a1a1a;
+  border: 1px solid #444;
+  border-radius: 3px;
+  padding: 8px 12px;
+  margin: 8px 0;
+  font-family: 'Courier New', Courier, monospace;
+  font-size: 0.95em;
+  color: #4fc3f7;
+  word-break: break-all;
+  user-select: all;
+}
