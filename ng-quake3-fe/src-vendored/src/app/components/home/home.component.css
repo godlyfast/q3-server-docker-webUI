@@ -3,3 +3,17 @@
   padding-bottom: 50px;
   padding-top: 10px;
 }
+
+.mode-card {
+  margin-bottom: 20px;
+}
+
+.mode-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.mode-label {
+  font-size: 16px;
+}

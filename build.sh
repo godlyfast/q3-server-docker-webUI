@@ -59,6 +59,17 @@ cp "$Q3DIR"/zzz_*.pk3 "$Q3DIR"/wtf-*.pk3 "$SCRIPT_DIR/build/" 2>/dev/null || tru
 
 echo "Staged $(ls "$SCRIPT_DIR/build/"*.pk3 2>/dev/null | wc -l) server pk3 files"
 
+# CPMA pk3 for Docker build context (Dockerfile COPYs it into image)
+cp "$Q3ROOT/cpma"/z-cpma-*.pk3 "$SCRIPT_DIR/" 2>/dev/null || true
+echo "Staged CPMA pk3 for Docker build: $(ls "$SCRIPT_DIR"/z-cpma-*.pk3 2>/dev/null)"
+
+# CPMA server files (pk3 + cfg-maps for host bind mount)
+CPMA_STAGE="$SCRIPT_DIR/build/cpma"
+mkdir -p "$CPMA_STAGE/cfg-maps"
+cp "$Q3ROOT/cpma"/z-cpma-*.pk3 "$CPMA_STAGE/" 2>/dev/null || true
+cp "$SCRIPT_DIR/cpma-cfg-maps/"*.txt "$CPMA_STAGE/cfg-maps/" 2>/dev/null || true
+echo "Staged CPMA server files: pk3 + $(ls "$CPMA_STAGE/cfg-maps/"*.txt 2>/dev/null | wc -l) map list(s)"
+
 # Frontend download pk3s (complete Q3 experience for clients)
 DLDIR="$SCRIPT_DIR/ng-quake3-fe/downloads"
 mkdir -p "$DLDIR" "$DLDIR/cpma"
@@ -90,12 +101,11 @@ echo "--- Building all-in-one download bundle ---"
 ALL_IN_ONE="$DLDIR/q3-all-in-one.zip"
 rm -f "$ALL_IN_ONE"
 BUNDLE_DIR="$(mktemp -d -p "${TMPDIR:-$HOME/.cache/podman-tmp}")"
-mkdir -p "$BUNDLE_DIR/baseq3" "$BUNDLE_DIR/cpma" "$BUNDLE_DIR/osp"
+mkdir -p "$BUNDLE_DIR/baseq3" "$BUNDLE_DIR/cpma"
 cp "$DLDIR"/*.pk3 "$BUNDLE_DIR/baseq3/"
 cp "$DLDIR"/autoexec.cfg "$BUNDLE_DIR/baseq3/" 2>/dev/null || true
 cp "$DLDIR"/cpma/*.pk3 "$BUNDLE_DIR/cpma/" 2>/dev/null || true
-cp "$DLDIR"/osp/*.pk3 "$BUNDLE_DIR/osp/" 2>/dev/null || true
-(cd "$BUNDLE_DIR" && zip -0 -r "$ALL_IN_ONE" baseq3/ cpma/ osp/)
+(cd "$BUNDLE_DIR" && zip -0 -r "$ALL_IN_ONE" baseq3/ cpma/)
 rm -rf "$BUNDLE_DIR"
 echo "Created $(du -h "$ALL_IN_ONE" | cut -f1) all-in-one bundle"
 
@@ -133,6 +143,11 @@ if $SYNC_DATA; then
 
     echo "Syncing server pk3s..."
     rsync -avz --progress -e "$RSYNC_RSH" "$SCRIPT_DIR/build/"*.pk3 "tim@$HOST:$HOST_DATA/server/baseq3/"
+
+    echo ""
+    echo "Syncing CPMA server files (pk3 + cfg-maps)..."
+    "${SSH_CMD[@]}" "mkdir -p '$HOST_DATA/server/cpma/cfg-maps'"
+    rsync -avz --progress -e "$RSYNC_RSH" "$CPMA_STAGE/" "tim@$HOST:$HOST_DATA/server/cpma/"
 
     echo ""
     echo "Syncing download files..."

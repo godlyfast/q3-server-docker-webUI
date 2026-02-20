@@ -7,11 +7,11 @@
         <mat-card-header>
           <div mat-card-avatar class="example-header-image"></div>
           <mat-card-title>Quick Start &mdash; All-in-One Bundle</mat-card-title>
-          <mat-card-subtitle>Complete Q3 experience: game data + CPM maps + CPMA + OSP + 4K textures + HD weapons + models + sounds (~6.3 GB)</mat-card-subtitle>
+          <mat-card-subtitle>Complete Q3 experience: game data + CPMA + CPM maps + 4K textures + HD weapons + models + sounds (~6.3 GB)</mat-card-subtitle>
         </mat-card-header>
         <mat-card-content>
-          <p>Everything you need in a single download. Extract the <kbd>baseq3/</kbd>,
-            <kbd>cpma/</kbd>, and <kbd>osp/</kbd> folders into your ioquake3 directory, launch, and connect.
+          <p>Everything you need in a single download. Extract the <kbd>baseq3/</kbd>
+            and <kbd>cpma/</kbd> folders into your ioquake3 directory, launch, and connect.
             Grab the engine for your platform below.</p>
           <p style="text-align:center; font-size:1.1em">
             <kbd>/connect dczp.jsninjas.net:27960</kbd>
@@ -114,7 +114,7 @@
     </div>
   </div>
 
-  <!-- Row 2: Linux/Deck + Android + OSP mod -->
+  <!-- Row 2: Linux/Deck + Android + CPMA mod -->
   <div class="row" style="margin-top: 20px">
     <div class="col-lg-4">
       <mat-card class="example-card">
@@ -177,24 +177,25 @@
       <mat-card class="example-card">
         <mat-card-header>
           <div mat-card-avatar class="example-header-image"></div>
-          <mat-card-title>OSP Mod</mat-card-title>
-          <mat-card-subtitle>Optional &mdash; competitive mod</mat-card-subtitle>
+          <mat-card-title>CPMA Mod</mat-card-title>
+          <mat-card-subtitle>Required &mdash; server runs CPMA</mat-card-subtitle>
         </mat-card-header>
-        <img mat-card-image src="./assets/osp.jpg" alt="OSP Mod">
+        <img mat-card-image src="./assets/quake-3-icon.png" alt="CPMA">
         <mat-card-content>
           <p>
-            OSP (Orange Smoothie Productions) adds competitive match features
-            and Challenge Pro Mode (CPM) for faster gameplay.
-            Only needed if connecting to a server running the OSP mod.
+            This server runs CPMA (Challenge ProMode Arena). You need the CPMA pk3
+            to connect. Included in the all-in-one bundle above.
           </p>
           <ol>
-            <li>Download <a href="http://osp.dget.cc/orangesmoothie/downloads/osp-Quake3-1.03a_full.zip">OSP 1.03a</a> (54 MB)</li>
-            <li>Extract the <kbd>osp/</kbd> folder next to your <kbd>baseq3/</kbd> folder</li>
+            <li>Download <a href="/downloads/cpma/z-cpma-pak153.pk3"><strong>CPMA 1.53</strong></a> (16 MB)</li>
+            <li>Place in a <kbd>cpma/</kbd> folder next to your <kbd>baseq3/</kbd> folder</li>
+            <li>Launch with <kbd>+set fs_game cpma</kbd></li>
           </ol>
+          <p><small>Source: <a href="https://playmorepromode.com/downloads" target="_blank" rel="noopener">playmorepromode.com</a></small></p>
         </mat-card-content>
         <mat-card-actions>
-          <a mat-raised-button href="http://osp.dget.cc/orangesmoothie/downloads/osp-Quake3-1.03a_full.zip" target="_blank" rel="noopener">
-            Download OSP 1.03a
+          <a mat-raised-button color="primary" href="/downloads/cpma/z-cpma-pak153.pk3">
+            CPMA 1.53 (16 MB)
           </a>
         </mat-card-actions>
       </mat-card>
@@ -386,9 +387,9 @@
     </div>
   </div>
 
-  <!-- Row 5: 4K Neural Textures + CPMA Mod + CPM Maps -->
+  <!-- Row 5: 4K Neural Textures + CPM Maps -->
   <div class="row" style="margin-top: 20px">
-    <div class="col-lg-4">
+    <div class="col-lg-6">
       <mat-card class="example-card">
         <mat-card-header>
           <div mat-card-avatar class="example-header-image"></div>
@@ -419,35 +420,7 @@
       </mat-card>
     </div>
 
-    <div class="col-lg-4">
-      <mat-card class="example-card">
-        <mat-card-header>
-          <div mat-card-avatar class="example-header-image"></div>
-          <mat-card-title>CPMA Mod</mat-card-title>
-          <mat-card-subtitle>Optional &mdash; Challenge ProMode Arena</mat-card-subtitle>
-        </mat-card-header>
-        <img mat-card-image src="./assets/quake-3-icon.png" alt="CPMA">
-        <mat-card-content>
-          <p>Challenge ProMode Arena adds advanced movement physics (air control, strafe jumping),
-            competitive game modes, and a superior HUD.
-            The definitive competitive Q3 experience.</p>
-          <ol>
-            <li>Download <a href="/downloads/cpma/z-cpma-pak153.pk3"><strong>CPMA 1.53</strong></a> (16 MB)</li>
-            <li>Place in a <kbd>cpma/</kbd> folder next to <kbd>baseq3/</kbd></li>
-            <li>Launch with <kbd>+set fs_game cpma</kbd></li>
-          </ol>
-          <p><em>Included in the all-in-one bundle.</em></p>
-          <p><small>Source: <a href="https://playmorepromode.com/downloads" target="_blank" rel="noopener">playmorepromode.com</a></small></p>
-        </mat-card-content>
-        <mat-card-actions>
-          <a mat-raised-button color="accent" href="/downloads/cpma/z-cpma-pak153.pk3">
-            CPMA 1.53 (16 MB)
-          </a>
-        </mat-card-actions>
-      </mat-card>
-    </div>
-
-    <div class="col-lg-4">
+    <div class="col-lg-6">
       <mat-card class="example-card">
         <mat-card-header>
           <div mat-card-avatar class="example-header-image"></div>

@@ -1,4 +1,20 @@
 
+<div class="container" *ngIf="serverMode">
+  <mat-card class="mode-card">
+    <mat-card-content>
+      <div class="mode-row">
+        <span class="mode-label">Server Mode: <strong>{{modeLabel}}</strong></span>
+        <button mat-raised-button color="primary"
+                (click)="switchMode()"
+                [disabled]="modeLoading">
+          <span *ngIf="!modeLoading">Switch to {{otherModeLabel}}</span>
+          <span *ngIf="modeLoading">Server restarting...</span>
+        </button>
+      </div>
+    </mat-card-content>
+  </mat-card>
+</div>
+
 <div *ngIf="rconData">
   <div class="container">
     <div class="home-map-name" style="padding-bottom: 30px">

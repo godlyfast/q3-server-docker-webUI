@@ -3,7 +3,7 @@ import { HttpClient } from '@angular/common/http';
 import { RconStatus } from '../interfaces/status.rcon';
 import { RconServerInfo } from '../interfaces/serverinfo.rcon';
 
-import { merge } from 'rxjs';
+import { merge, Observable } from 'rxjs';
 import { Socket } from 'ngx-socket-io';
 
 @Injectable({
@@ -33,6 +33,14 @@ export class RconService {
 
   public setVar(q3Var: string, value?: string) {
       this.httpClient.post<string>(`${this.apiURL}/setVar`, {q3Var, value}).subscribe();
+  }
+
+  public getServerMode(): Observable<{mode: string}> {
+    return this.httpClient.get<{mode: string}>('/api/server/mode');
+  }
+
+  public setServerMode(mode: string): Observable<{mode: string, restarting: boolean}> {
+    return this.httpClient.post<{mode: string, restarting: boolean}>('/api/server/mode', {mode});
   }
 }
 

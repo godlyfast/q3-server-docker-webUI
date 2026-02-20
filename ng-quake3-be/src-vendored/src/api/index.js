@@ -7,6 +7,7 @@
 import errors from './errors';
 import rconRoutes from './rcon'
 import mapsRoutes from './maps'
+import serverRoutes from './server'
 
 import expressHealthCheck from 'express-healthcheck'
 
@@ -16,6 +17,7 @@ export default function(app) {
 
   app.use('/api/rcon', rconRoutes);
   app.use('/api/maps', mapsRoutes);
+  app.use('/api/server', serverRoutes);
 
   app.use('/healthcheck', expressHealthCheck());
 

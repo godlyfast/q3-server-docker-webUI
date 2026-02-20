@@ -10,31 +10,33 @@ RUN \
   echo "# COMPILE IOQUAKE3 #############################################" && \
   echo "y" | sh /tmp/build/compile.sh
 
-# Install OSP mod
-RUN \
-  wget http://osp.dget.cc/orangesmoothie/downloads/osp-Quake3-1.03a_full.zip && \
-  unzip osp-Quake3-1.03a_full.zip -d /root/ioquake3 && \
-  rm osp-Quake3-1.03a_full.zip
-
 FROM alpine:latest
 RUN adduser ioq3srv -D
 
-# Copy ioquake3 + OSP from builder
+# Copy ioquake3 from builder
 COPY --from=builder /root/ioquake3 /home/ioq3srv/ioquake3
 
 # baseq3 dir populated via host bind mount (pk3s synced by build.sh)
 RUN mkdir -p /home/ioq3srv/ioquake3/baseq3
 
-# Copy server.cfg template (RCON password substituted at startup)
-COPY ./server.cfg /home/ioq3srv/ioquake3/osp/server.cfg
+# Install CPMA mod (pk3 staged by build.sh from Steam install)
+RUN mkdir -p /home/ioq3srv/ioquake3/cpma
+COPY z-cpma-pak153.pk3 /home/ioq3srv/ioquake3/cpma/
 
-# Copy entrypoint (substitutes env vars into server.cfg, then execs ioq3ded)
+# Copy CPMA server.cfg template (RCON password substituted at startup)
+COPY ./server.cfg /home/ioq3srv/ioquake3/cpma/server.cfg
+
+# Copy vanilla server.cfg to fs_homepath (not covered by baseq3 bind mount)
+RUN mkdir -p /home/ioq3srv/.q3a/baseq3
+COPY ./server-baseq3.cfg /home/ioq3srv/.q3a/baseq3/server.cfg
+
+# Copy entrypoint (reads mode from /shared, substitutes env vars, execs ioq3ded)
 COPY ./docker-entrypoint.sh /usr/local/bin/docker-entrypoint.sh
 
 # Fix ownership so ioq3srv can write logs/configs
-RUN chown -R ioq3srv:ioq3srv /home/ioq3srv/ioquake3
+RUN chown -R ioq3srv:ioq3srv /home/ioq3srv/ioquake3 /home/ioq3srv/.q3a
 
 USER ioq3srv
 EXPOSE 27960/udp
 ENTRYPOINT ["docker-entrypoint.sh"]
-CMD ["+set", "fs_game", "osp", "+exec", "server.cfg"]
+CMD []

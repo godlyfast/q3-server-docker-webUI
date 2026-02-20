@@ -1,0 +1,201 @@
+// CENDAS Q3 Server - FFA Map Rotation
+// Format: mapname  min_players  max_players
+// CPMA picks maps where current players fall within [min, max]
+
+// === Stock Q3 Maps ===
+// Tourney (small 1v1 arenas)
+q3tourney1     0  4
+q3tourney2     0  6
+q3tourney3     0  4
+q3tourney4     0  6
+q3tourney5     0  4
+q3tourney6     0  6
+
+// Small DM
+q3dm1          0  6
+q3dm2          0  8
+q3dm3          0  8
+q3dm4          2  8
+q3dm5          2  8
+q3dm8          2  8
+q3dm9          0  6
+q3dm10         0  6
+q3dm14         2  8
+q3dm15         2  8
+q3dm16         2  8
+q3dm18         0  6
+q3dm19         2  8
+
+// Medium-Large DM
+q3dm6          2  12
+q3dm7          4  16
+q3dm11         2  12
+q3dm12         2  12
+q3dm13         2  12
+q3dm17         4  16
+
+// === Id Pro Maps ===
+pro-q3dm6      2  12
+pro-q3dm13     2  12
+pro-q3tourney2 0  6
+pro-q3tourney4 0  6
+
+// === OSP Maps ===
+ospdm1         0  8
+ospdm2         0  8
+ospdm3         0  8
+ospdm4         2  8
+ospdm5         2  8
+ospdm6         2  10
+ospdm7         2  8
+ospdm8         2  10
+ospdm9         0  6
+ospdm10        2  8
+ospdm11        2  10
+ospdm12        2  10
+
+// === CPM Competition Maps ===
+cpm1a          0  4
+cpm2           0  6
+cpm3           0  6
+cpm3a          0  6
+cpm4           0  4
+cpm4a          0  4
+cpm5           0  6
+cpm6           0  6
+cpm7           0  6
+cpm8           0  6
+cpm9           0  6
+cpm10          0  6
+cpm11          0  6
+cpm11a         0  6
+cpm12          0  6
+cpm13          0  6
+cpm14          0  6
+cpm15          0  8
+cpm16          0  6
+cpm17          0  6
+cpm18          0  6
+cpm18r         0  6
+cpm19          0  6
+cpm20          0  6
+cpm21          0  6
+cpm22          0  8
+cpm23          0  6
+cpm24          0  8
+cpm25          0  6
+cpm26          2  10
+cpm27          0  6
+cpm28          0  6
+cpm29          0  6
+cpma3          0  6
+
+// === LvL Community Maps (4.45-4.85 rated) ===
+rustgrad           2  10
+q3gwdm1            2  8
+trespass           2  10
+phantq3dm3_rev     2  8
+hydra              2  10
+phantq3dm6_mc      2  8
+solitude           2  8
+bst3dm1            2  8
+pukka3tourney2     0  6
+phantq3dm4         2  8
+akutadm1           2  8
+map-katdm3         2  8
+map-13vast         2  10
+zl3tourney1        0  4
+map-wintergames    2  10
+zih_roof           2  8
+shad3dm2           2  8
+map-13dream        2  8
+revenga            2  8
+
+// === Popular Community Maps - Batch 1 ===
+ztn3dm1            2  10
+lun3dm1            2  8
+runtfest           2  10
+japandm            2  10
+japanctf           4  16
+lae3dm1            2  8
+pom_bots           2  8
+mvdm01             2  8
+overkill           2  10
+fr3dm1             2  8
+lloydmdm2          2  8
+t8dm5              2  8
+simetrik           2  8
+auh3dm1            2  8
+estatica           2  10
+lun3dm5            2  8
+nor3ctf1           4  16
+illdm2             2  8
+spikectf3          4  16
+simpsons_q3        2  10
+yan_test           2  8
+backrooms_arena    2  8
+
+// === Popular Community Maps - Batch 2 ===
+smo1v1             0  4
+reqapartament      2  8
+rockshellwill      2  8
+13night            2  8
+amon3tourney02     0  6
+acid3dm11          2  8
+redwar             2  10
+rv3sfi1            2  8
+tsh3dm2_v2         2  8
+mxl_school         2  10
+oxodm1             2  8
+exhumed            2  8
+shivaportal        2  8
+acid3dm12          2  8
+rv3dm3             2  8
+atomized           2  8
+oildm1             2  8
+quake3stuff        2  8
+auh3dm2            2  8
+bal3dm2            2  8
+d3xf1              2  8
+devdm3             2  8
+fff                2  8
+ik3dm1             2  8
+
+// === LvL Pack Maps ===
+lun3dm2            2  8
+natedm2            2  8
+mrcq3t3            0  4
+shortcircuit       2  8
+tig_den            0  6
+distonic_small     0  6
+htourney1          0  4
+klhights           2  8
+unitooldm3a        2  8
+mrcq3t2            0  4
+nedmaj             2  8
+
+// === PlanetQuake Pack ===
+plutonians         2  8
+
+// === Q3 25th Anniversary Pack ===
+caustic            2  8
+jam3dm3_25         2  8
+13castle           2  10
+ori_apt            2  8
+q325_deck          2  10
+q3ctfchnu01        4  16
+quadctf            4  16
+spikedm1c          2  8
+spikedm9           2  8
+tsh3dm2            2  8
+
+// === Threewave CTF Pack ===
+q3wctf1            4  16
+q3wctf2            4  16
+q3wctf3            4  16
+
+// === Stock CTF Maps ===
+q3ctf1             4  16
+q3ctf2             4  16
+q3ctf3             4  16
+q3ctf4             4  16

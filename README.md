@@ -13,14 +13,15 @@ Quake 3 Arena dedicated server with a web-based admin dashboard. Forked from [ka
 Workstation (build machine)              Target Host (192.168.55.100)
   Podman build + push ──────────────────► registry:5000
   rsync game data ──────────────────────► /home/tim/q3-data/
-                                          ├── server/baseq3/    → q3-server container (:ro)
-                                          ├── downloads/        → q3-frontend container (:ro)
-                                          └── downloads/        → q3-downloads container (:ro)
+                                          ├── server/baseq3/       → q3-server container (:ro)
+                                          ├── server/cpma/cfg-maps → q3-server container (:ro)
+                                          ├── downloads/           → q3-frontend container (:ro)
+                                          └── downloads/           → q3-downloads container (:ro)
 ```
 
 | Service | Image | Port | Description |
 |---------|-------|------|-------------|
-| `quake3` | `q3-server` (~135 MB) | 27960/udp | ioquake3 dedicated server + OSP mod |
+| `quake3` | `q3-server` (~135 MB) | 27960/udp | ioquake3 dedicated server + CPMA mod |
 | `ng-quake3-be` | `q3-backend` (~190 MB) | 9009 (internal) | Node.js REST API + Socket.io RCON bridge |
 | `ng-quake3-fe` | `q3-frontend` (~55 MB) | 8080/tcp | Angular web UI + LAN downloads (has RCON — LAN only!) |
 | `q3-downloads` | `nginx:1.24-alpine` | 41960/tcp | Static pk3 file server for `sv_dlURL` (internet-safe) |
@@ -36,7 +37,6 @@ Images contain only code and config (~380 MB total). Game data (~15 GB) lives on
 │   ├── *.pk3              # Individual map/texture pk3s
 │   ├── baseq3 → .         # Symlink for sv_dlURL path resolution
 │   ├── cpma/              # CPMA mod pk3
-│   ├── osp/               # 5 OSP mod pk3s
 │   ├── q3-all-in-one.zip  # Complete bundle (~6.3 GB)
 │   └── autoexec.cfg       # Client config (hunkMegs 1024, autoswitch off, zoom, OpenGL2)
 └── downloads-nginx.conf   # nginx config for q3-downloads container (port 41960)
@@ -84,7 +84,7 @@ vim server.cfg
 
 ### Image Build (default)
 1. Stages pk3 files from Steam Q3 installation into `build/` and `ng-quake3-fe/downloads/` (local staging only)
-2. Builds all-in-one zip (`q3-all-in-one.zip`) with `baseq3/` (pk3s + autoexec.cfg), `cpma/`, and `osp/` directories
+2. Builds all-in-one zip (`q3-all-in-one.zip`) with `baseq3/` (pk3s + autoexec.cfg) and `cpma/` directories
 3. Builds 3 lean Docker images (no game data baked in — just compiled binaries + configs)
 4. Pushes to the specified registry
 
@@ -121,8 +121,7 @@ All files served by nginx at `/downloads/` with `Content-Disposition: attachment
 | Bug fixes/HUD | TUP + HQQ | ~29 MB |
 | QL content | QL Player Models + FX Replacer | ~200 MB |
 | CPMA mod | z-cpma-pak153.pk3 (in `cpma/` subdir) | ~16 MB |
-| OSP mod | 5 pk3s in `osp/` (zz-osp-pak0 through zz-osp-server3a) | ~7 MB |
-| **All-in-one zip** | **q3-all-in-one.zip** (baseq3/ + cpma/ + osp/) | **~6.3 GB** |
+| **All-in-one zip** | **q3-all-in-one.zip** (baseq3/ + cpma/) | **~6.3 GB** |
 
 ## Download Page
 
@@ -130,10 +129,10 @@ The web UI at `/download` provides a complete setup page for LAN players with 6 
 
 1. **Quick Start** — All-in-one bundle (6.3 GB) with everything included
 2. **Game Data + Windows + macOS** — pak0.pk3 + ioquake3 engine downloads
-3. **Linux/Steam Deck + Android + OSP** — platform engines + competitive mod
+3. **Linux/Steam Deck + Android + CPMA** — platform engines + required mod
 4. **HD Textures + HD Weapons + QC Sounds** — visual and audio enhancements
 5. **Neural Upscale + Bug Fixes + QL Models** — AI upscaled textures + patches
-6. **4K Neural Textures + CPMA Mod + CPM Maps** — ultimate quality + competitive mode
+6. **4K Neural Textures + CPM Maps** — ultimate quality + competitive maps
 
 All enhancement pk3s are self-hosted (no external ModDB dependency). Individual files can be downloaded separately or grab the all-in-one zip for the complete experience.
 
@@ -177,20 +176,21 @@ The web UI at `/map` shows all available maps as cards with screenshots. Click a
 4. Run `./build.sh --sync-data` (syncs pk3s to host + rebuilds backend/frontend for updated map list)
 5. Redeploy via Portainer
 
-Total maps: **135** in web UI (29 stock + 4 id pro + 12 OSP + 90 community). CPM maps are pk3s on server but not in the map switcher.
+Total maps: **135** in web UI (29 stock + 4 id pro + 12 OSP + 90 community). CPM maps (38) are pk3s on the server and in the CPMA map rotation but not in the web map switcher.
 
 ## Server Config
 
-`server.cfg` is baked into the game server image at `/home/ioq3srv/ioquake3/osp/server.cfg`. The `__RCON_PASSWORD__` placeholder is substituted by `docker-entrypoint.sh` at container startup from the `RCON_PASSWORD` environment variable (no rebuild needed to change the password).
+`server.cfg` is baked into the game server image at `/home/ioq3srv/ioquake3/cpma/server.cfg`. The `__RCON_PASSWORD__` placeholder is substituted by `docker-entrypoint.sh` at container startup from the `RCON_PASSWORD` environment variable (no rebuild needed to change the password).
 
 Key settings:
 
-- **Game type**: FFA (g_gametype 0)
+- **Game type**: FFA (mode_start FFA)
+- **Gameplay**: VQ3 (vanilla physics — compatible with all clients)
 - **sv_pure**: 0 (required for hires textures — clients don't need matching pk3s)
 - **sv_dlURL**: `http://dczp.jsninjas.net:41960` (HTTP redirect download via q3-downloads container)
 - **Bot fill**: 4 minimum players
-- **Mod**: OSP (Orange Smoothie Productions)
-- **Map rotation**: 10-map cycle via `vstr` chain
+- **Mod**: CPMA 1.53 (Challenge ProMode Arena)
+- **Map rotation**: Automatic via `map_rotate 1` + `cfg-maps/ffamaps.txt` (170+ maps with player-count bounds)
 
 The `sv_dlURL` setting enables fast HTTP map downloads. When a client joins and needs pk3 files, ioquake3 fetches them from the q3-downloads container at port 41960 (instead of the slow ~30 KB/s UDP game protocol). The `baseq3 → .` symlink in the downloads directory resolves the `/baseq3/{file}.pk3` URL path.
 
@@ -205,6 +205,7 @@ services:
   quake3:
     volumes:
       - /home/tim/q3-data/server/baseq3:/home/ioq3srv/ioquake3/baseq3:ro
+      - /home/tim/q3-data/server/cpma/cfg-maps:/home/ioq3srv/ioquake3/cpma/cfg-maps:ro
 
   ng-quake3-fe:
     volumes:
@@ -308,4 +309,4 @@ The `ioquake3-launch.sh` wrapper (included in the Q3 directory) sets `fs_basepat
 - Backend: [kalik1/q3-server-docker-rest-api](https://github.com/kalik1/q3-server-docker-rest-api)
 - Frontend: [kalik1/q3-server-docker-webUI-angular](https://github.com/kalik1/q3-server-docker-webUI-angular)
 - Game engine: [ioquake3](https://github.com/ioquake/ioq3)
-- Mod: OSP (Orange Smoothie Productions) — original site defunct
+- Mod: [CPMA](https://playmorepromode.com/) (Challenge ProMode Arena)
