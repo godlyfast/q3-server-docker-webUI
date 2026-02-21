@@ -16,13 +16,14 @@ Workstation (build machine)              Target Host (192.168.55.100)
                                           ├── server/baseq3/         → q3-server container (:ro)
                                           ├── server/cpma/cfg-maps   → q3-server container (:ro)
                                           ├── server/excessiveplus/  → q3-server container (:ro)
+                                          ├── server/osp/            → q3-server container (:ro)
                                           ├── downloads/             → q3-frontend container (:ro)
                                           └── downloads/             → q3-downloads container (:ro)
 ```
 
 | Service | Image | Port | Description |
 |---------|-------|------|-------------|
-| `quake3` | `q3-server` (~135 MB) | 27960/udp | ioquake3 dedicated server + CPMA + Excessive Plus mods |
+| `quake3` | `q3-server` (~135 MB) | 27960/udp | ioquake3 dedicated server + CPMA + E+ + OSP mods |
 | `ng-quake3-be` | `q3-backend` (~190 MB) | 9009 (internal) | Node.js REST API + Socket.io RCON bridge |
 | `ng-quake3-fe` | `q3-frontend` (~55 MB) | 8080/tcp | Angular web UI + LAN downloads (has RCON — LAN only!) |
 | `q3-downloads` | `nginx:1.24-alpine` | 41960/tcp | Static pk3 file server for `sv_dlURL` (internet-safe) |
@@ -36,11 +37,13 @@ Images contain only code and config (~380 MB total). Game data (~15 GB) lives on
 ├── server/baseq3/         # 139 pk3s (game server reads these)
 ├── server/cpma/           # CPMA pk3 + cfg-maps/
 ├── server/excessiveplus/  # Excessive Plus pk3s (4 cumulative files)
+├── server/osp/            # OSP 1.03a + OSP2-BE pk3s (6 files)
 ├── downloads/             # 160+ pk3s + mods + all-in-one zip + config
 │   ├── *.pk3              # Individual map/texture pk3s
 │   ├── baseq3 → .         # Symlink for sv_dlURL path resolution
 │   ├── cpma/              # CPMA mod pk3
 │   ├── excessiveplus/     # Excessive Plus mod pk3s
+│   ├── osp/               # OSP mod pk3s (1.03a + OSP2-BE)
 │   ├── q3-all-in-one.zip  # Complete bundle (~6.3 GB)
 │   └── autoexec.cfg       # Client config (hunkMegs 1024, autoswitch off, zoom, OpenGL2)
 └── downloads-nginx.conf   # nginx config for q3-downloads container (port 41960)
@@ -88,7 +91,7 @@ vim server.cfg
 
 ### Image Build (default)
 1. Stages pk3 files from Steam Q3 installation into `build/` and `ng-quake3-fe/downloads/` (local staging only)
-2. Builds all-in-one zip (`q3-all-in-one.zip`) with `baseq3/`, `cpma/`, and `excessiveplus/` directories
+2. Builds all-in-one zip (`q3-all-in-one.zip`) with `baseq3/`, `cpma/`, `excessiveplus/`, and `osp/` directories
 3. Builds 3 lean Docker images (no game data baked in — just compiled binaries + configs)
 4. Pushes to the specified registry
 
@@ -126,7 +129,8 @@ All files served by nginx at `/downloads/` with `Content-Disposition: attachment
 | QL content | QL Player Models + FX Replacer | ~200 MB |
 | CPMA mod | z-cpma-pak153.pk3 (in `cpma/` subdir) | ~16 MB |
 | Excessive Plus mod | 4 cumulative pk3s (in `excessiveplus/` subdir) | ~16 MB |
-| **All-in-one zip** | **q3-all-in-one.zip** (baseq3/ + cpma/ + excessiveplus/) | **~6.3 GB** |
+| OSP mod | OSP 1.03a + OSP2-BE pk3s (in `osp/` subdir) | ~57 MB |
+| **All-in-one zip** | **q3-all-in-one.zip** (baseq3/ + cpma/ + excessiveplus/ + osp/) | **~6.3 GB** |
 
 ## Download Page
 
@@ -185,13 +189,14 @@ Total maps: **135** in web UI (29 stock + 4 id pro + 12 OSP + 90 community). CPM
 
 ## Server Modes
 
-The web UI at http://192.168.55.100:8080 provides a 3-button mode selector to switch between server modes. The server restarts on mode change (Docker `restart: unless-stopped` policy).
+The web UI at http://192.168.55.100:8080 provides a 4-button mode selector to switch between server modes. The server restarts on mode change (Docker `restart: unless-stopped` policy).
 
 | Mode | Config File | Game Type | Map Rotation | Bot Fill |
 |------|-------------|-----------|--------------|----------|
 | **Vanilla Q3** (default) | `server-baseq3.cfg` | FFA | vstr chain (25 maps) | 4 |
 | **CPMA** | `server.cfg` | FFA (VQ3 physics) | cfg-maps/ffamaps.txt (170+ maps) | 4 |
 | **Excessive Plus** | `server-excessiveplus.cfg` | FreezeTag (gametype 8) | vstr chain (12 team maps) | 6 |
+| **OSP** | `server-osp.cfg` | FFA | vstr chain (25 maps) | 4 |
 
 **How it works**: Backend writes the mode to `/shared/server-mode` (Docker named volume shared between game server and backend), sends RCON `quit`, and Docker restarts the container. `docker-entrypoint.sh` reads the mode and starts `ioq3ded` with the appropriate `fs_game` and config.
 
@@ -221,6 +226,7 @@ services:
       - /home/tim/q3-data/server/baseq3:/home/ioq3srv/ioquake3/baseq3:ro
       - /home/tim/q3-data/server/cpma/cfg-maps:/home/ioq3srv/ioquake3/cpma/cfg-maps:ro
       - /home/tim/q3-data/server/excessiveplus:/home/ioq3srv/ioquake3/excessiveplus:ro
+      - /home/tim/q3-data/server/osp:/home/ioq3srv/ioquake3/osp:ro
 
   ng-quake3-fe:
     volumes:
@@ -326,3 +332,5 @@ The `ioquake3-launch.sh` wrapper (included in the Q3 directory) sets `fs_basepat
 - Game engine: [ioquake3](https://github.com/ioquake/ioq3)
 - Mod: [CPMA](https://playmorepromode.com/) (Challenge ProMode Arena)
 - Mod: [Excessive Plus](https://www.excessiveplus.net/) v2.3 (FreezeTag + overpowered weapons)
+- Mod: [OSP](http://www.intq3.com/osp/) 1.03a (Orange Smoothie Productions — competitive mod)
+- Mod: [OSP2-BE](https://github.com/scoqx/OSP2-BE) v1.01d (OSP client enhancement — SuperHUD, player outlines)

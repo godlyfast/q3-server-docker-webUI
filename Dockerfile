@@ -30,6 +30,10 @@ COPY ./server.cfg /home/ioq3srv/ioquake3/cpma/server.cfg
 RUN mkdir -p /home/ioq3srv/ioquake3/excessiveplus
 COPY excessiveplus-pk3s/ /home/ioq3srv/ioquake3/excessiveplus/
 
+# Install OSP mod (1.03a server + OSP2-BE client enhancement, see docs/q3-server.md)
+RUN mkdir -p /home/ioq3srv/ioquake3/osp
+COPY osp-mod/ /home/ioq3srv/ioquake3/osp/
+
 # Copy vanilla server.cfg to fs_homepath (not covered by baseq3 bind mount)
 RUN mkdir -p /home/ioq3srv/.q3a/baseq3
 COPY ./server-baseq3.cfg /home/ioq3srv/.q3a/baseq3/server.cfg
@@ -37,6 +41,10 @@ COPY ./server-baseq3.cfg /home/ioq3srv/.q3a/baseq3/server.cfg
 # Copy E+ server.cfg to fs_homepath (not covered by excessiveplus bind mount)
 RUN mkdir -p /home/ioq3srv/.q3a/excessiveplus
 COPY ./server-excessiveplus.cfg /home/ioq3srv/.q3a/excessiveplus/server.cfg
+
+# Copy OSP server.cfg to fs_homepath (not covered by osp bind mount)
+RUN mkdir -p /home/ioq3srv/.q3a/osp
+COPY ./server-osp.cfg /home/ioq3srv/.q3a/osp/server.cfg
 
 # Copy entrypoint (reads mode from /shared, substitutes env vars, execs ioq3ded)
 COPY ./docker-entrypoint.sh /usr/local/bin/docker-entrypoint.sh

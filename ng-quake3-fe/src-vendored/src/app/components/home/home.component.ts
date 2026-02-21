@@ -17,6 +17,7 @@ export class HomeComponent implements OnInit {
     { value: 'baseq3', label: 'Vanilla Q3' },
     { value: 'cpma', label: 'CPMA' },
     { value: 'excessiveplus', label: 'Excessive+' },
+    { value: 'osp', label: 'OSP' },
   ];
 
   constructor(private rcon: RconService) { }

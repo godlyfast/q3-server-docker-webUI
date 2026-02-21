@@ -5,6 +5,7 @@
 # Modes:
 #   "cpma"           - CPMA mod with VQ3 gameplay, map rotation via cfg-maps/
 #   "excessiveplus"  - Excessive Plus v2.3 FreezeTag (g_gametype 8)
+#   "osp"            - OSP 1.03a + OSP2-BE FFA (g_gametype 0)
 #   "baseq3"         - Vanilla Q3 FFA with vstr map rotation (default)
 
 MODE_FILE="/shared/server-mode"
@@ -17,6 +18,9 @@ if [ "$MODE" = "cpma" ]; then
 elif [ "$MODE" = "excessiveplus" ]; then
   CFG="/home/ioq3srv/.q3a/excessiveplus/server.cfg"
   GAME_ARGS="+set fs_game excessiveplus +exec server.cfg"
+elif [ "$MODE" = "osp" ]; then
+  CFG="/home/ioq3srv/.q3a/osp/server.cfg"
+  GAME_ARGS="+set fs_game osp +exec server.cfg"
 else
   CFG="/home/ioq3srv/.q3a/baseq3/server.cfg"
   GAME_ARGS="+exec server.cfg"

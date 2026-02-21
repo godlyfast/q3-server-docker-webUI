@@ -4,7 +4,7 @@ import fs from 'fs';
 import Q3RCon from 'quake3-rcon';
 
 const MODE_FILE = '/shared/server-mode';
-const VALID_MODES = ['baseq3', 'cpma', 'excessiveplus'];
+const VALID_MODES = ['baseq3', 'cpma', 'excessiveplus', 'osp'];
 const DEFAULT_MODE = 'baseq3';
 
 const rcon = new Q3RCon({
