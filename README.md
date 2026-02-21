@@ -37,7 +37,7 @@ Images contain only code and config (~380 MB total). Game data (~15 GB) lives on
 ├── server/baseq3/         # 139 pk3s (game server reads these)
 ├── server/cpma/           # CPMA pk3 + cfg-maps/
 ├── server/excessiveplus/  # Excessive Plus pk3s (4 cumulative files)
-├── server/osp/            # OSP 1.03a + OSP2-BE pk3s (6 files)
+├── server/osp/            # OSP 1.03a + OSP2-BE + FPS uncap pk3s (7 files)
 ├── downloads/             # 160+ pk3s + mods + all-in-one zip + config
 │   ├── *.pk3              # Individual map/texture pk3s
 │   ├── baseq3 → .         # Symlink for sv_dlURL path resolution
@@ -129,7 +129,7 @@ All files served by nginx at `/downloads/` with `Content-Disposition: attachment
 | QL content | QL Player Models + FX Replacer | ~200 MB |
 | CPMA mod | z-cpma-pak153.pk3 (in `cpma/` subdir) | ~16 MB |
 | Excessive Plus mod | 4 cumulative pk3s (in `excessiveplus/` subdir) | ~16 MB |
-| OSP mod | OSP 1.03a + OSP2-BE pk3s (in `osp/` subdir) | ~57 MB |
+| OSP mod | OSP 1.03a + OSP2-BE + FPS uncap pk3s (in `osp/` subdir) | ~57 MB |
 | **All-in-one zip** | **q3-all-in-one.zip** (baseq3/ + cpma/ + excessiveplus/ + osp/) | **~6.3 GB** |
 
 ## Download Page
@@ -334,3 +334,4 @@ The `ioquake3-launch.sh` wrapper (included in the Q3 directory) sets `fs_basepat
 - Mod: [Excessive Plus](https://www.excessiveplus.net/) v2.3 (FreezeTag + overpowered weapons)
 - Mod: [OSP](http://www.intq3.com/osp/) 1.03a (Orange Smoothie Productions — competitive mod)
 - Mod: [OSP2-BE](https://github.com/scoqx/OSP2-BE) v1.01d (OSP client enhancement — SuperHUD, player outlines)
+- Mod: [Better Gibs](https://www.moddb.com/mods/better-gibs) v1.2.0 (enhanced gib effects for ioquake3)
