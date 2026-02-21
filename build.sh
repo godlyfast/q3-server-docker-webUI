@@ -70,9 +70,17 @@ cp "$Q3ROOT/cpma"/z-cpma-*.pk3 "$CPMA_STAGE/" 2>/dev/null || true
 cp "$SCRIPT_DIR/cpma-cfg-maps/"*.txt "$CPMA_STAGE/cfg-maps/" 2>/dev/null || true
 echo "Staged CPMA server files: pk3 + $(ls "$CPMA_STAGE/cfg-maps/"*.txt 2>/dev/null | wc -l) map list(s)"
 
+# Excessive Plus pk3s for Docker build context
+# (excessiveplus-pk3s/ must exist in repo root — downloaded manually from ModDB)
+if [ -d "$SCRIPT_DIR/excessiveplus-pk3s" ] && ls "$SCRIPT_DIR/excessiveplus-pk3s/"*.pk3 &>/dev/null; then
+    echo "Found Excessive Plus pk3s for Docker build: $(ls "$SCRIPT_DIR/excessiveplus-pk3s/"*.pk3 | wc -l) files"
+else
+    echo "WARNING: excessiveplus-pk3s/ not found or empty — E+ mode will not work"
+fi
+
 # Frontend download pk3s (complete Q3 experience for clients)
 DLDIR="$SCRIPT_DIR/ng-quake3-fe/downloads"
-mkdir -p "$DLDIR" "$DLDIR/cpma"
+mkdir -p "$DLDIR" "$DLDIR/cpma" "$DLDIR/excessiveplus"
 # Base game paks
 for f in pak{0..8}.pk3 q3wpak1.pk3; do
     [ -f "$Q3DIR/$f" ] && cp "$Q3DIR/$f" "$DLDIR/"
@@ -94,6 +102,8 @@ cp "$Q3DIR"/pak9hdplayers.pk3 "$Q3DIR"/pak9hdobjects.pk3 "$DLDIR/" 2>/dev/null |
 cp "$Q3DIR"/ql-playermodels-ioquake3-ql.pk3 "$Q3DIR"/Xsprites.pk3 "$DLDIR/" 2>/dev/null || true
 # CPMA mod
 cp "$Q3ROOT/cpma"/z-cpma-*.pk3 "$DLDIR/cpma/" 2>/dev/null || true
+# Excessive Plus mod (all 4 cumulative pk3s)
+cp "$SCRIPT_DIR/excessiveplus-pk3s/"*.pk3 "$DLDIR/excessiveplus/" 2>/dev/null || true
 echo "Staged $(find "$DLDIR" -name '*.pk3' | wc -l) download pk3 files"
 
 # Build all-in-one zip (complete Q3 + enhancements + maps + CPMA)
@@ -101,11 +111,12 @@ echo "--- Building all-in-one download bundle ---"
 ALL_IN_ONE="$DLDIR/q3-all-in-one.zip"
 rm -f "$ALL_IN_ONE"
 BUNDLE_DIR="$(mktemp -d -p "${TMPDIR:-$HOME/.cache/podman-tmp}")"
-mkdir -p "$BUNDLE_DIR/baseq3" "$BUNDLE_DIR/cpma"
+mkdir -p "$BUNDLE_DIR/baseq3" "$BUNDLE_DIR/cpma" "$BUNDLE_DIR/excessiveplus"
 cp "$DLDIR"/*.pk3 "$BUNDLE_DIR/baseq3/"
 cp "$DLDIR"/autoexec.cfg "$BUNDLE_DIR/baseq3/" 2>/dev/null || true
 cp "$DLDIR"/cpma/*.pk3 "$BUNDLE_DIR/cpma/" 2>/dev/null || true
-(cd "$BUNDLE_DIR" && zip -0 -r "$ALL_IN_ONE" baseq3/ cpma/)
+cp "$DLDIR"/excessiveplus/*.pk3 "$BUNDLE_DIR/excessiveplus/" 2>/dev/null || true
+(cd "$BUNDLE_DIR" && zip -0 -r "$ALL_IN_ONE" baseq3/ cpma/ excessiveplus/)
 rm -rf "$BUNDLE_DIR"
 echo "Created $(du -h "$ALL_IN_ONE" | cut -f1) all-in-one bundle"
 
@@ -148,6 +159,11 @@ if $SYNC_DATA; then
     echo "Syncing CPMA server files (pk3 + cfg-maps)..."
     "${SSH_CMD[@]}" "mkdir -p '$HOST_DATA/server/cpma/cfg-maps'"
     rsync -avz --progress -e "$RSYNC_RSH" "$CPMA_STAGE/" "tim@$HOST:$HOST_DATA/server/cpma/"
+
+    echo ""
+    echo "Syncing Excessive Plus files..."
+    "${SSH_CMD[@]}" "mkdir -p '$HOST_DATA/server/excessiveplus'"
+    rsync -avz --progress -e "$RSYNC_RSH" "$SCRIPT_DIR/excessiveplus-pk3s/" "tim@$HOST:$HOST_DATA/server/excessiveplus/"
 
     echo ""
     echo "Syncing download files..."

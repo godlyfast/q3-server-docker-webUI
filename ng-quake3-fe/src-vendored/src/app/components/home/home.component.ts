@@ -13,6 +13,12 @@ export class HomeComponent implements OnInit {
   serverMode: string = '';
   modeLoading: boolean = false;
 
+  modes = [
+    { value: 'baseq3', label: 'Vanilla Q3' },
+    { value: 'cpma', label: 'CPMA' },
+    { value: 'excessiveplus', label: 'Excessive+' },
+  ];
+
   constructor(private rcon: RconService) { }
 
   ngOnInit() {
@@ -21,24 +27,15 @@ export class HomeComponent implements OnInit {
   }
 
   get modeLabel(): string {
-    return this.serverMode === 'cpma' ? 'CPMA' : 'Vanilla Q3';
+    const m = this.modes.find(m => m.value === this.serverMode);
+    return m ? m.label : this.serverMode;
   }
 
-  get otherMode(): string {
-    return this.serverMode === 'cpma' ? 'baseq3' : 'cpma';
-  }
-
-  get otherModeLabel(): string {
-    return this.serverMode === 'cpma' ? 'Vanilla Q3' : 'CPMA';
-  }
-
-  switchMode() {
-    const target = this.otherModeLabel;
-    if (!confirm(`Switch to ${target}? Server will restart and all players will be disconnected.`)) {
-      return;
-    }
+  switchTo(mode: {value: string, label: string}) {
+    if (mode.value === this.serverMode) return;
+    if (!confirm(`Switch to ${mode.label}? Server will restart and all players will be disconnected.`)) return;
     this.modeLoading = true;
-    this.rcon.setServerMode(this.otherMode).subscribe(
+    this.rcon.setServerMode(mode.value).subscribe(
       res => {
         this.serverMode = res.mode;
         this.modeLoading = false;

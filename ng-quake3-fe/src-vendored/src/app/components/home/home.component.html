@@ -4,13 +4,17 @@
     <mat-card-content>
       <div class="mode-row">
         <span class="mode-label">Server Mode: <strong>{{modeLabel}}</strong></span>
-        <button mat-raised-button color="primary"
-                (click)="switchMode()"
-                [disabled]="modeLoading">
-          <span *ngIf="!modeLoading">Switch to {{otherModeLabel}}</span>
-          <span *ngIf="modeLoading">Server restarting...</span>
-        </button>
+        <div class="mode-buttons">
+          <button *ngFor="let mode of modes"
+                  mat-raised-button
+                  [color]="mode.value === serverMode ? 'accent' : 'primary'"
+                  (click)="switchTo(mode)"
+                  [disabled]="modeLoading || mode.value === serverMode">
+            {{mode.label}}
+          </button>
+        </div>
       </div>
+      <span *ngIf="modeLoading" class="restarting">Server restarting...</span>
     </mat-card-content>
   </mat-card>
 </div>
