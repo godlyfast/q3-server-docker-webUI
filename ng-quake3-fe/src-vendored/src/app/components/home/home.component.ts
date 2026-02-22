@@ -79,15 +79,33 @@ export class HomeComponent implements OnInit {
     if (mode.value === this.serverMode) return;
     if (!confirm(`Switch to ${mode.label}? Server will restart and all players will be disconnected.`)) return;
     this.modeLoading = true;
+    this.currentGametype = -1;
     this.rcon.setServerMode(mode.value).subscribe(
       res => {
         this.serverMode = res.mode;
         this.modeLoading = false;
+        this.refreshGametype();
       },
       () => {
         this.modeLoading = false;
       }
     );
+  }
+
+  private refreshGametype() {
+    setTimeout(() => {
+      this.rcon.getServerInfo().subscribe(
+        vars => {
+          const gt = vars.find(v => v.name === 'g_gametype');
+          if (gt) {
+            this.currentGametype = parseInt(gt.value, 10);
+          } else {
+            this.refreshGametype();
+          }
+        },
+        () => this.refreshGametype()
+      );
+    }, 15000);
   }
 
   switchGametype(gt: {value: number, label: string, desc: string}) {
