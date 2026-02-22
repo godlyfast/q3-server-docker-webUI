@@ -17,6 +17,24 @@
       <span *ngIf="modeLoading" class="restarting">Server restarting...</span>
     </mat-card-content>
   </mat-card>
+
+  <mat-card class="mode-card">
+    <mat-card-content>
+      <div class="mode-row">
+        <span class="mode-label">Gametype: <strong>{{currentGametypeLabel}}</strong></span>
+        <div class="mode-buttons">
+          <button *ngFor="let gt of availableGametypes"
+                  mat-raised-button
+                  [color]="gt.value === currentGametype ? 'accent' : 'primary'"
+                  (click)="switchGametype(gt)"
+                  [disabled]="gt.value === currentGametype"
+                  [matTooltip]="gt.desc">
+            {{gt.label}}
+          </button>
+        </div>
+      </div>
+    </mat-card-content>
+  </mat-card>
 </div>
 
 <div *ngIf="rconData">

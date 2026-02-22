@@ -35,6 +35,10 @@ export class RconService {
       this.httpClient.post<string>(`${this.apiURL}/setVar`, {q3Var, value}).subscribe();
   }
 
+  public sendCommand(q3var: string, value?: string): Observable<any> {
+    return this.httpClient.post<any>(`${this.apiURL}/setVar`, {q3var, value});
+  }
+
   public getServerMode(): Observable<{mode: string}> {
     return this.httpClient.get<{mode: string}>('/api/server/mode');
   }
