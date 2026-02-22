@@ -817,6 +817,151 @@ export function getMapList() {
                 title: "Finnegan's Revenge (Threewave)",
                 source: 'Threewave CTF (Zoid & Casey)',
                 description: 'The third Threewave CTF map. A 12-player CTF arena completing the legendary Threewave trilogy.'
+            },
+            // === LvL Top Downloaded / Popular Maps ===
+            {
+                name: 'gm3tourney2',
+                title: 'Dead Souls',
+                source: '..::LvL (GlassMan)',
+                description: 'A stunning DM, TDM, and Tourney arena with CPM support for 2-6 players. Rated 4.4/5 with over 14,000 downloads. Features atmospheric gothic architecture with excellent flow and multiple engagement distances.'
+            },
+            {
+                name: 'pro-q3tourney7',
+                title: 'Almost Lost',
+                source: 'Id Software, Inc.',
+                description: 'A restored id Software tourney/DM map for 2-5 players. Rated 4.4/5 with over 11,000 downloads. Originally cut from the game, this hidden gem features classic id design sensibilities.'
+            },
+            {
+                name: 'rpg3dm2',
+                title: 'Trial by Error',
+                source: '..::LvL (R.P.G.)',
+                description: 'A compact CPM and DM arena for 2-4 players. Rated 4.3/5 with over 14,000 downloads. Clean design with tight corridors and excellent competitive flow.'
+            },
+            {
+                name: 'lsdm1',
+                title: 'Desert Temple',
+                source: '..::LvL (LordSquart)',
+                description: 'An atmospheric DM arena set in a desert temple for 3-7 players. Rated 4.3/5 with over 11,000 downloads. Beautiful Middle Eastern architecture with excellent item placement.'
+            },
+            {
+                name: 'wvwq3dm7',
+                title: 'Decidia',
+                source: '..::LvL (wviperw)',
+                description: 'A visually striking DM arena for 3-6 players. Rated 4.3/5 with over 12,000 downloads. Clean gothic design with balanced combat spaces and excellent flow.'
+            },
+            {
+                name: 'chiropteradm',
+                title: 'ChiropteraDM',
+                source: '..::LvL (Alcatraz, nunuk & Sock)',
+                description: 'A collaborative DM and Tourney masterpiece for 2-6 players. Rated 4.2/5 with over 13,000 downloads. Features work from three legendary mappers including Sock. Bat-themed gothic architecture.'
+            },
+            {
+                name: 'mrcq3t6',
+                title: 'Bitter Embrace',
+                source: '..::LvL (Mr.CleaN)',
+                description: 'A CPM, DM, and Tourney arena for 2-5 players by Mr.CleaN. Rated 4.2/5 with over 10,000 downloads. Includes custom bot and FFA variant. Companion to Prophecy and Heavy Duty.'
+            },
+            {
+                name: 'dangercity',
+                title: 'Dangercity',
+                source: '..::LvL (M. Kupfer)',
+                description: 'A realism-based city DM arena for 4-10 players. Rated 4.2/5 with over 15,000 downloads. Features shops, offices, warehouse, sewer access, and rooftops. One of the most popular city maps ever made.'
+            },
+            {
+                name: 'addict',
+                title: 'Quake3:Addiction',
+                source: '..::LvL (Peej)',
+                description: 'A CPM, DM, and Tourney arena for 2-6 players. Rated 4.1/5 with over 16,000 downloads. A Quake 1 remake that plays brilliantly with bots and in competitive 1v1.'
+            },
+            {
+                name: 'bal3dm3',
+                title: 'Disinformation',
+                source: '..::LvL (Bal)',
+                description: 'A DM arena for 3-6 players by Bal (also author of Golconda). Rated 4.1/5 with over 15,000 downloads. Set on a rusting space ship/station with outstanding architecture.'
+            },
+            {
+                name: 'ztn3dm2',
+                title: 'Beatbox',
+                source: '..::LvL (ztn)',
+                description: 'A CPM, DM, and Tourney arena for 2-5 players by ztn (author of Blood Run). Rated 4.1/5 with over 13,000 downloads. Another classic from one of Q3\'s most legendary mappers.'
+            },
+            {
+                name: 'mrcq3t4',
+                title: 'Prophecy',
+                source: '..::LvL (Mr.CleaN)',
+                description: 'A CPM, DM, and Tourney arena for 2-4 players. Rated 4.1/5 with over 13,000 downloads. Part of Mr.CleaN\'s acclaimed tournament map series alongside Heavy Duty and Bitter Embrace.'
+            },
+            {
+                name: 't8dm6',
+                title: 'Mindfields',
+                source: '..::LvL (Senn)',
+                description: 'A DM and Tourney arena for 2-5 players by Senn (author of Quake3Stuff). Rated 4.1/5 with over 14,000 downloads. Tight, intense combat with excellent sightlines.'
+            },
+            {
+                name: 'dmmq3dm3',
+                title: 'Lonely Planet',
+                source: '..::LvL (SmallPileOfGibs)',
+                description: 'A DM arena for 3-8 players. Rated 4.1/5 with over 13,000 downloads. A large, visually rich environment with custom TGA textures. One of the most downloaded community maps.'
+            },
+            {
+                name: 'senndm2',
+                title: 'Falling Higher',
+                source: '..::LvL (Senn)',
+                description: 'A DM and Tourney arena for 3-8 players by Senn. Rated 4.1/5 with over 12,000 downloads. Multi-level design with vertical gameplay and excellent flow.'
+            },
+            {
+                name: 'nedsword',
+                title: 'Caliburnus',
+                source: '..::LvL (Ned Man)',
+                description: 'A DM and TDM arena for 4-9 players by Ned Man (author of Majesty). Rated 4.1/5 with over 12,000 downloads. Beautifully textured medieval theme featuring a prominent sword element.'
+            },
+            {
+                name: 'bal3dm1',
+                title: 'Ash Rain',
+                source: '..::LvL (Bal)',
+                description: 'A DM and Tourney arena for 2-6 players by Bal. Rated 4.1/5 with over 11,000 downloads. Atmospheric industrial design from one of Q3\'s most respected mappers.'
+            },
+            {
+                name: 'lae3dm2',
+                title: 'White Collar Violence',
+                source: '..::LvL (Laerth)',
+                description: 'A DM and Tourney arena for 2-5 players by Laerth (author of Nothing At All). Rated 4.1/5 with over 11,000 downloads. Clean design with tight competitive gameplay.'
+            },
+            {
+                name: 'rcq3dm1',
+                title: 'A Glasswork Fishbowl',
+                source: '..::LvL (Redchurch)',
+                description: 'A DM arena for 3-7 players. Rated 4.1/5 with over 12,000 downloads. Unique glass-themed architecture with transparent walkways and creative use of see-through surfaces.'
+            },
+            {
+                name: 'sokar3dm5',
+                title: 'Ice Storm',
+                source: '..::LvL (SoKaR)',
+                description: 'A CPM, DM, and Tourney arena for 2-4 players. Rated 4.0/5 with over 13,000 downloads. Ice/winter themed with clean competitive layout.'
+            },
+            {
+                name: 'storm3tourney5',
+                title: 'Cajun Hell',
+                source: '..::LvL (StormShadow)',
+                description: 'An FFA, Tourney, and TDM arena for 2-4 players. Rated 4.0/5 with over 14,000 downloads. Tight gothic design with excellent duel gameplay.'
+            },
+            {
+                name: 'gm3tourney1',
+                title: 'Until The Next Life',
+                source: '..::LvL (GlassMan)',
+                description: 'A CPM tourney arena for 2 players by GlassMan (author of Dead Souls). Rated 4.1/5 with over 14,000 downloads. Designed for intense 1v1 duels.'
+            },
+            {
+                name: 'reqkitchen',
+                title: 'Nu Clear Lunch Time',
+                source: '..::LvL (Requiem)',
+                description: 'A fun novelty DM arena for 3-12 players. Rated 4.2/5 with over 12,000 downloads. A giant kitchen where players are mouse-sized! Features interactive appliances and high-detail environment.'
+            },
+            {
+                name: 'facer2d',
+                title: 'Facing Worlds',
+                source: '..::LvL (Bauul)',
+                description: 'A CTF map for 4-8 players inspired by Unreal Tournament\'s iconic Facing Worlds. Rated 3.1/5 with over 10,000 downloads. Two giant towers floating in space connected by bridges. A nostalgic classic for UT fans.'
             }
         ])
     })

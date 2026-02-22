@@ -194,6 +194,33 @@ q3wctf1            4  16
 q3wctf2            4  16
 q3wctf3            4  16
 
+// === LvL Top Downloaded Maps ===
+gm3tourney2        2  8
+pro-q3tourney7     0  6
+rpg3dm2            0  6
+lsdm1              2  8
+wvwq3dm7           2  8
+chiropteradm       2  8
+mrcq3t6            0  6
+mrcq3t6_ffa        2  8
+dangercity         2  10
+addict             0  6
+bal3dm3            2  8
+ztn3dm2            0  6
+mrcq3t4            0  6
+t8dm6              2  8
+dmmq3dm3           2  10
+senndm2            2  8
+nedsword           2  10
+bal3dm1            2  8
+lae3dm2            2  8
+rcq3dm1            2  8
+sokar3dm5          0  6
+storm3tourney5     0  6
+gm3tourney1        0  4
+reqkitchen         2  12
+facer2d            4  16
+
 // === Stock CTF Maps ===
 q3ctf1             4  16
 q3ctf2             4  16
