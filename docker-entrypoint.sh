@@ -20,10 +20,10 @@ elif [ "$MODE" = "excessiveplus" ]; then
   GAME_ARGS="+set fs_game excessiveplus +exec server.cfg"
 elif [ "$MODE" = "osp" ]; then
   CFG="/home/ioq3srv/.q3a/osp/server.cfg"
-  GAME_ARGS="+set fs_game osp +exec server.cfg"
+  GAME_ARGS="+set fs_game osp +exec server.cfg +vstr r1"
 else
   CFG="/home/ioq3srv/.q3a/baseq3/server.cfg"
-  GAME_ARGS="+exec server.cfg"
+  GAME_ARGS="+exec server.cfg +vstr r1"
 fi
 
 if [ -n "$RCON_PASSWORD" ]; then

@@ -87,27 +87,12 @@ else
 fi
 
 # Frontend download pk3s (complete Q3 experience for clients)
+# Copy ALL pk3s from Steam baseq3 — this is the source of truth.
+# New maps/packs added to Steam are automatically included.
 DLDIR="$SCRIPT_DIR/ng-quake3-fe/downloads"
 mkdir -p "$DLDIR" "$DLDIR/cpma" "$DLDIR/excessiveplus" "$DLDIR/osp"
-# Base game paks
-for f in pak{0..8}.pk3 q3wpak1.pk3; do
-    [ -f "$Q3DIR/$f" ] && cp "$Q3DIR/$f" "$DLDIR/"
-done
-# CPM competition maps
-cp "$Q3DIR"/map_cpm*.pk3 "$DLDIR/" 2>/dev/null || true
-# HD textures (Q3Q, wtf-q3a, Kpax)
-cp "$Q3DIR"/zzz_*.pk3 "$Q3DIR"/wtf-*.pk3 "$Q3DIR"/xcsv_bq3hi-res.pk3 "$DLDIR/" 2>/dev/null || true
-# Custom Map 4K neural upscale textures
-cp "$Q3DIR"/zz-q3-4x-textures.pk3 "$Q3DIR"/zzz-3w-4x-textures.pk3 "$DLDIR/" 2>/dev/null || true
-cp "$Q3DIR"/zz-q3-4x-models.pk3 "$Q3DIR"/zz-q3-hqq.pk3 "$DLDIR/" 2>/dev/null || true
-# HD weapons (CZ45 + BFG)
-cp "$Q3DIR"/zzczhdwr*.pk3 "$Q3DIR"/zzczremBFG*.pk3 "$DLDIR/" 2>/dev/null || true
-# Sounds (QC pack + QL announcer)
-cp "$Q3DIR"/zzzz-Quake_Champions_Sounds.pk3 "$Q3DIR"/zzzz-QL-Default-Announcer.pk3 "$DLDIR/" 2>/dev/null || true
-# Neural upscale players + objects, bug fixes, QL models + FX
-cp "$Q3DIR"/pak9tup.pk3 "$Q3DIR"/pak9hqq37.pk3 "$DLDIR/" 2>/dev/null || true
-cp "$Q3DIR"/pak9hdplayers.pk3 "$Q3DIR"/pak9hdobjects.pk3 "$DLDIR/" 2>/dev/null || true
-cp "$Q3DIR"/ql-playermodels-ioquake3-ql.pk3 "$Q3DIR"/Xsprites.pk3 "$DLDIR/" 2>/dev/null || true
+cp "$Q3DIR"/*.pk3 "$DLDIR/"
+cp "$Q3DIR"/autoexec.cfg "$DLDIR/" 2>/dev/null || true
 # CPMA mod
 cp "$Q3ROOT/cpma"/z-cpma-*.pk3 "$DLDIR/cpma/" 2>/dev/null || true
 # Excessive Plus mod (all 4 cumulative pk3s)

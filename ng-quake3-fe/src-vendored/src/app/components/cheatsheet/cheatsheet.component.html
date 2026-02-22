@@ -1,0 +1,464 @@
+<div class="container" style="min-width: 70%; margin-bottom: 50px">
+
+  <!-- Row 1: Connection & Essential Setup -->
+  <div class="row">
+    <div class="col-lg-12">
+      <mat-card class="example-card">
+        <mat-card-header>
+          <div mat-card-avatar class="example-header-image"></div>
+          <mat-card-title>Connection &amp; Essential Setup</mat-card-title>
+          <mat-card-subtitle>How to connect and required launch flags</mat-card-subtitle>
+        </mat-card-header>
+        <mat-card-content>
+          <p><strong>Connect (LAN):</strong></p>
+          <div class="launch-cmd">/connect 192.168.55.100:27960</div>
+          <p><strong>Connect (WAN):</strong></p>
+          <div class="launch-cmd">/connect dczp.jsninjas.net:27960</div>
+          <p><strong>Required memory flags</strong> &mdash; must be on the command line, not in config files:</p>
+          <div class="launch-cmd">ioquake3 +set com_hunkMegs 1024 +set com_zoneMegs 512</div>
+          <p class="section-note">The server has 157+ pk3 files. Without these flags, the engine runs out of zone memory
+            and crashes with a <kbd>Z_Malloc</kbd> error on startup. <kbd>com_hunkMegs</kbd> controls the main memory pool
+            and <kbd>com_zoneMegs</kbd> controls the dynamic allocation zone &mdash; both are initialized before config
+            files are read, so they <strong>must</strong> be set on the command line.</p>
+        </mat-card-content>
+      </mat-card>
+    </div>
+  </div>
+
+  <!-- Row 2: Console Commands + Useful CVars -->
+  <div class="row" style="margin-top: 20px">
+    <div class="col-lg-6">
+      <mat-card class="example-card">
+        <mat-card-header>
+          <div mat-card-avatar class="example-header-image"></div>
+          <mat-card-title>Console Commands</mat-card-title>
+          <mat-card-subtitle>Essential in-game commands</mat-card-subtitle>
+        </mat-card-header>
+        <mat-card-content>
+          <table class="cheat-table">
+            <tr>
+              <td>~</td>
+              <td>Open/close console</td>
+            </tr>
+            <tr>
+              <td>/connect &lt;ip&gt;</td>
+              <td>Connect to server</td>
+            </tr>
+            <tr>
+              <td>/reconnect</td>
+              <td>Reconnect to last server</td>
+            </tr>
+            <tr>
+              <td>/disconnect</td>
+              <td>Leave server</td>
+            </tr>
+            <tr>
+              <td>/quit</td>
+              <td>Exit game</td>
+            </tr>
+            <tr>
+              <td>/callvote map &lt;name&gt;</td>
+              <td>Vote to change map</td>
+            </tr>
+            <tr>
+              <td>/callvote kick &lt;player&gt;</td>
+              <td>Vote to kick player</td>
+            </tr>
+            <tr>
+              <td>/players</td>
+              <td>List connected players</td>
+            </tr>
+            <tr>
+              <td>/serverinfo</td>
+              <td>Show server settings</td>
+            </tr>
+            <tr>
+              <td>/map_restart</td>
+              <td>Restart current map (admin)</td>
+            </tr>
+          </table>
+        </mat-card-content>
+      </mat-card>
+    </div>
+
+    <div class="col-lg-6">
+      <mat-card class="example-card">
+        <mat-card-header>
+          <div mat-card-avatar class="example-header-image"></div>
+          <mat-card-title>Useful CVars</mat-card-title>
+          <mat-card-subtitle>Configuration variables &mdash; set in console or autoexec.cfg</mat-card-subtitle>
+        </mat-card-header>
+        <mat-card-content>
+          <table class="cheat-table">
+            <tr>
+              <th>CVar</th>
+              <th>Description</th>
+            </tr>
+            <tr>
+              <td>com_maxfps 250</td>
+              <td>FPS cap (125 default, 250/333/500)</td>
+            </tr>
+            <tr>
+              <td>cg_fov 110</td>
+              <td>Field of view (default 90, up to 120)</td>
+            </tr>
+            <tr>
+              <td>sensitivity 3</td>
+              <td>Mouse sensitivity (1&ndash;10)</td>
+            </tr>
+            <tr>
+              <td>cg_drawFPS 1</td>
+              <td>Show FPS counter</td>
+            </tr>
+            <tr>
+              <td>cg_drawTimer 1</td>
+              <td>Show game timer</td>
+            </tr>
+            <tr>
+              <td>cg_autoswitch 0</td>
+              <td>Don't auto-switch to picked up weapons</td>
+            </tr>
+            <tr>
+              <td>r_fullscreen 1</td>
+              <td>Fullscreen mode</td>
+            </tr>
+            <tr>
+              <td>name "YourName"</td>
+              <td>Set player name</td>
+            </tr>
+            <tr>
+              <td>cl_maxpackets 125</td>
+              <td>Network packet rate (30&ndash;125)</td>
+            </tr>
+            <tr>
+              <td>snaps 40</td>
+              <td>Snapshot rate from server (20&ndash;40)</td>
+            </tr>
+            <tr>
+              <td>rate 25000</td>
+              <td>Network rate (3000&ndash;25000)</td>
+            </tr>
+          </table>
+        </mat-card-content>
+      </mat-card>
+    </div>
+  </div>
+
+  <!-- Row 3: CPMA-Specific + Mod Notes -->
+  <div class="row" style="margin-top: 20px">
+    <div class="col-lg-6">
+      <mat-card class="example-card">
+        <mat-card-header>
+          <div mat-card-avatar class="example-header-image"></div>
+          <mat-card-title>CPMA Commands</mat-card-title>
+          <mat-card-subtitle>Challenge ProMode Arena specific</mat-card-subtitle>
+        </mat-card-header>
+        <mat-card-content>
+          <table class="cheat-table">
+            <tr>
+              <td>/mode vq3</td>
+              <td>Switch to VQ3 physics</td>
+            </tr>
+            <tr>
+              <td>/mode cpm</td>
+              <td>Switch to CPM physics</td>
+            </tr>
+            <tr>
+              <td>/callvote mode &lt;mode&gt;</td>
+              <td>Vote physics mode</td>
+            </tr>
+            <tr>
+              <td>/callvote map &lt;name&gt;</td>
+              <td>Vote map change</td>
+            </tr>
+            <tr>
+              <td>cg_noclutterHUD 1</td>
+              <td>Clean CPMA HUD</td>
+            </tr>
+          </table>
+          <p class="section-note">Launch with <kbd>+set fs_game cpma</kbd> to load the CPMA mod.
+            VQ3 uses standard Quake 3 movement; CPM adds air control and plasma climbing.</p>
+        </mat-card-content>
+      </mat-card>
+    </div>
+
+    <div class="col-lg-6">
+      <mat-card class="example-card">
+        <mat-card-header>
+          <div mat-card-avatar class="example-header-image"></div>
+          <mat-card-title>Mod Notes</mat-card-title>
+          <mat-card-subtitle>What to expect in each game mode</mat-card-subtitle>
+        </mat-card-header>
+        <mat-card-content>
+          <p><strong>E+ (Excessive Plus)</strong><br>
+            300HP regen, multi-jump, overpowered weapons. FreezeTag = freeze enemies,
+            stand near frozen teammates to thaw them.</p>
+          <p><strong>OSP (OmniBot Server Patch)</strong><br>
+            Tournament-focused mod. Uses 125fps capped cgame &mdash; the server provides
+            <kbd>zzz-uncap-fps.pk3</kbd> override automatically.</p>
+          <p><strong>CPMA (Challenge ProMode Arena)</strong><br>
+            VQ3 (default) or CPM (air control, plasma climb). Clan Arena = round-based
+            elimination, no self-damage, full stack.</p>
+        </mat-card-content>
+      </mat-card>
+    </div>
+  </div>
+
+  <!-- Row 4: Excessive Plus (E+) -->
+  <div class="row" style="margin-top: 20px">
+    <div class="col-lg-6">
+      <mat-card class="example-card">
+        <mat-card-header>
+          <div mat-card-avatar class="example-header-image"></div>
+          <mat-card-title>E+ Commands</mat-card-title>
+          <mat-card-subtitle>Excessive Plus &mdash; FreezeTag &amp; gameplay</mat-card-subtitle>
+        </mat-card-header>
+        <mat-card-content>
+          <table class="cheat-table">
+            <tr>
+              <td>/team red</td>
+              <td>Join red team</td>
+            </tr>
+            <tr>
+              <td>/team blue</td>
+              <td>Join blue team</td>
+            </tr>
+            <tr>
+              <td>/team auto</td>
+              <td>Auto-assign team</td>
+            </tr>
+            <tr>
+              <td>/team s</td>
+              <td>Spectate</td>
+            </tr>
+            <tr>
+              <td>/callvote map &lt;name&gt;</td>
+              <td>Vote to change map</td>
+            </tr>
+            <tr>
+              <td>/callvote g_gametype &lt;n&gt;</td>
+              <td>Vote gametype (0=FFA, 8=FreezeTag)</td>
+            </tr>
+            <tr>
+              <td>/callvote fraglimit &lt;n&gt;</td>
+              <td>Vote frag limit</td>
+            </tr>
+            <tr>
+              <td>/callvote timelimit &lt;n&gt;</td>
+              <td>Vote time limit</td>
+            </tr>
+          </table>
+          <p class="section-note"><strong>FreezeTag rules:</strong> Frag an enemy to freeze them in place.
+            Stand near a frozen teammate to thaw them. Round ends when an entire team is frozen.
+            All weapons are overpowered &mdash; 300HP regen, multi-jump, and air control.</p>
+        </mat-card-content>
+      </mat-card>
+    </div>
+
+    <div class="col-lg-6">
+      <mat-card class="example-card">
+        <mat-card-header>
+          <div mat-card-avatar class="example-header-image"></div>
+          <mat-card-title>E+ CVars</mat-card-title>
+          <mat-card-subtitle>Client-side settings &mdash; <kbd>xp_</kbd> prefix</mat-card-subtitle>
+        </mat-card-header>
+        <mat-card-content>
+          <table class="cheat-table">
+            <tr>
+              <th>CVar</th>
+              <th>Description</th>
+            </tr>
+            <tr>
+              <td>xp_modelscale 1.1</td>
+              <td>Slightly enlarge player models (easier to hit)</td>
+            </tr>
+            <tr>
+              <td>xp_noskins 0</td>
+              <td>Use player skins (1 = force bright model)</td>
+            </tr>
+            <tr>
+              <td>xp_deadbodydarken 1</td>
+              <td>Darken corpses (less visual clutter)</td>
+            </tr>
+            <tr>
+              <td>xp_noFrozenShard 0</td>
+              <td>Show ice shards on frozen players</td>
+            </tr>
+            <tr>
+              <td>xp_unlagged 1</td>
+              <td>Server-side lag compensation</td>
+            </tr>
+            <tr>
+              <td>xp_itemFX 1</td>
+              <td>Item glow effects (0 = cleaner look)</td>
+            </tr>
+            <tr>
+              <td>xp_screenshotXP 1</td>
+              <td>Clean screenshot (hides HUD)</td>
+            </tr>
+          </table>
+          <p class="section-note">Launch with <kbd>+set fs_game excessiveplus</kbd> to load E+.
+            All <kbd>xp_</kbd> CVars can be set in autoexec.cfg inside the
+            <kbd>excessiveplus/</kbd> folder.</p>
+        </mat-card-content>
+      </mat-card>
+    </div>
+  </div>
+
+  <!-- Row 5: OSP -->
+  <div class="row" style="margin-top: 20px">
+    <div class="col-lg-6">
+      <mat-card class="example-card">
+        <mat-card-header>
+          <div mat-card-avatar class="example-header-image"></div>
+          <mat-card-title>OSP Commands</mat-card-title>
+          <mat-card-subtitle>OrangeSmooth Productions &mdash; tournament mod</mat-card-subtitle>
+        </mat-card-header>
+        <mat-card-content>
+          <table class="cheat-table">
+            <tr>
+              <td>/menu</td>
+              <td>Open OSP client settings menu</td>
+            </tr>
+            <tr>
+              <td>/ready</td>
+              <td>Ready up for match start</td>
+            </tr>
+            <tr>
+              <td>/notready</td>
+              <td>Unready</td>
+            </tr>
+            <tr>
+              <td>/stats</td>
+              <td>Show match statistics</td>
+            </tr>
+            <tr>
+              <td>/players</td>
+              <td>List players with IDs</td>
+            </tr>
+            <tr>
+              <td>/callvote</td>
+              <td>List all available vote options</td>
+            </tr>
+            <tr>
+              <td>/callvote map &lt;name&gt;</td>
+              <td>Vote map change</td>
+            </tr>
+            <tr>
+              <td>/timeout</td>
+              <td>Call a timeout (if allowed)</td>
+            </tr>
+            <tr>
+              <td>/help</td>
+              <td>Show OSP help info</td>
+            </tr>
+          </table>
+          <p class="section-note">Launch with <kbd>+set fs_game osp</kbd> to load OSP.
+            Typing <kbd>/callvote</kbd> alone shows all voteable options on the server.</p>
+        </mat-card-content>
+      </mat-card>
+    </div>
+
+    <div class="col-lg-6">
+      <mat-card class="example-card">
+        <mat-card-header>
+          <div mat-card-avatar class="example-header-image"></div>
+          <mat-card-title>OSP Referee</mat-card-title>
+          <mat-card-subtitle>Match control commands (referee or admin)</mat-card-subtitle>
+        </mat-card-header>
+        <mat-card-content>
+          <table class="cheat-table">
+            <tr>
+              <td>/ref &lt;password&gt;</td>
+              <td>Become referee</td>
+            </tr>
+            <tr>
+              <td>/r_allready</td>
+              <td>Force all players ready</td>
+            </tr>
+            <tr>
+              <td>/r_abort</td>
+              <td>Abort current match</td>
+            </tr>
+            <tr>
+              <td>/r_map &lt;name&gt;</td>
+              <td>Change map (no vote needed)</td>
+            </tr>
+            <tr>
+              <td>/r_kick &lt;player&gt;</td>
+              <td>Kick a player</td>
+            </tr>
+            <tr>
+              <td>/r_lock &lt;team&gt;</td>
+              <td>Lock red/blue team</td>
+            </tr>
+            <tr>
+              <td>/r_pause</td>
+              <td>Pause the match</td>
+            </tr>
+            <tr>
+              <td>/r_help</td>
+              <td>Show all referee commands</td>
+            </tr>
+          </table>
+          <p class="section-note">OSP supports FFA (0), Duel (1), TDM (3), and CTF (4).
+            The server auto-provides <kbd>zzz-uncap-fps.pk3</kbd> to override OSP's 125fps cap.</p>
+        </mat-card-content>
+      </mat-card>
+    </div>
+  </div>
+
+  <!-- Row 6: Admin RCON Reference -->
+  <div class="row" style="margin-top: 20px">
+    <div class="col-lg-12">
+      <mat-card class="example-card">
+        <mat-card-header>
+          <div mat-card-avatar class="example-header-image"></div>
+          <mat-card-title>Admin RCON Reference</mat-card-title>
+          <mat-card-subtitle>Remote console commands &mdash; available through the web UI</mat-card-subtitle>
+        </mat-card-header>
+        <mat-card-content>
+          <p>RCON commands can be sent from the <strong>Home</strong> page of this web UI
+            (no need to use the in-game console).</p>
+          <table class="cheat-table">
+            <tr>
+              <td>map &lt;name&gt;</td>
+              <td>Change to a specific map</td>
+            </tr>
+            <tr>
+              <td>map_restart</td>
+              <td>Restart the current map</td>
+            </tr>
+            <tr>
+              <td>g_gametype &lt;n&gt;</td>
+              <td>Set gametype (see values below)</td>
+            </tr>
+            <tr>
+              <td>kick &lt;player&gt;</td>
+              <td>Kick a player</td>
+            </tr>
+            <tr>
+              <td>addbot &lt;name&gt; &lt;skill&gt;</td>
+              <td>Add a bot (skill 1&ndash;5)</td>
+            </tr>
+            <tr>
+              <td>bot_minplayers &lt;n&gt;</td>
+              <td>Auto-fill with bots up to n players</td>
+            </tr>
+            <tr>
+              <td>fraglimit &lt;n&gt;</td>
+              <td>Set frag limit</td>
+            </tr>
+            <tr>
+              <td>timelimit &lt;n&gt;</td>
+              <td>Set time limit (minutes)</td>
+            </tr>
+          </table>
+          <p style="margin-top: 12px"><strong>Gametype values:</strong>
+            FFA=0, Duel=1, TDM=3, CTF=4, CA=5 (CPMA), FreezeTag=8 (E+)</p>
+        </mat-card-content>
+      </mat-card>
+    </div>
+  </div>
+
+</div>

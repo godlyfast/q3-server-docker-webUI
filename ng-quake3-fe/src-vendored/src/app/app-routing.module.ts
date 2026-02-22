@@ -4,13 +4,15 @@ import {StatusComponent} from './components/status/status.component';
 import {HomeComponent} from './components/home/home.component';
 import {DownloadComponent} from './components/download/download.component';
 import {MapComponent} from './components/map/map.component';
+import {CheatsheetComponent} from './components/cheatsheet/cheatsheet.component';
 
 
 const routes: Routes = [
   { path: '', component: HomeComponent },
   { path: 'status', component: StatusComponent },
   { path: 'download', component: DownloadComponent },
-  { path: 'map', component: MapComponent }
+  { path: 'map', component: MapComponent },
+  { path: 'cheatsheet', component: CheatsheetComponent }
 ];
 
 @NgModule({

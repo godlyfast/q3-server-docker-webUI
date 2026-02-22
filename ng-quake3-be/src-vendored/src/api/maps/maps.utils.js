@@ -962,6 +962,121 @@ export function getMapList() {
                 title: 'Facing Worlds',
                 source: '..::LvL (Bauul)',
                 description: 'A CTF map for 4-8 players inspired by Unreal Tournament\'s iconic Facing Worlds. Rated 3.1/5 with over 10,000 downloads. Two giant towers floating in space connected by bridges. A nostalgic classic for UT fans.'
+            },
+            // === LvL Top Rated Maps (4.5-4.85) ===
+            {
+                name: 'moteof_final',
+                title: 'The Edge of Forever',
+                source: '..::LvL (Sock)',
+                description: 'The #1 rated map on ..::LvL. A breathtaking gothic arena by legendary mapper Sock. Supports DM and Tourney for 2-6 players. Rated 4.85/5 with 40 votes. Extraordinary attention to detail in every corner.'
+            },
+            {
+                name: 'chiropterata',
+                title: 'ChiropteraTA',
+                source: '..::LvL (Alcatraz, nunuk & Sock)',
+                description: 'A Team Arena version of ChiropteraDM by three legendary mappers including Sock. Rated 4.643/5 with 21 votes. Bat-themed gothic architecture with expanded team gameplay features.'
+            },
+            {
+                name: '13tokay',
+                title: 'Tokay Arena',
+                source: '..::LvL (sst13)',
+                description: 'A Q3 remake of the classic Q2 map Tokay\'s Towers by prolific mapper sst13. Supports DM for 3-8 players. Rated 4.636/5 with 11 votes. Faithful recreation with modern Q3 polish.'
+            },
+            {
+                name: '13tomb',
+                title: 'Ziggurat Tomb',
+                source: '..::LvL (sst13)',
+                description: 'An atmospheric ziggurat-themed DM arena for 3-8 players by sst13. Rated 4.636/5 with 11 votes. Ancient tomb architecture with excellent flow and item placement.'
+            },
+            {
+                name: 'ct3ctf2',
+                title: 'Fluorescent',
+                source: '..::LvL (cityy)',
+                description: 'A vibrant CTF map for 4-12 players. Rated 4.635/5 with 26 votes. Glowing fluorescent lighting creates a distinctive visual style while maintaining competitive CTF gameplay.'
+            },
+            {
+                name: 'rota3ctf1',
+                title: 'Iris',
+                source: '..::LvL (Rota)',
+                description: 'A beautifully crafted CTF map for 6-12 players by Rota. Rated 4.622/5 with 45 votes. One of the highest-rated CTF maps on LvL with elegant layout and balanced flag runs.'
+            },
+            {
+                name: 'q3gwdm2',
+                title: 'Endurance',
+                source: '..::LvL (flipout)',
+                description: 'A stunning DM and Tourney arena by flipout (author of Achromatic). Rated 4.62/5 with 25 votes. Clean architecture with exceptional visual quality and competitive gameplay flow.'
+            },
+            {
+                name: 'akutatourney8',
+                title: 'Running Man',
+                source: '..::LvL (AKUTA)',
+                description: 'A fast-paced Tourney arena by AKUTA (author of ALIEN). Rated 4.614/5 with 22 votes. Designed for intense 1v1 duels with tight corridors and quick engagements.'
+            },
+            {
+                name: 'gas-st',
+                title: 'TNK gas station',
+                source: '..::LvL (Anton)',
+                description: 'A unique real-world themed DM arena set in a gas station for 3-8 players. Rated 4.603/5 with 29 votes. Incredibly detailed environment with great gameplay despite the unconventional setting.'
+            },
+            {
+                name: 'goldleaf',
+                title: 'Goldleaf',
+                source: '..::LvL (Pat Howard)',
+                description: 'A golden-themed DM arena by Pat Howard (author of Trespass and Hydra). Rated 4.594/5 with 16 votes. Elegant architecture with warm golden tones and excellent flow.'
+            },
+            {
+                name: 'zastavka',
+                title: 'Obec: Zastavka u Brna',
+                source: '..::LvL (Maxell)',
+                description: 'A breathtaking recreation of a real Czech village by Maxell. DM for 4-10 players. Rated 4.588/5 with 20 votes. Features an entire town with buildings, streets, and surrounding countryside.'
+            },
+            {
+                name: 'shibam',
+                title: 'Shibam',
+                source: '..::LvL (DaEngineer)',
+                description: 'A DM arena inspired by the ancient Yemeni city of Shibam for 4-8 players. Rated 4.577/5 with 26 votes. Stunning Middle Eastern architecture with multi-level mud-brick tower combat.'
+            },
+            {
+                name: 'rota3dm4',
+                title: 'Rashmi',
+                source: '..::LvL (Rota)',
+                description: 'A DM arena by Rota (author of Iris) for 3-6 players. Rated 4.571/5 with 14 votes. Clean design with excellent combat flow and atmospheric lighting.'
+            },
+            {
+                name: 'akutadm3',
+                title: 'Magnetic Centrifuge',
+                source: '..::LvL (AKUTA)',
+                description: 'A sci-fi DM arena by AKUTA for 3-8 players. Rated 4.567/5 with 15 votes. Industrial centrifuge-themed environment with dramatic lighting and multi-level combat zones.'
+            },
+            {
+                name: '13ground_xt',
+                title: 'The Proving Grounds CTF - Extended',
+                source: '..::LvL (sst13)',
+                description: 'An extended CTF version of the classic Proving Grounds by sst13 for 6-16 players. Rated 4.565/5 with 31 votes. Expanded layout with new routes and balanced team play.'
+            },
+            {
+                name: 'pukka3tourney5',
+                title: 'suboptimal',
+                source: '..::LvL (thefury)',
+                description: 'A Tourney and DM arena by thefury (author of Evolution) for 2-4 players. Rated 4.557/5 with 22 votes. Tight, focused layout for intense close-quarters duels.'
+            },
+            {
+                name: 'phantq3ctf1_rev',
+                title: 'Substation 11',
+                source: '..::LvL (Phantazm11)',
+                description: 'A CTF map by Phantazm11 (author of Corrosion and Geotechnic) for 6-16 players. Rated 4.556/5 with 18 votes. Industrial substation theme with well-designed flag routes.'
+            },
+            {
+                name: 'pukka3dm1',
+                title: 'Hot Place',
+                source: '..::LvL (thefury)',
+                description: 'A DM arena by thefury for 3-8 players. Rated 4.545/5 with 28 votes. Lava-themed environment with excellent flow and satisfying combat at all skill levels.'
+            },
+            {
+                name: 'akutatourney6',
+                title: 'Deep Purple',
+                source: '..::LvL (AKUTA)',
+                description: 'A Tourney arena by AKUTA for 2-4 players. Rated 4.537/5 with 27 votes. Deep purple-toned gothic atmosphere with tight competitive layout designed for skilled 1v1 play.'
             }
         ])
     })

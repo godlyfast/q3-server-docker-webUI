@@ -28,6 +28,7 @@ import {MatTooltipModule} from '@angular/material/tooltip';
 
 import { DownloadComponent } from './components/download/download.component';
 import { MapComponent } from './components/map/map.component';
+import { CheatsheetComponent } from './components/cheatsheet/cheatsheet.component';
 
 const socketIoConfig: SocketIoConfig = { url: `/`, options: {} };
 
@@ -39,6 +40,7 @@ const socketIoConfig: SocketIoConfig = { url: `/`, options: {} };
     Q3nameDirective,
     DownloadComponent,
     MapComponent,
+    CheatsheetComponent,
   ],
   imports: [
     CommonModule,
