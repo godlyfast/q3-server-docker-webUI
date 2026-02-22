@@ -34,6 +34,18 @@ COPY excessiveplus-pk3s/ /home/ioq3srv/ioquake3/excessiveplus/
 RUN mkdir -p /home/ioq3srv/ioquake3/osp
 COPY osp-mod/ /home/ioq3srv/ioquake3/osp/
 
+# Install Generations Arena 0.99f (5 classes: Wolf3D/Doom/Q1/Q2/Q3)
+RUN mkdir -p /home/ioq3srv/ioquake3/generations
+COPY generations-mod/ /home/ioq3srv/ioquake3/generations/
+
+# Install Ultra Freeze Tag 1.1 (enhanced FreezeTag with grapple hooks)
+RUN mkdir -p /home/ioq3srv/ioquake3/ufreeze
+COPY ufreeze-mod/ /home/ioq3srv/ioquake3/ufreeze/
+
+# Install PainKeep Arena 3.0 (new weapons: Airfist, Chain Lightning, Gravity Well)
+RUN mkdir -p /home/ioq3srv/ioquake3/pkarena
+COPY pkarena-mod/ /home/ioq3srv/ioquake3/pkarena/
+
 # Copy vanilla server.cfg to fs_homepath (not covered by baseq3 bind mount)
 RUN mkdir -p /home/ioq3srv/.q3a/baseq3
 COPY ./server-baseq3.cfg /home/ioq3srv/.q3a/baseq3/server.cfg
@@ -45,6 +57,18 @@ COPY ./server-excessiveplus.cfg /home/ioq3srv/.q3a/excessiveplus/server.cfg
 # Copy OSP server.cfg to fs_homepath (not covered by osp bind mount)
 RUN mkdir -p /home/ioq3srv/.q3a/osp
 COPY ./server-osp.cfg /home/ioq3srv/.q3a/osp/server.cfg
+
+# Copy Generations Arena server.cfg to fs_homepath
+RUN mkdir -p /home/ioq3srv/.q3a/generations
+COPY ./server-generations.cfg /home/ioq3srv/.q3a/generations/server.cfg
+
+# Copy Ultra Freeze Tag server.cfg to fs_homepath
+RUN mkdir -p /home/ioq3srv/.q3a/ufreeze
+COPY ./server-ufreeze.cfg /home/ioq3srv/.q3a/ufreeze/server.cfg
+
+# Copy PainKeep Arena server.cfg to fs_homepath
+RUN mkdir -p /home/ioq3srv/.q3a/pkarena
+COPY ./server-pkarena.cfg /home/ioq3srv/.q3a/pkarena/server.cfg
 
 # Copy entrypoint (reads mode from /shared, substitutes env vars, execs ioq3ded)
 COPY ./docker-entrypoint.sh /usr/local/bin/docker-entrypoint.sh

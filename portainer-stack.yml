@@ -25,6 +25,9 @@ services:
       - /home/tim/q3-data/server/cpma/cfg-maps:/home/ioq3srv/ioquake3/cpma/cfg-maps:ro
       - /home/tim/q3-data/server/excessiveplus:/home/ioq3srv/ioquake3/excessiveplus:ro
       - /home/tim/q3-data/server/osp:/home/ioq3srv/ioquake3/osp:ro
+      - /home/tim/q3-data/server/generations:/home/ioq3srv/ioquake3/generations:ro
+      - /home/tim/q3-data/server/ufreeze:/home/ioq3srv/ioquake3/ufreeze:ro
+      - /home/tim/q3-data/server/pkarena:/home/ioq3srv/ioquake3/pkarena:ro
       - q3-shared:/shared
     networks:
       - q3net
