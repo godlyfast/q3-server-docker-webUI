@@ -18,9 +18,6 @@ export class HomeComponent implements OnInit {
     { value: 'cpma', label: 'CPMA' },
     { value: 'excessiveplus', label: 'Excessive+' },
     { value: 'osp', label: 'OSP' },
-    { value: 'generations', label: 'GenArena' },
-    { value: 'ufreeze', label: 'UFreeze' },
-    { value: 'pkarena', label: 'PainKeep' },
   ];
 
   constructor(private rcon: RconService) { }

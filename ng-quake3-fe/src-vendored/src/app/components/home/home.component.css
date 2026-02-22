@@ -17,9 +17,3 @@
 .mode-label {
   font-size: 16px;
 }
-
-.mode-buttons {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 8px;
-}
