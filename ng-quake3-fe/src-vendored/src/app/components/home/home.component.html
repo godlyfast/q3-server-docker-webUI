@@ -35,6 +35,23 @@
       </div>
     </mat-card-content>
   </mat-card>
+
+  <mat-card class="mode-card" *ngIf="instagibSupported">
+    <mat-card-content>
+      <div class="mode-row">
+        <span class="mode-label">InstaGib: <strong>{{instagibEnabled ? 'ON' : 'OFF'}}</strong></span>
+        <div class="mode-buttons">
+          <button mat-raised-button
+                  [color]="instagibEnabled ? 'warn' : 'primary'"
+                  (click)="toggleInstagib()"
+                  [disabled]="instagibLoading">
+            {{instagibEnabled ? 'Disable InstaGib' : 'Enable InstaGib'}}
+          </button>
+        </div>
+      </div>
+      <span *ngIf="instagibLoading" class="restarting">Applying...</span>
+    </mat-card-content>
+  </mat-card>
 </div>
 
 <div *ngIf="rconData">

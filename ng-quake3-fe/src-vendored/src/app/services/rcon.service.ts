@@ -46,5 +46,13 @@ export class RconService {
   public setServerMode(mode: string): Observable<{mode: string, restarting: boolean}> {
     return this.httpClient.post<{mode: string, restarting: boolean}>('/api/server/mode', {mode});
   }
+
+  public getInstagib(): Observable<{supported: boolean, enabled: boolean}> {
+    return this.httpClient.get<{supported: boolean, enabled: boolean}>('/api/server/instagib');
+  }
+
+  public setInstagib(enabled: boolean): Observable<{enabled: boolean, restarting: boolean}> {
+    return this.httpClient.post<{enabled: boolean, restarting: boolean}>('/api/server/instagib', {enabled});
+  }
 }
 

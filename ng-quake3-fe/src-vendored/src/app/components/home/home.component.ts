@@ -50,6 +50,10 @@ export class HomeComponent implements OnInit {
   };
   currentGametype: number = -1;
 
+  instagibEnabled: boolean = false;
+  instagibSupported: boolean = false;
+  instagibLoading: boolean = false;
+
   get availableGametypes() {
     return this.gametypesByMode[this.serverMode] || this.gametypesByMode['baseq3'];
   }
@@ -63,7 +67,10 @@ export class HomeComponent implements OnInit {
 
   ngOnInit() {
     this.rcon.getStatus().subscribe(res => this.rconData = res);
-    this.rcon.getServerMode().subscribe(res => this.serverMode = res.mode);
+    this.rcon.getServerMode().subscribe(res => {
+      this.serverMode = res.mode;
+      this.refreshInstagib();
+    });
     this.rcon.getServerInfo().subscribe(vars => {
       const gt = vars.find(v => v.name === 'g_gametype');
       if (gt) this.currentGametype = parseInt(gt.value, 10);
@@ -85,6 +92,7 @@ export class HomeComponent implements OnInit {
         this.serverMode = res.mode;
         this.modeLoading = false;
         this.refreshGametype();
+        this.refreshInstagib();
       },
       () => {
         this.modeLoading = false;
@@ -114,6 +122,22 @@ export class HomeComponent implements OnInit {
     this.rcon.sendCommand('g_gametype', gt.value.toString()).subscribe(() => {
       this.currentGametype = gt.value;
       this.rcon.sendCommand('map_restart', '').subscribe();
+    });
+  }
+
+  refreshInstagib() {
+    this.rcon.getInstagib().subscribe(res => {
+      this.instagibSupported = res.supported;
+      this.instagibEnabled = res.enabled;
+    });
+  }
+
+  toggleInstagib() {
+    const enable = !this.instagibEnabled;
+    this.instagibLoading = true;
+    this.rcon.setInstagib(enable).subscribe(res => {
+      this.instagibEnabled = res.enabled;
+      this.instagibLoading = false;
     });
   }
 }
