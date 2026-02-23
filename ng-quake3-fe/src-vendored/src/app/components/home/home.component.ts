@@ -32,6 +32,7 @@ export class HomeComponent implements OnInit {
       { value: 1, label: 'Duel', desc: '1v1 Tournament' },
       { value: 3, label: 'TDM', desc: 'Team Deathmatch' },
       { value: 4, label: 'CTF', desc: 'Capture The Flag' },
+      { value: 5, label: 'CA', desc: 'Clan Arena — round-based, all weapons, no self-damage' },
     ],
     cpma: [
       { value: 0, label: 'FFA', desc: 'Free For All' },
@@ -54,6 +55,28 @@ export class HomeComponent implements OnInit {
   instagibSupported: boolean = false;
   instagibLoading: boolean = false;
 
+  ospSettingsSupported: boolean = false;
+  ospSettings: {[key: string]: string} = {};
+  ospSettingUpdating: string = '';
+
+  ospToggles = [
+    { cvar: 'hook_enable',             label: 'Grappling Hook',       type: 'bool' },
+    { cvar: 'server_freezetag',        label: 'FreezeTag',            type: 'tri',
+      options: [{v:'0',l:'Off'},{v:'1',l:'OSP'},{v:'2',l:'Vanilla'}],
+      note: 'Requires TDM gametype' },
+    { cvar: 'server_promode',          label: 'ProMode Physics',      type: 'bool' },
+    { cvar: 'match_hurtself',          label: 'Self Damage',          type: 'bool' },
+    { cvar: 'g_friendlyFire',          label: 'Friendly Fire',        type: 'bool' },
+    { cvar: 'server_thrufloors',       label: 'Splash Through Walls', type: 'bool' },
+    { cvar: 'server_fastrail',         label: 'Fast Rail Switch',     type: 'bool', note: 'ProMode' },
+    { cvar: 'server_lgcooldown',       label: 'LG Cooldown',          type: 'bool', note: 'ProMode' },
+    { cvar: 'weapon_deaddrop',         label: 'Drop Weapon on Death', type: 'bool' },
+    { cvar: 'match_dropitems',         label: 'Allow Item Drop',      type: 'bool', note: 'TDM' },
+    { cvar: 'armor_q2style',           label: 'Q2-Style Armor',       type: 'bool' },
+    { cvar: 'dmflags_noFallingDamage', label: 'No Falling Damage',    type: 'bool' },
+    { cvar: 'dmflags_noFootsteps',     label: 'No Footsteps',         type: 'bool' },
+  ];
+
   get availableGametypes() {
     return this.gametypesByMode[this.serverMode] || this.gametypesByMode['baseq3'];
   }
@@ -70,6 +93,7 @@ export class HomeComponent implements OnInit {
     this.rcon.getServerMode().subscribe(res => {
       this.serverMode = res.mode;
       this.refreshInstagib();
+      this.refreshOspSettings();
     });
     this.rcon.getServerInfo().subscribe(vars => {
       const gt = vars.find(v => v.name === 'g_gametype');
@@ -93,6 +117,7 @@ export class HomeComponent implements OnInit {
         this.modeLoading = false;
         this.refreshGametype();
         this.refreshInstagib();
+        this.refreshOspSettings();
       },
       () => {
         this.modeLoading = false;
@@ -139,5 +164,29 @@ export class HomeComponent implements OnInit {
       this.instagibEnabled = res.enabled;
       this.instagibLoading = false;
     });
+  }
+
+  refreshOspSettings() {
+    this.rcon.getOspSettings().subscribe(res => {
+      this.ospSettingsSupported = res.supported;
+      this.ospSettings = res.settings;
+    });
+  }
+
+  toggleOspSetting(cvar: string, value: string) {
+    this.ospSettingUpdating = cvar;
+    this.rcon.setOspSetting(cvar, value).subscribe(
+      res => {
+        this.ospSettings[res.cvar] = res.value;
+        this.ospSettingUpdating = '';
+      },
+      () => {
+        this.ospSettingUpdating = '';
+      }
+    );
+  }
+
+  getSettingValue(cvar: string): string {
+    return this.ospSettings[cvar] || '0';
   }
 }

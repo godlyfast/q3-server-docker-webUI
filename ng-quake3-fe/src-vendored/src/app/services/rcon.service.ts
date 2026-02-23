@@ -54,5 +54,13 @@ export class RconService {
   public setInstagib(enabled: boolean): Observable<{enabled: boolean, restarting: boolean}> {
     return this.httpClient.post<{enabled: boolean, restarting: boolean}>('/api/server/instagib', {enabled});
   }
+
+  public getOspSettings(): Observable<{supported: boolean, settings: {[key: string]: string}}> {
+    return this.httpClient.get<{supported: boolean, settings: {[key: string]: string}}>('/api/server/settings');
+  }
+
+  public setOspSetting(cvar: string, value: string): Observable<{cvar: string, value: string}> {
+    return this.httpClient.post<{cvar: string, value: string}>('/api/server/settings', {cvar, value});
+  }
 }
 

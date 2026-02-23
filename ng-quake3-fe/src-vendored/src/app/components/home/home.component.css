@@ -17,3 +17,45 @@
 .mode-label {
   font-size: 16px;
 }
+
+.osp-toggle-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 4px 0;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+}
+
+.osp-toggle-row:last-of-type {
+  border-bottom: none;
+}
+
+.osp-toggle-left {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.osp-toggle-label {
+  font-size: 14px;
+}
+
+.osp-toggle-value {
+  font-size: 12px;
+  opacity: 0.6;
+}
+
+.osp-toggle-value.on {
+  opacity: 1;
+  color: #69f0ae;
+}
+
+.osp-toggle-note {
+  font-size: 11px;
+  opacity: 0.4;
+  font-style: italic;
+}
+
+.mode-buttons button {
+  margin-left: 6px;
+}

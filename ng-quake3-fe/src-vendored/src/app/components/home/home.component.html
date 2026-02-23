@@ -52,6 +52,46 @@
       <span *ngIf="instagibLoading" class="restarting">Applying...</span>
     </mat-card-content>
   </mat-card>
+
+  <mat-card class="mode-card" *ngIf="ospSettingsSupported">
+    <mat-card-content>
+      <div class="mode-row" style="margin-bottom: 8px">
+        <span class="mode-label"><strong>OSP Settings</strong></span>
+      </div>
+      <div *ngFor="let toggle of ospToggles" class="osp-toggle-row">
+        <div class="osp-toggle-left">
+          <span class="osp-toggle-label">{{toggle.label}}</span>
+          <span class="osp-toggle-value" [class.on]="getSettingValue(toggle.cvar) !== '0'">
+            <ng-container *ngIf="toggle.type === 'bool'">{{getSettingValue(toggle.cvar) === '1' ? 'ON' : 'OFF'}}</ng-container>
+            <ng-container *ngIf="toggle.type === 'tri'">
+              <ng-container *ngFor="let opt of toggle.options">
+                <ng-container *ngIf="getSettingValue(toggle.cvar) === opt.v">{{opt.l}}</ng-container>
+              </ng-container>
+            </ng-container>
+          </span>
+          <span *ngIf="toggle.note" class="osp-toggle-note">{{toggle.note}}</span>
+        </div>
+        <div class="mode-buttons" *ngIf="toggle.type === 'bool'">
+          <button mat-raised-button
+                  [color]="getSettingValue(toggle.cvar) === '1' ? 'warn' : 'primary'"
+                  (click)="toggleOspSetting(toggle.cvar, getSettingValue(toggle.cvar) === '1' ? '0' : '1')"
+                  [disabled]="ospSettingUpdating === toggle.cvar">
+            {{getSettingValue(toggle.cvar) === '1' ? 'Disable' : 'Enable'}}
+          </button>
+        </div>
+        <div class="mode-buttons" *ngIf="toggle.type === 'tri'">
+          <button *ngFor="let opt of toggle.options"
+                  mat-raised-button
+                  [color]="getSettingValue(toggle.cvar) === opt.v ? 'accent' : 'primary'"
+                  (click)="toggleOspSetting(toggle.cvar, opt.v)"
+                  [disabled]="ospSettingUpdating === toggle.cvar || getSettingValue(toggle.cvar) === opt.v">
+            {{opt.l}}
+          </button>
+        </div>
+      </div>
+      <span *ngIf="ospSettingUpdating" class="restarting">Applying...</span>
+    </mat-card-content>
+  </mat-card>
 </div>
 
 <div *ngIf="rconData">

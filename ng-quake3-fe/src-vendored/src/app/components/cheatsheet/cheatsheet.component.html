@@ -401,14 +401,244 @@
               <td>Show all referee commands</td>
             </tr>
           </table>
-          <p class="section-note">OSP supports FFA (0), Duel (1), TDM (3), and CTF (4).
+          <p class="section-note">OSP supports FFA (0), Duel (1), TDM (3), CTF (4), and CA (5).
             The server auto-provides <kbd>zzz-uncap-fps.pk3</kbd> to override OSP's 125fps cap.</p>
         </mat-card-content>
       </mat-card>
     </div>
   </div>
 
-  <!-- Row 6: Admin RCON Reference -->
+  <!-- Row 6: OSP2-BE (Black Edition) -->
+  <div class="row" style="margin-top: 20px">
+    <div class="col-lg-6">
+      <mat-card class="example-card">
+        <mat-card-header>
+          <div mat-card-avatar class="example-header-image"></div>
+          <mat-card-title>OSP2-BE Client Features</mat-card-title>
+          <mat-card-subtitle>OSP2 Black Edition &mdash; client-side enhancement by scoqx</mat-card-subtitle>
+        </mat-card-header>
+        <mat-card-content>
+          <p>OSP2-BE is a <strong>client-only</strong> enhancement for OSP 1.03a. It adds visual features,
+            damage plums, bright models, and a SuperHUD system. It is auto-downloaded from the server &mdash;
+            no manual install needed.</p>
+          <table class="cheat-table">
+            <tr>
+              <th>CVar</th>
+              <th>Description</th>
+            </tr>
+            <tr>
+              <td>cg_damagePlums 1</td>
+              <td>Floating damage numbers on hit</td>
+            </tr>
+            <tr>
+              <td>cg_drawBrightWeapons 1</td>
+              <td>Bright weapon models</td>
+            </tr>
+            <tr>
+              <td>cg_noExplosions 1</td>
+              <td>Disable explosion effects (cleaner view)</td>
+            </tr>
+            <tr>
+              <td>cg_altRail 1</td>
+              <td>Alternative railgun trail effect</td>
+            </tr>
+            <tr>
+              <td>cg_hitSoundsQC 1</td>
+              <td>Quake Champions hit sounds</td>
+            </tr>
+            <tr>
+              <td>cg_friendsWallhackFrozen 1</td>
+              <td>See frozen teammates through walls</td>
+            </tr>
+            <tr>
+              <td>cg_countdownTimer 1</td>
+              <td>Visual countdown timer</td>
+            </tr>
+            <tr>
+              <td>cg_autoHop 1</td>
+              <td>Auto bunny-hop (hold jump)</td>
+            </tr>
+            <tr>
+              <td>cg_teamTask 1</td>
+              <td>Show team task overlay</td>
+            </tr>
+          </table>
+          <p class="section-note">Commands: <kbd>/belist</kbd> (list BE features),
+            <kbd>/behelp</kbd> (help), <kbd>/reloadHUD</kbd> (reload SuperHUD).
+            All settings are client-side only.</p>
+        </mat-card-content>
+      </mat-card>
+    </div>
+
+    <div class="col-lg-6">
+      <mat-card class="example-card">
+        <mat-card-header>
+          <div mat-card-avatar class="example-header-image"></div>
+          <mat-card-title>OSP2-BE SuperHUD</mat-card-title>
+          <mat-card-subtitle>Customizable HUD configs &mdash; <kbd>osp/hud/</kbd></mat-card-subtitle>
+        </mat-card-header>
+        <mat-card-content>
+          <p>OSP2-BE includes a <strong>SuperHUD</strong> system with fully customizable HUD layouts.
+            HUD configs are <kbd>.cfg</kbd> files in your <kbd>osp/hud/</kbd> directory.</p>
+          <table class="cheat-table">
+            <tr>
+              <th>Command / CVar</th>
+              <th>Description</th>
+            </tr>
+            <tr>
+              <td>cg_shud 1</td>
+              <td>Enable SuperHUD (0 = classic OSP HUD)</td>
+            </tr>
+            <tr>
+              <td>ch_file hud/Elite.cfg</td>
+              <td>Load a specific HUD preset</td>
+            </tr>
+            <tr>
+              <td>/reloadHUD</td>
+              <td>Reload current HUD without restart</td>
+            </tr>
+          </table>
+          <p style="margin-top: 12px"><strong>Included HUD presets:</strong></p>
+          <p>Elite, California, ChikiPiki, RTG, cybra, czm, flexo, Gothic, humiq, Misha,
+            nasty, Pasha, qwerty, scoqx, scoqx_widescreen, Spayce, zpg</p>
+          <p class="section-note">Place custom <kbd>.cfg</kbd> files in your <kbd>osp/hud/</kbd> directory.
+            Use <kbd>/reloadHUD</kbd> to apply changes without restarting the game.</p>
+        </mat-card-content>
+      </mat-card>
+    </div>
+  </div>
+
+  <!-- Row 7: OSP Server Settings Reference -->
+  <div class="row" style="margin-top: 20px">
+    <div class="col-lg-6">
+      <mat-card class="example-card">
+        <mat-card-header>
+          <div mat-card-avatar class="example-header-image"></div>
+          <mat-card-title>OSP Server CVars</mat-card-title>
+          <mat-card-subtitle>Server-side toggles &mdash; controllable from the web UI</mat-card-subtitle>
+        </mat-card-header>
+        <mat-card-content>
+          <table class="cheat-table">
+            <tr>
+              <th>CVar</th>
+              <th>Values</th>
+              <th>Description</th>
+            </tr>
+            <tr>
+              <td>hook_enable</td>
+              <td>0/1</td>
+              <td>Grappling hook</td>
+            </tr>
+            <tr>
+              <td>server_freezetag</td>
+              <td>0/1/2</td>
+              <td>FreezeTag (0=Off, 1=OSP, 2=Vanilla)</td>
+            </tr>
+            <tr>
+              <td>server_promode</td>
+              <td>0/1</td>
+              <td>ProMode physics (air control)</td>
+            </tr>
+            <tr>
+              <td>match_hurtself</td>
+              <td>0/1</td>
+              <td>Self-damage from own weapons</td>
+            </tr>
+            <tr>
+              <td>g_friendlyFire</td>
+              <td>0/1</td>
+              <td>Team damage in team modes</td>
+            </tr>
+            <tr>
+              <td>server_thrufloors</td>
+              <td>0/1</td>
+              <td>Splash damage through walls</td>
+            </tr>
+            <tr>
+              <td>server_fastrail</td>
+              <td>0/1</td>
+              <td>Fast railgun weapon switch (ProMode)</td>
+            </tr>
+            <tr>
+              <td>server_lgcooldown</td>
+              <td>0/1</td>
+              <td>Lightning gun cooldown (ProMode)</td>
+            </tr>
+            <tr>
+              <td>weapon_deaddrop</td>
+              <td>0/1</td>
+              <td>Drop weapon on death</td>
+            </tr>
+            <tr>
+              <td>match_dropitems</td>
+              <td>0/1</td>
+              <td>Allow item drop (TDM)</td>
+            </tr>
+            <tr>
+              <td>armor_q2style</td>
+              <td>0/1</td>
+              <td>Quake 2 style armor stacking</td>
+            </tr>
+          </table>
+          <p class="section-note">All toggles are controllable from the <strong>Home</strong> page
+            when in OSP mode. Changes take effect after <kbd>map_restart</kbd>.</p>
+        </mat-card-content>
+      </mat-card>
+    </div>
+
+    <div class="col-lg-6">
+      <mat-card class="example-card">
+        <mat-card-header>
+          <div mat-card-avatar class="example-header-image"></div>
+          <mat-card-title>OSP Damage Flags &amp; Voting</mat-card-title>
+          <mat-card-subtitle>dmflags bitmask and player voting commands</mat-card-subtitle>
+        </mat-card-header>
+        <mat-card-content>
+          <p><strong>dmflags bitmask:</strong></p>
+          <table class="cheat-table">
+            <tr>
+              <th>Bit</th>
+              <th>Value</th>
+              <th>Effect</th>
+            </tr>
+            <tr>
+              <td>3</td>
+              <td>8</td>
+              <td>No falling damage</td>
+            </tr>
+            <tr>
+              <td>5</td>
+              <td>32</td>
+              <td>No footstep sounds</td>
+            </tr>
+          </table>
+          <p style="margin-top: 12px"><strong>OSP voting commands:</strong></p>
+          <table class="cheat-table">
+            <tr>
+              <td>/callvote instagib 1</td>
+              <td>Enable InstaGib</td>
+            </tr>
+            <tr>
+              <td>/callvote hook 1</td>
+              <td>Enable grappling hook</td>
+            </tr>
+            <tr>
+              <td>/callvote promode 1</td>
+              <td>Enable ProMode physics</td>
+            </tr>
+            <tr>
+              <td>/callvote mode &lt;n&gt;</td>
+              <td>Switch gametype</td>
+            </tr>
+          </table>
+          <p style="margin-top: 12px"><strong>OSP gametypes:</strong>
+            FFA (0), Duel (1), TDM (3), CTF (4), CA (5)</p>
+        </mat-card-content>
+      </mat-card>
+    </div>
+  </div>
+
+  <!-- Row 8: Admin RCON Reference -->
   <div class="row" style="margin-top: 20px">
     <div class="col-lg-12">
       <mat-card class="example-card">
@@ -455,7 +685,7 @@
             </tr>
           </table>
           <p style="margin-top: 12px"><strong>Gametype values:</strong>
-            FFA=0, Duel=1, TDM=3, CTF=4, CA=5 (CPMA), FreezeTag=8 (E+)</p>
+            FFA=0, Duel=1, TDM=3, CTF=4, CA=5 (CPMA/OSP), FreezeTag=8 (E+)</p>
         </mat-card-content>
       </mat-card>
     </div>
