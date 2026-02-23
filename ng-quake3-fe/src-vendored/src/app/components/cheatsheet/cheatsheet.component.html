@@ -752,31 +752,32 @@
             </tr>
             <tr>
               <td>conf/default.cfg</td>
-              <td>Default E+ &mdash; overpowered weapons, 300HP regen, multi-jump</td>
+              <td>Default E+ &mdash; BFG start, 125HP, all map items, standard Q3 weapon damage</td>
             </tr>
             <tr>
               <td>conf/baseq3.cfg</td>
-              <td>Vanilla Q3 weapon/health balance</td>
+              <td>Vanilla Q3 &mdash; disables unlagged, physics, solids. Pure Q3 gameplay</td>
             </tr>
             <tr>
               <td>conf/excessive1.cfg</td>
-              <td>Excessive 1 &mdash; light modifications</td>
+              <td>Overkill v1 &mdash; 300HP, RL start, rapid-fire RL+RG (100ms), 750dmg gauntlet, no self/fall damage</td>
             </tr>
             <tr>
               <td>conf/excessive2.cfg</td>
-              <td>Excessive 2 &mdash; moderate boost</td>
+              <td>Overkill v2 &mdash; all weapons, 5HP/s regen, splash LG (70dmg+65 splash), faster MG (50ms/45dmg), BFG Pants</td>
             </tr>
             <tr>
               <td>conf/excessive3.cfg</td>
-              <td>Excessive 3 &mdash; high power</td>
+              <td>Overkill v3 &mdash; same as E2 + Quad Damage on first spawn</td>
             </tr>
             <tr>
               <td>conf/excessive4.cfg</td>
-              <td>Excessive 4 &mdash; very high power</td>
+              <td>Overkill v4 &mdash; same as E3 + grapple hook, configurable loadout, optional instant weapon switch</td>
             </tr>
             <tr>
               <td>conf/excessive5.cfg</td>
-              <td>Excessive 5 &mdash; maximum excess</td>
+              <td>Excessive 5 &mdash; advanced physics (double/ramp/step jumps), instant switch, 2s spawn protection.
+                Includes <kbd>xp_rail</kbd> sub-mode (300dmg RG) and <kbd>xp_space</kbd> sub-mode (GL+LG+BFG only)</td>
             </tr>
           </table>
           <p style="margin-top: 12px"><strong>Commands:</strong></p>
@@ -790,7 +791,10 @@
               <td>RCON: set preset directly</td>
             </tr>
           </table>
-          <p class="section-note">Config presets load on <kbd>map_restart</kbd>. The preset selector
+          <p class="section-note">Each level adds more on top of the last: E1 gives you rapid-fire rockets,
+            E2 adds all weapons + health regen + splash lightning, E3 adds quad on spawn,
+            E4 adds grapple + loadout customization, E5 is the modern preset with advanced movement physics.
+            Config presets load on <kbd>map_restart</kbd>. The preset selector
             is also available on the <strong>Home</strong> page when in E+ mode.</p>
         </mat-card-content>
       </mat-card>
@@ -844,7 +848,7 @@
             </tr>
           </table>
           <p style="margin-top: 12px"><strong>Gametype values:</strong>
-            FFA=0, Duel=1, TDM=3, CTF=4, CA=5 (CPMA/OSP), FreezeTag=8 (E+)</p>
+            FFA=0, Duel=1, TDM=3, CTF=4, CA=5 (CPMA/OSP), CA=7 (E+), FreezeTag=8 (E+)</p>
         </mat-card-content>
       </mat-card>
     </div>

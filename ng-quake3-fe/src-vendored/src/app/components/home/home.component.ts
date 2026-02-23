@@ -52,6 +52,11 @@ export class HomeComponent implements OnInit {
   };
   currentGametype: number = -1;
 
+  initialLoading: boolean = true;
+  playersLoading: boolean = true;
+  instagibChecked: boolean = false;
+  settingsChecked: boolean = false;
+
   instagibEnabled: boolean = false;
   instagibSupported: boolean = false;
   instagibLoading: boolean = false;
@@ -68,6 +73,7 @@ export class HomeComponent implements OnInit {
     { cvar: 'server_promode',          label: 'ProMode Physics',      type: 'bool' },
     { cvar: 'match_hurtself',          label: 'Self Damage',          type: 'bool' },
     { cvar: 'g_friendlyFire',          label: 'Friendly Fire',        type: 'bool' },
+    { cvar: 'g_teamForceBalance',     label: 'Team Balance',         type: 'bool', note: 'Auto-balance on join' },
     { cvar: 'server_thrufloors',       label: 'Splash Through Walls', type: 'bool' },
     { cvar: 'server_fastrail',         label: 'Fast Rail Switch',     type: 'bool', note: 'ProMode' },
     { cvar: 'server_lgcooldown',       label: 'LG Cooldown',          type: 'bool', note: 'ProMode' },
@@ -99,11 +105,12 @@ export class HomeComponent implements OnInit {
     { cvar: 'xp_noCustomEnts',           label: 'No Custom Entities',   type: 'bool', note: 'Disable map scripts' },
     { cvar: 'g_friendlyFire',            label: 'Friendly Fire',        type: 'bool' },
     { cvar: 'xp_matchmode',              label: 'Match Mode',           type: 'multi',
-      options: [{v:'0',l:'Off'},{v:'1',l:'Simple'},{v:'2',l:'Rounds'},{v:'3',l:'Round-Based'}] },
-    { cvar: 'xp_physics_forwardAirCtrl', label: 'Forward Air Control',  type: 'bool' },
-    { cvar: 'xp_physics_sidewardAirCtrl',label: 'Sideward Air Control', type: 'bool' },
-    { cvar: 'xp_physics_airStopping',    label: 'Air Stopping',         type: 'bool' },
-    { cvar: 'xp_physics_noRampJumps',    label: 'Disable Ramp Jumps',   type: 'bool' },
+      options: [{v:'0',l:'Off'},{v:'1',l:'Simple'},{v:'2',l:'Rounds'},{v:'3',l:'Round-Based'}],
+      note: 'Tournament rules & ready-up' },
+    { cvar: 'xp_physics_forwardAirCtrl', label: 'Forward Air Control',  type: 'bool', note: 'Steer forward mid-air (CPMA)' },
+    { cvar: 'xp_physics_sidewardAirCtrl',label: 'Sideward Air Control', type: 'bool', note: 'Strafe-turn mid-air (CPMA)' },
+    { cvar: 'xp_physics_airStopping',    label: 'Air Stopping',         type: 'bool', note: 'Brake to stop mid-air' },
+    { cvar: 'xp_physics_noRampJumps',    label: 'Disable Ramp Jumps',   type: 'bool', note: 'No speed boost from slopes' },
   ];
 
   get activeToggles() {
@@ -130,9 +137,13 @@ export class HomeComponent implements OnInit {
   constructor(private rcon: RconService) { }
 
   ngOnInit() {
-    this.rcon.getStatus().subscribe(res => this.rconData = res);
+    this.rcon.getStatus().subscribe(res => {
+      this.rconData = res;
+      this.playersLoading = false;
+    });
     this.rcon.getServerMode().subscribe(res => {
       this.serverMode = res.mode;
+      this.initialLoading = false;
       this.refreshInstagib();
       this.refreshOspSettings();
     });
@@ -152,6 +163,9 @@ export class HomeComponent implements OnInit {
     if (!confirm(`Switch to ${mode.label}? Server will restart and all players will be disconnected.`)) return;
     this.modeLoading = true;
     this.currentGametype = -1;
+    this.instagibChecked = false;
+    this.settingsChecked = false;
+    this.rcon.invalidateCache();
     this.rcon.setServerMode(mode.value).subscribe(
       res => {
         this.serverMode = res.mode;
@@ -191,10 +205,12 @@ export class HomeComponent implements OnInit {
     });
   }
 
-  refreshInstagib() {
-    this.rcon.getInstagib().subscribe(res => {
+  refreshInstagib(force: boolean = false) {
+    this.instagibChecked = false;
+    this.rcon.getInstagib(force).subscribe(res => {
       this.instagibSupported = res.supported;
       this.instagibEnabled = res.enabled;
+      this.instagibChecked = true;
     });
   }
 
@@ -207,11 +223,17 @@ export class HomeComponent implements OnInit {
     });
   }
 
-  refreshOspSettings() {
-    this.rcon.getOspSettings().subscribe(res => {
+  refreshOspSettings(force: boolean = false) {
+    this.settingsChecked = false;
+    this.rcon.getOspSettings(force).subscribe(res => {
       this.ospSettingsSupported = res.supported;
       this.ospSettings = res.settings;
+      this.settingsChecked = true;
     });
+  }
+
+  manualRefreshSettings() {
+    this.refreshOspSettings(true);
   }
 
   toggleOspSetting(cvar: string, value: string) {

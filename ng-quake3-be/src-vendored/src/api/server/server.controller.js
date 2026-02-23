@@ -13,6 +13,7 @@ const OSP_TOGGLES = {
   'server_promode':    { values: ['0', '1'] },
   'match_hurtself':    { values: ['0', '1'] },
   'g_friendlyFire':    { values: ['0', '1'] },
+  'g_teamForceBalance': { values: ['0', '1'] },
   'server_thrufloors': { values: ['0', '1'] },
   'server_fastrail':   { values: ['0', '1'] },
   'server_lgcooldown': { values: ['0', '1'] },

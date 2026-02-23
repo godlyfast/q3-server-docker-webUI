@@ -3,7 +3,8 @@ import { HttpClient } from '@angular/common/http';
 import { RconStatus } from '../interfaces/status.rcon';
 import { RconServerInfo } from '../interfaces/serverinfo.rcon';
 
-import { merge, Observable } from 'rxjs';
+import { merge, Observable, of } from 'rxjs';
+import { tap } from 'rxjs/operators';
 import { Socket } from 'ngx-socket-io';
 
 @Injectable({
@@ -11,6 +12,9 @@ import { Socket } from 'ngx-socket-io';
 })
 export class RconService {
   apiURL = `/api/rcon`;
+
+  private settingsCache: {supported: boolean, settings: {[key: string]: string}} | null = null;
+  private instagibCache: {supported: boolean, enabled: boolean} | null = null;
 
   constructor(
     private httpClient: HttpClient,
@@ -47,20 +51,39 @@ export class RconService {
     return this.httpClient.post<{mode: string, restarting: boolean}>('/api/server/mode', {mode});
   }
 
-  public getInstagib(): Observable<{supported: boolean, enabled: boolean}> {
-    return this.httpClient.get<{supported: boolean, enabled: boolean}>('/api/server/instagib');
+  public getInstagib(forceRefresh: boolean = false): Observable<{supported: boolean, enabled: boolean}> {
+    if (!forceRefresh && this.instagibCache) {
+      return of(this.instagibCache);
+    }
+    return this.httpClient.get<{supported: boolean, enabled: boolean}>('/api/server/instagib').pipe(
+      tap(res => this.instagibCache = res)
+    );
   }
 
   public setInstagib(enabled: boolean): Observable<{enabled: boolean, restarting: boolean}> {
-    return this.httpClient.post<{enabled: boolean, restarting: boolean}>('/api/server/instagib', {enabled});
+    return this.httpClient.post<{enabled: boolean, restarting: boolean}>('/api/server/instagib', {enabled}).pipe(
+      tap(res => { if (this.instagibCache) this.instagibCache.enabled = res.enabled; })
+    );
   }
 
-  public getOspSettings(): Observable<{supported: boolean, settings: {[key: string]: string}}> {
-    return this.httpClient.get<{supported: boolean, settings: {[key: string]: string}}>('/api/server/settings');
+  public getOspSettings(forceRefresh: boolean = false): Observable<{supported: boolean, settings: {[key: string]: string}}> {
+    if (!forceRefresh && this.settingsCache) {
+      return of(this.settingsCache);
+    }
+    return this.httpClient.get<{supported: boolean, settings: {[key: string]: string}}>('/api/server/settings').pipe(
+      tap(res => this.settingsCache = res)
+    );
   }
 
   public setOspSetting(cvar: string, value: string): Observable<{cvar: string, value: string}> {
-    return this.httpClient.post<{cvar: string, value: string}>('/api/server/settings', {cvar, value});
+    return this.httpClient.post<{cvar: string, value: string}>('/api/server/settings', {cvar, value}).pipe(
+      tap(res => { if (this.settingsCache) this.settingsCache.settings[res.cvar] = res.value; })
+    );
+  }
+
+  public invalidateCache(): void {
+    this.settingsCache = null;
+    this.instagibCache = null;
   }
 }
 

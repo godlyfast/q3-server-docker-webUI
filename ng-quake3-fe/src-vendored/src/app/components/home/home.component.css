@@ -59,3 +59,15 @@
 .mode-buttons button {
   margin-left: 6px;
 }
+
+.loading-row {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 8px 0;
+}
+
+.loading-text {
+  font-size: 14px;
+  opacity: 0.6;
+}

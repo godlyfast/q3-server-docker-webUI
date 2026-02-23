@@ -25,6 +25,7 @@ import {
 } from '@angular/material';
 import {MatCardModule} from '@angular/material/card';
 import {MatTooltipModule} from '@angular/material/tooltip';
+import {MatProgressSpinnerModule} from '@angular/material/progress-spinner';
 
 import { DownloadComponent } from './components/download/download.component';
 import { MapComponent } from './components/map/map.component';
@@ -56,6 +57,7 @@ const socketIoConfig: SocketIoConfig = { url: `/`, options: {} };
     MatIconModule,
     MatCardModule,
     MatTooltipModule,
+    MatProgressSpinnerModule,
     FormsModule,
     ReactiveFormsModule,
     SocketIoModule.forRoot(socketIoConfig)

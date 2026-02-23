@@ -1,24 +1,32 @@
 
-<div class="container" *ngIf="serverMode">
+<div class="container">
   <mat-card class="mode-card">
     <mat-card-content>
-      <div class="mode-row">
-        <span class="mode-label">Server Mode: <strong>{{modeLabel}}</strong></span>
-        <div class="mode-buttons">
-          <button *ngFor="let mode of modes"
-                  mat-raised-button
-                  [color]="mode.value === serverMode ? 'accent' : 'primary'"
-                  (click)="switchTo(mode)"
-                  [disabled]="modeLoading || mode.value === serverMode">
-            {{mode.label}}
-          </button>
+      <ng-container *ngIf="!initialLoading; else modeSpinner">
+        <div class="mode-row">
+          <span class="mode-label">Server Mode: <strong>{{modeLabel}}</strong></span>
+          <div class="mode-buttons">
+            <button *ngFor="let mode of modes"
+                    mat-raised-button
+                    [color]="mode.value === serverMode ? 'accent' : 'primary'"
+                    (click)="switchTo(mode)"
+                    [disabled]="modeLoading || mode.value === serverMode">
+              {{mode.label}}
+            </button>
+          </div>
         </div>
-      </div>
-      <span *ngIf="modeLoading" class="restarting">Server restarting...</span>
+        <span *ngIf="modeLoading" class="restarting">Server restarting...</span>
+      </ng-container>
+      <ng-template #modeSpinner>
+        <div class="loading-row">
+          <mat-spinner diameter="24"></mat-spinner>
+          <span class="loading-text">Loading server mode...</span>
+        </div>
+      </ng-template>
     </mat-card-content>
   </mat-card>
 
-  <mat-card class="mode-card">
+  <mat-card class="mode-card" *ngIf="!initialLoading">
     <mat-card-content>
       <div class="mode-row">
         <span class="mode-label">Gametype: <strong>{{currentGametypeLabel}}</strong></span>
@@ -36,91 +44,119 @@
     </mat-card-content>
   </mat-card>
 
-  <mat-card class="mode-card" *ngIf="instagibSupported">
+  <mat-card class="mode-card" *ngIf="!initialLoading && (!instagibChecked || instagibSupported)">
     <mat-card-content>
-      <div class="mode-row">
-        <span class="mode-label">InstaGib: <strong>{{instagibEnabled ? 'ON' : 'OFF'}}</strong></span>
-        <div class="mode-buttons">
-          <button mat-raised-button
-                  [color]="instagibEnabled ? 'warn' : 'primary'"
-                  (click)="toggleInstagib()"
-                  [disabled]="instagibLoading">
-            {{instagibEnabled ? 'Disable InstaGib' : 'Enable InstaGib'}}
-          </button>
+      <ng-container *ngIf="instagibChecked; else instagibSpinner">
+        <div class="mode-row">
+          <span class="mode-label">InstaGib: <strong>{{instagibEnabled ? 'ON' : 'OFF'}}</strong></span>
+          <div class="mode-buttons">
+            <button mat-raised-button
+                    [color]="instagibEnabled ? 'warn' : 'primary'"
+                    (click)="toggleInstagib()"
+                    [disabled]="instagibLoading">
+              {{instagibEnabled ? 'Disable InstaGib' : 'Enable InstaGib'}}
+            </button>
+          </div>
         </div>
-      </div>
-      <span *ngIf="instagibLoading" class="restarting">Applying...</span>
+        <span *ngIf="instagibLoading" class="restarting">Applying...</span>
+      </ng-container>
+      <ng-template #instagibSpinner>
+        <div class="loading-row">
+          <mat-spinner diameter="24"></mat-spinner>
+          <span class="loading-text">Checking InstaGib...</span>
+        </div>
+      </ng-template>
     </mat-card-content>
   </mat-card>
 
-  <mat-card class="mode-card" *ngIf="ospSettingsSupported">
+  <mat-card class="mode-card" *ngIf="!initialLoading && (!settingsChecked || ospSettingsSupported)">
     <mat-card-content>
-      <div class="mode-row" style="margin-bottom: 8px">
-        <span class="mode-label"><strong>{{settingsTitle}}</strong></span>
-      </div>
-      <div *ngFor="let toggle of activeToggles" class="osp-toggle-row">
-        <div class="osp-toggle-left">
-          <span class="osp-toggle-label">{{toggle.label}}</span>
-          <span class="osp-toggle-value" [class.on]="getSettingValue(toggle.cvar) !== '0'">
-            <ng-container *ngIf="toggle.type === 'bool'">{{getSettingValue(toggle.cvar) === '1' ? 'ON' : 'OFF'}}</ng-container>
-            <ng-container *ngIf="toggle.type === 'multi'">
-              <ng-container *ngFor="let opt of toggle.options">
-                <ng-container *ngIf="getSettingValue(toggle.cvar) === opt.v">{{opt.l}}</ng-container>
+      <ng-container *ngIf="settingsChecked; else settingsSpinner">
+        <div class="mode-row" style="margin-bottom: 8px">
+          <span class="mode-label"><strong>{{settingsTitle}}</strong></span>
+          <button mat-icon-button
+                  (click)="manualRefreshSettings()"
+                  [disabled]="!settingsChecked"
+                  matTooltip="Refresh settings from server">
+            <mat-icon>refresh</mat-icon>
+          </button>
+        </div>
+        <div *ngFor="let toggle of activeToggles" class="osp-toggle-row">
+          <div class="osp-toggle-left">
+            <span class="osp-toggle-label">{{toggle.label}}</span>
+            <span class="osp-toggle-value" [class.on]="getSettingValue(toggle.cvar) !== '0'">
+              <ng-container *ngIf="toggle.type === 'bool'">{{getSettingValue(toggle.cvar) === '1' ? 'ON' : 'OFF'}}</ng-container>
+              <ng-container *ngIf="toggle.type === 'multi'">
+                <ng-container *ngFor="let opt of toggle.options">
+                  <ng-container *ngIf="getSettingValue(toggle.cvar) === opt.v">{{opt.l}}</ng-container>
+                </ng-container>
               </ng-container>
-            </ng-container>
-          </span>
-          <span *ngIf="toggle.note" class="osp-toggle-note">{{toggle.note}}</span>
+            </span>
+            <span *ngIf="toggle.note" class="osp-toggle-note">{{toggle.note}}</span>
+          </div>
+          <div class="mode-buttons" *ngIf="toggle.type === 'bool'">
+            <button mat-raised-button
+                    [color]="getSettingValue(toggle.cvar) === '1' ? 'warn' : 'primary'"
+                    (click)="toggleOspSetting(toggle.cvar, getSettingValue(toggle.cvar) === '1' ? '0' : '1')"
+                    [disabled]="ospSettingUpdating === toggle.cvar">
+              {{getSettingValue(toggle.cvar) === '1' ? 'Disable' : 'Enable'}}
+            </button>
+          </div>
+          <div class="mode-buttons" *ngIf="toggle.type === 'multi'">
+            <button *ngFor="let opt of toggle.options"
+                    mat-raised-button
+                    [color]="getSettingValue(toggle.cvar) === opt.v ? 'accent' : 'primary'"
+                    (click)="toggleOspSetting(toggle.cvar, opt.v)"
+                    [disabled]="ospSettingUpdating === toggle.cvar || getSettingValue(toggle.cvar) === opt.v">
+              {{opt.l}}
+            </button>
+          </div>
         </div>
-        <div class="mode-buttons" *ngIf="toggle.type === 'bool'">
-          <button mat-raised-button
-                  [color]="getSettingValue(toggle.cvar) === '1' ? 'warn' : 'primary'"
-                  (click)="toggleOspSetting(toggle.cvar, getSettingValue(toggle.cvar) === '1' ? '0' : '1')"
-                  [disabled]="ospSettingUpdating === toggle.cvar">
-            {{getSettingValue(toggle.cvar) === '1' ? 'Disable' : 'Enable'}}
-          </button>
+        <span *ngIf="ospSettingUpdating" class="restarting">Applying...</span>
+      </ng-container>
+      <ng-template #settingsSpinner>
+        <div class="loading-row">
+          <mat-spinner diameter="24"></mat-spinner>
+          <span class="loading-text">Loading settings...</span>
         </div>
-        <div class="mode-buttons" *ngIf="toggle.type === 'multi'">
-          <button *ngFor="let opt of toggle.options"
-                  mat-raised-button
-                  [color]="getSettingValue(toggle.cvar) === opt.v ? 'accent' : 'primary'"
-                  (click)="toggleOspSetting(toggle.cvar, opt.v)"
-                  [disabled]="ospSettingUpdating === toggle.cvar || getSettingValue(toggle.cvar) === opt.v">
-            {{opt.l}}
-          </button>
-        </div>
-      </div>
-      <span *ngIf="ospSettingUpdating" class="restarting">Applying...</span>
+      </ng-template>
     </mat-card-content>
   </mat-card>
 </div>
 
-<div *ngIf="rconData">
-  <div class="container">
-    <div class="home-map-name" style="padding-bottom: 30px">
-      <h2>Playing <strong>{{rconData.currentMap}}</strong></h2>
-    </div>
+<div class="container">
+  <mat-card class="mode-card">
+    <mat-card-content>
+      <ng-container *ngIf="!playersLoading; else playersSpinner">
+        <div class="home-map-name" style="padding-bottom: 30px">
+          <h2>Playing <strong>{{rconData.currentMap}}</strong></h2>
+        </div>
 
-    <table class="table table-dark">
-      <thead>
-      <tr>
-        <th>Name</th>
-<!--    <th>cl</th>-->
-        <th>Ping</th>
-        <th>Score</th>
-        <th>Rate</th>
-<!--     <th>address</th>-->
-      </tr>
-      </thead>
-      <tbody>
-      <tr *ngFor="let player of rconData.players">
-        <td appQ3name="{{player.name}}"></td>
-<!--    <td>{{player.cl}}</td>-->
-        <td>{{player.ping}}</td>
-        <td>{{player.score}}</td>
-        <td>{{player.rate >= 99999 ? '---' : player.rate}}</td>
-<!--    <td appQ3name="{{player.address}}"></td> -->
-      </tr>
-      </tbody>
-    </table>
-  </div>
+        <table class="table table-dark">
+          <thead>
+          <tr>
+            <th>Name</th>
+            <th>Ping</th>
+            <th>Score</th>
+            <th>Rate</th>
+          </tr>
+          </thead>
+          <tbody>
+          <tr *ngFor="let player of rconData.players">
+            <td appQ3name="{{player.name}}"></td>
+            <td>{{player.ping}}</td>
+            <td>{{player.score}}</td>
+            <td>{{player.rate >= 99999 ? '---' : player.rate}}</td>
+          </tr>
+          </tbody>
+        </table>
+      </ng-container>
+      <ng-template #playersSpinner>
+        <div class="loading-row">
+          <mat-spinner diameter="24"></mat-spinner>
+          <span class="loading-text">Loading players...</span>
+        </div>
+      </ng-template>
+    </mat-card-content>
+  </mat-card>
 </div>
