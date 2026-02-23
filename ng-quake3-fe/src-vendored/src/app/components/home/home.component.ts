@@ -61,7 +61,7 @@ export class HomeComponent implements OnInit {
 
   ospToggles = [
     { cvar: 'hook_enable',             label: 'Grappling Hook',       type: 'bool' },
-    { cvar: 'server_freezetag',        label: 'FreezeTag',            type: 'tri',
+    { cvar: 'server_freezetag',        label: 'FreezeTag',            type: 'multi',
       options: [{v:'0',l:'Off'},{v:'1',l:'OSP'},{v:'2',l:'Vanilla'}],
       note: 'Requires TDM gametype' },
     { cvar: 'server_promode',          label: 'ProMode Physics',      type: 'bool' },
@@ -76,6 +76,46 @@ export class HomeComponent implements OnInit {
     { cvar: 'dmflags_noFallingDamage', label: 'No Falling Damage',    type: 'bool' },
     { cvar: 'dmflags_noFootsteps',     label: 'No Footsteps',         type: 'bool' },
   ];
+
+  eplusToggles = [
+    { cvar: 'xp_config',                 label: 'Config Preset',        type: 'multi',
+      options: [
+        {v:'conf/default.cfg',    l:'Default'},
+        {v:'conf/baseq3.cfg',     l:'Vanilla'},
+        {v:'conf/excessive1.cfg', l:'Excessive 1'},
+        {v:'conf/excessive2.cfg', l:'Excessive 2'},
+        {v:'conf/excessive3.cfg', l:'Excessive 3'},
+        {v:'conf/excessive4.cfg', l:'Excessive 4'},
+        {v:'conf/excessive5.cfg', l:'Excessive 5'},
+      ],
+      note: 'Changes weapons, health, physics' },
+    { cvar: 'xp_unlagged',               label: 'Unlagged',             type: 'bool', note: 'Lag compensation' },
+    { cvar: 'xp_suddenDeath',            label: 'Sudden Death',         type: 'bool' },
+    { cvar: 'xp_teamBalance',            label: 'Team Balance',         type: 'bool' },
+    { cvar: 'xp_muteSpectators',         label: 'Mute Spectators',      type: 'bool' },
+    { cvar: 'xp_holyshit',               label: 'BFG Direct Hit Sound', type: 'bool' },
+    { cvar: 'xp_crazyCTF',               label: 'Crazy CTF',            type: 'bool', note: 'Flag respawn mod' },
+    { cvar: 'xp_noCustomEnts',           label: 'No Custom Entities',   type: 'bool', note: 'Disable map scripts' },
+    { cvar: 'g_friendlyFire',            label: 'Friendly Fire',        type: 'bool' },
+    { cvar: 'xp_matchmode',              label: 'Match Mode',           type: 'multi',
+      options: [{v:'0',l:'Off'},{v:'1',l:'Simple'},{v:'2',l:'Rounds'},{v:'3',l:'Round-Based'}] },
+    { cvar: 'xp_physics_forwardAirCtrl', label: 'Forward Air Control',  type: 'bool' },
+    { cvar: 'xp_physics_sidewardAirCtrl',label: 'Sideward Air Control', type: 'bool' },
+    { cvar: 'xp_physics_airStopping',    label: 'Air Stopping',         type: 'bool' },
+    { cvar: 'xp_physics_noRampJumps',    label: 'Disable Ramp Jumps',   type: 'bool' },
+  ];
+
+  get activeToggles() {
+    if (this.serverMode === 'osp') return this.ospToggles;
+    if (this.serverMode === 'excessiveplus') return this.eplusToggles;
+    return [];
+  }
+
+  get settingsTitle(): string {
+    if (this.serverMode === 'osp') return 'OSP Settings';
+    if (this.serverMode === 'excessiveplus') return 'E+ Settings';
+    return 'Mod Settings';
+  }
 
   get availableGametypes() {
     return this.gametypesByMode[this.serverMode] || this.gametypesByMode['baseq3'];
@@ -187,6 +227,7 @@ export class HomeComponent implements OnInit {
   }
 
   getSettingValue(cvar: string): string {
-    return this.ospSettings[cvar] || '0';
+    const val = this.ospSettings[cvar];
+    return val !== undefined ? val : '0';
   }
 }

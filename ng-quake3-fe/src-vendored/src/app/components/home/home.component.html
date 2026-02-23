@@ -56,14 +56,14 @@
   <mat-card class="mode-card" *ngIf="ospSettingsSupported">
     <mat-card-content>
       <div class="mode-row" style="margin-bottom: 8px">
-        <span class="mode-label"><strong>OSP Settings</strong></span>
+        <span class="mode-label"><strong>{{settingsTitle}}</strong></span>
       </div>
-      <div *ngFor="let toggle of ospToggles" class="osp-toggle-row">
+      <div *ngFor="let toggle of activeToggles" class="osp-toggle-row">
         <div class="osp-toggle-left">
           <span class="osp-toggle-label">{{toggle.label}}</span>
           <span class="osp-toggle-value" [class.on]="getSettingValue(toggle.cvar) !== '0'">
             <ng-container *ngIf="toggle.type === 'bool'">{{getSettingValue(toggle.cvar) === '1' ? 'ON' : 'OFF'}}</ng-container>
-            <ng-container *ngIf="toggle.type === 'tri'">
+            <ng-container *ngIf="toggle.type === 'multi'">
               <ng-container *ngFor="let opt of toggle.options">
                 <ng-container *ngIf="getSettingValue(toggle.cvar) === opt.v">{{opt.l}}</ng-container>
               </ng-container>
@@ -79,7 +79,7 @@
             {{getSettingValue(toggle.cvar) === '1' ? 'Disable' : 'Enable'}}
           </button>
         </div>
-        <div class="mode-buttons" *ngIf="toggle.type === 'tri'">
+        <div class="mode-buttons" *ngIf="toggle.type === 'multi'">
           <button *ngFor="let opt of toggle.options"
                   mat-raised-button
                   [color]="getSettingValue(toggle.cvar) === opt.v ? 'accent' : 'primary'"

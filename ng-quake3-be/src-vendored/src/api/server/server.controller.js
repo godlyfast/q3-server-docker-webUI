@@ -21,6 +21,37 @@ const OSP_TOGGLES = {
   'armor_q2style':     { values: ['0', '1'] },
 };
 
+const EPLUS_TOGGLES = {
+  'xp_unlagged':       { values: ['0', '1'] },
+  'xp_suddenDeath':    { values: ['0', '1'] },
+  'xp_teamBalance':    { values: ['0', '1'] },
+  'xp_muteSpectators': { values: ['0', '1'] },
+  'xp_holyshit':       { values: ['0', '1'] },
+  'xp_crazyCTF':       { values: ['0', '1'] },
+  'xp_noCustomEnts':   { values: ['0', '1'] },
+  'g_friendlyFire':    { values: ['0', '1'] },
+  'xp_matchmode':      { values: ['0', '1', '2', '3'] },
+};
+
+const EPLUS_PHYSICS_BITS = {
+  'xp_physics_forwardAirCtrl': 1,
+  'xp_physics_sidewardAirCtrl': 2,
+  'xp_physics_airStopping': 4,
+  'xp_physics_noRampJumps': 8,
+};
+
+const EPLUS_CONFIG_VALUES = [
+  'conf/default.cfg', 'conf/baseq3.cfg',
+  'conf/excessive1.cfg', 'conf/excessive2.cfg', 'conf/excessive3.cfg',
+  'conf/excessive4.cfg', 'conf/excessive5.cfg',
+];
+
+function getTogglesForMode(mode) {
+  if (mode === 'osp') return { toggles: OSP_TOGGLES, bitmaskField: 'dmflags' };
+  if (mode === 'excessiveplus') return { toggles: EPLUS_TOGGLES, bitmaskField: 'xp_physics' };
+  return null;
+}
+
 const rcon = new Q3RCon({
   address: process.env.Q3SERV_HOST || '192.168.120.4',
   port: process.env.Q3SERV_PORT || 27960,
@@ -140,8 +171,9 @@ function parseCvarResponse(raw) {
 
 export function getSettings(req, res) {
   const mode = readCurrentMode();
+  const modeInfo = getTogglesForMode(mode);
 
-  if (mode !== 'osp') {
+  if (!modeInfo) {
     return res.json({ supported: false, settings: {} });
   }
 
@@ -150,7 +182,7 @@ export function getSettings(req, res) {
     const settings = {};
 
     // Extract toggle cvars — try serverinfo first, fall back to individual query
-    for (const cvar of Object.keys(OSP_TOGGLES)) {
+    for (const cvar of Object.keys(modeInfo.toggles)) {
       if (vars[cvar] !== undefined) {
         settings[cvar] = vars[cvar];
       } else {
@@ -160,10 +192,34 @@ export function getSettings(req, res) {
       }
     }
 
-    // Decompose dmflags bitmask
-    const dmflags = parseInt(vars['dmflags'] || '0', 10) || 0;
-    settings['dmflags_noFallingDamage'] = (dmflags & 8) ? '1' : '0';
-    settings['dmflags_noFootsteps'] = (dmflags & 32) ? '1' : '0';
+    if (mode === 'osp') {
+      // Decompose dmflags bitmask
+      const dmflags = parseInt(vars['dmflags'] || '0', 10) || 0;
+      settings['dmflags_noFallingDamage'] = (dmflags & 8) ? '1' : '0';
+      settings['dmflags_noFootsteps'] = (dmflags & 32) ? '1' : '0';
+    }
+
+    if (mode === 'excessiveplus') {
+      // Decompose xp_physics bitmask — not in serverinfo, must query individually
+      let xpPhysics;
+      if (vars['xp_physics'] !== undefined) {
+        xpPhysics = parseInt(vars['xp_physics'], 10) || 0;
+      } else {
+        const raw = await rconSend('xp_physics');
+        xpPhysics = parseInt(parseCvarResponse(raw) || '0', 10) || 0;
+      }
+      for (const [pseudo, bit] of Object.entries(EPLUS_PHYSICS_BITS)) {
+        settings[pseudo] = (xpPhysics & bit) ? '1' : '0';
+      }
+
+      // Read xp_config preset — not in serverinfo, must query individually
+      if (vars['xp_config'] !== undefined) {
+        settings['xp_config'] = vars['xp_config'];
+      } else {
+        const raw = await rconSend('xp_config');
+        settings['xp_config'] = parseCvarResponse(raw) || '';
+      }
+    }
 
     res.json({ supported: true, settings });
   });
@@ -177,12 +233,16 @@ export function setSetting(req, res) {
   }
 
   const mode = readCurrentMode();
-  if (mode !== 'osp') {
+  const modeInfo = getTogglesForMode(mode);
+  if (!modeInfo) {
     return res.status(400).json({ error: `Settings toggle not supported in ${mode} mode` });
   }
 
-  // Handle dmflags pseudo-cvars
+  // Handle dmflags pseudo-cvars (OSP)
   if (cvar === 'dmflags_noFallingDamage' || cvar === 'dmflags_noFootsteps') {
+    if (mode !== 'osp') {
+      return res.status(400).json({ error: `${cvar} only supported in OSP mode` });
+    }
     if (value !== '0' && value !== '1') {
       return res.status(400).json({ error: 'value must be 0 or 1' });
     }
@@ -205,8 +265,57 @@ export function setSetting(req, res) {
     return;
   }
 
-  // Validate against whitelist
-  const toggle = OSP_TOGGLES[cvar];
+  // Handle xp_physics pseudo-cvars (E+)
+  if (EPLUS_PHYSICS_BITS[cvar]) {
+    if (mode !== 'excessiveplus') {
+      return res.status(400).json({ error: `${cvar} only supported in E+ mode` });
+    }
+    if (value !== '0' && value !== '1') {
+      return res.status(400).json({ error: 'value must be 0 or 1' });
+    }
+    const bit = EPLUS_PHYSICS_BITS[cvar];
+
+    // No map_restart for xp_physics — physics cvars take effect immediately,
+    // and map_restart re-loads xp_config which would override our change
+    rconSend('serverinfo').then(async (response) => {
+      const vars = parseServerInfo(response);
+      let xpPhysics;
+      if (vars['xp_physics'] !== undefined) {
+        xpPhysics = parseInt(vars['xp_physics'], 10) || 0;
+      } else {
+        const raw = await rconSend('xp_physics');
+        xpPhysics = parseInt(parseCvarResponse(raw) || '0', 10) || 0;
+      }
+      if (value === '1') {
+        xpPhysics |= bit;
+      } else {
+        xpPhysics &= ~bit;
+      }
+      return rconSend(`xp_physics ${xpPhysics}`);
+    }).then(() => {
+      res.json({ cvar, value });
+    });
+    return;
+  }
+
+  // Handle xp_config preset (E+)
+  if (cvar === 'xp_config') {
+    if (mode !== 'excessiveplus') {
+      return res.status(400).json({ error: 'xp_config only supported in E+ mode' });
+    }
+    if (!EPLUS_CONFIG_VALUES.includes(value)) {
+      return res.status(400).json({ error: `Invalid config preset. Must be one of: ${EPLUS_CONFIG_VALUES.join(', ')}` });
+    }
+    rconSend(`xp_config "${value}"`).then(() => {
+      return rconSend('map_restart');
+    }).then(() => {
+      res.json({ cvar, value });
+    });
+    return;
+  }
+
+  // Validate against mode-specific whitelist
+  const toggle = modeInfo.toggles[cvar];
   if (!toggle) {
     return res.status(400).json({ error: `Unknown cvar: ${cvar}` });
   }

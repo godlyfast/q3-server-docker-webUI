@@ -638,7 +638,166 @@
     </div>
   </div>
 
-  <!-- Row 8: Admin RCON Reference -->
+  <!-- Row 8: E+ Server Settings Reference -->
+  <div class="row" style="margin-top: 20px">
+    <div class="col-lg-6">
+      <mat-card class="example-card">
+        <mat-card-header>
+          <div mat-card-avatar class="example-header-image"></div>
+          <mat-card-title>E+ Server CVars</mat-card-title>
+          <mat-card-subtitle>Server-side toggles &mdash; controllable from the web UI</mat-card-subtitle>
+        </mat-card-header>
+        <mat-card-content>
+          <table class="cheat-table">
+            <tr>
+              <th>CVar</th>
+              <th>Values</th>
+              <th>Description</th>
+            </tr>
+            <tr>
+              <td>xp_unlagged</td>
+              <td>0/1</td>
+              <td>Server-side lag compensation</td>
+            </tr>
+            <tr>
+              <td>xp_suddenDeath</td>
+              <td>0/1</td>
+              <td>Sudden death on timelimit</td>
+            </tr>
+            <tr>
+              <td>xp_teamBalance</td>
+              <td>0/1</td>
+              <td>Auto team balancing</td>
+            </tr>
+            <tr>
+              <td>xp_muteSpectators</td>
+              <td>0/1</td>
+              <td>Mute spectator chat</td>
+            </tr>
+            <tr>
+              <td>xp_holyshit</td>
+              <td>0/1</td>
+              <td>BFG direct hit announcement</td>
+            </tr>
+            <tr>
+              <td>xp_crazyCTF</td>
+              <td>0/1</td>
+              <td>Crazy CTF flag respawn mod</td>
+            </tr>
+            <tr>
+              <td>xp_noCustomEnts</td>
+              <td>0/1</td>
+              <td>Disable custom map entities/scripts</td>
+            </tr>
+            <tr>
+              <td>g_friendlyFire</td>
+              <td>0/1</td>
+              <td>Team damage in team modes</td>
+            </tr>
+            <tr>
+              <td>xp_matchmode</td>
+              <td>0&ndash;3</td>
+              <td>Match mode (0=Off, 1=Simple, 2=Rounds, 3=Round-Based)</td>
+            </tr>
+          </table>
+          <p style="margin-top: 12px"><strong>xp_physics bitmask:</strong></p>
+          <table class="cheat-table">
+            <tr>
+              <th>Bit</th>
+              <th>Value</th>
+              <th>Effect</th>
+            </tr>
+            <tr>
+              <td>0</td>
+              <td>1</td>
+              <td>Forward air control</td>
+            </tr>
+            <tr>
+              <td>1</td>
+              <td>2</td>
+              <td>Sideward air control</td>
+            </tr>
+            <tr>
+              <td>2</td>
+              <td>4</td>
+              <td>Air stopping</td>
+            </tr>
+            <tr>
+              <td>3</td>
+              <td>8</td>
+              <td>Disable ramp jumps</td>
+            </tr>
+          </table>
+          <p class="section-note">All toggles are controllable from the <strong>Home</strong> page
+            when in E+ mode. Changes take effect after <kbd>map_restart</kbd>.</p>
+        </mat-card-content>
+      </mat-card>
+    </div>
+
+    <div class="col-lg-6">
+      <mat-card class="example-card">
+        <mat-card-header>
+          <div mat-card-avatar class="example-header-image"></div>
+          <mat-card-title>E+ Config Presets</mat-card-title>
+          <mat-card-subtitle>Gameplay presets via <kbd>xp_config</kbd></mat-card-subtitle>
+        </mat-card-header>
+        <mat-card-content>
+          <p>E+ controls gameplay through <strong>config preset files</strong> rather than
+            individual weapon cvars. Setting <kbd>xp_config</kbd> loads a preset that changes
+            weapons, health, armor, physics, and respawn settings all at once.</p>
+          <table class="cheat-table">
+            <tr>
+              <th>Preset</th>
+              <th>Description</th>
+            </tr>
+            <tr>
+              <td>conf/default.cfg</td>
+              <td>Default E+ &mdash; overpowered weapons, 300HP regen, multi-jump</td>
+            </tr>
+            <tr>
+              <td>conf/baseq3.cfg</td>
+              <td>Vanilla Q3 weapon/health balance</td>
+            </tr>
+            <tr>
+              <td>conf/excessive1.cfg</td>
+              <td>Excessive 1 &mdash; light modifications</td>
+            </tr>
+            <tr>
+              <td>conf/excessive2.cfg</td>
+              <td>Excessive 2 &mdash; moderate boost</td>
+            </tr>
+            <tr>
+              <td>conf/excessive3.cfg</td>
+              <td>Excessive 3 &mdash; high power</td>
+            </tr>
+            <tr>
+              <td>conf/excessive4.cfg</td>
+              <td>Excessive 4 &mdash; very high power</td>
+            </tr>
+            <tr>
+              <td>conf/excessive5.cfg</td>
+              <td>Excessive 5 &mdash; maximum excess</td>
+            </tr>
+          </table>
+          <p style="margin-top: 12px"><strong>Commands:</strong></p>
+          <table class="cheat-table">
+            <tr>
+              <td>/callvote conf &lt;name&gt;</td>
+              <td>Vote to change config preset</td>
+            </tr>
+            <tr>
+              <td>xp_config "conf/excessive5.cfg"</td>
+              <td>RCON: set preset directly</td>
+            </tr>
+          </table>
+          <p class="section-note">Config presets load on <kbd>map_restart</kbd>. The preset selector
+            is also available on the <strong>Home</strong> page when in E+ mode.</p>
+        </mat-card-content>
+      </mat-card>
+    </div>
+  </div>
+
+  <!-- Row 9: Admin RCON Reference -->
   <div class="row" style="margin-top: 20px">
     <div class="col-lg-12">
       <mat-card class="example-card">

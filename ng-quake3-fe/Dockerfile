@@ -4,7 +4,10 @@ FROM node:14-alpine as builder
 WORKDIR /ng-app
 
 # git needed for buble dependency (popper → buble from GitHub)
-RUN apk --no-cache add git
+# Force HTTPS instead of SSH for GitHub clones (no SSH keys in container)
+RUN apk --no-cache add git && \
+    git config --global url."https://github.com/".insteadOf "ssh://git@github.com/" && \
+    git config --global url."https://github.com/".insteadOf "git@github.com:"
 
 # Copy vendored source
 COPY ./src-vendored/ .
