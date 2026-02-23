@@ -22,6 +22,25 @@ const OSP_TOGGLES = {
   'armor_q2style':     { values: ['0', '1'] },
 };
 
+const CPMA_TOGGLES = {
+  'server_gameplay':    { values: ['VQ3', 'CPM'] },
+  'g_instagib':         { values: ['0', '1'] },
+  'hook_enable':        { values: ['0', '1'] },
+  'server_freezetag':   { values: ['0', '1', '2'] },
+  'match_hurtself':     { values: ['0', '1'] },
+  'g_friendlyFire':     { values: ['0', '1'] },
+  'g_teamForceBalance': { values: ['0', '1'] },
+  'server_thrufloors':  { values: ['0', '1'] },
+  'server_fastrail':    { values: ['0', '1'] },
+  'server_lgcooldown':  { values: ['0', '1'] },
+  'weapon_deaddrop':    { values: ['0', '1'] },
+  'match_dropitems':    { values: ['0', '1'] },
+  'armor_q2style':      { values: ['0', '1'] },
+  'match_mutespecs':    { values: ['0', '1'] },
+  'g_allowVote':        { values: ['0', '1'] },
+  'map_rotate':         { values: ['0', '1'] },
+};
+
 const EPLUS_TOGGLES = {
   'xp_unlagged':       { values: ['0', '1'] },
   'xp_suddenDeath':    { values: ['0', '1'] },
@@ -49,6 +68,7 @@ const EPLUS_CONFIG_VALUES = [
 
 function getTogglesForMode(mode) {
   if (mode === 'osp') return { toggles: OSP_TOGGLES, bitmaskField: 'dmflags' };
+  if (mode === 'cpma') return { toggles: CPMA_TOGGLES, bitmaskField: 'dmflags' };
   if (mode === 'excessiveplus') return { toggles: EPLUS_TOGGLES, bitmaskField: 'xp_physics' };
   return null;
 }
@@ -193,7 +213,7 @@ export function getSettings(req, res) {
       }
     }
 
-    if (mode === 'osp') {
+    if (mode === 'osp' || mode === 'cpma') {
       // Decompose dmflags bitmask
       const dmflags = parseInt(vars['dmflags'] || '0', 10) || 0;
       settings['dmflags_noFallingDamage'] = (dmflags & 8) ? '1' : '0';
@@ -241,8 +261,8 @@ export function setSetting(req, res) {
 
   // Handle dmflags pseudo-cvars (OSP)
   if (cvar === 'dmflags_noFallingDamage' || cvar === 'dmflags_noFootsteps') {
-    if (mode !== 'osp') {
-      return res.status(400).json({ error: `${cvar} only supported in OSP mode` });
+    if (mode !== 'osp' && mode !== 'cpma') {
+      return res.status(400).json({ error: `${cvar} only supported in OSP/CPMA mode` });
     }
     if (value !== '0' && value !== '1') {
       return res.status(400).json({ error: 'value must be 0 or 1' });

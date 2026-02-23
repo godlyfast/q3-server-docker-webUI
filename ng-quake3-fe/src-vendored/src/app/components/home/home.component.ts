@@ -57,6 +57,8 @@ export class HomeComponent implements OnInit {
   instagibChecked: boolean = false;
   settingsChecked: boolean = false;
 
+  restartLoading: boolean = false;
+
   instagibEnabled: boolean = false;
   instagibSupported: boolean = false;
   instagibLoading: boolean = false;
@@ -113,14 +115,41 @@ export class HomeComponent implements OnInit {
     { cvar: 'xp_physics_noRampJumps',    label: 'Disable Ramp Jumps',   type: 'bool', note: 'No speed boost from slopes' },
   ];
 
+  cpmaToggles = [
+    { cvar: 'server_gameplay',          label: 'Physics Mode',          type: 'multi',
+      options: [{v:'VQ3',l:'VQ3'},{v:'CPM',l:'CPM'}],
+      note: 'VQ3=vanilla, CPM=promode air control' },
+    { cvar: 'g_instagib',              label: 'InstaGib',              type: 'bool', note: 'One-hit railgun kills' },
+    { cvar: 'hook_enable',             label: 'Grappling Hook',       type: 'bool' },
+    { cvar: 'server_freezetag',        label: 'FreezeTag',            type: 'multi',
+      options: [{v:'0',l:'Off'},{v:'1',l:'CPMA'},{v:'2',l:'Vanilla'}],
+      note: 'Requires TDM gametype' },
+    { cvar: 'match_hurtself',          label: 'Self Damage',          type: 'bool' },
+    { cvar: 'g_friendlyFire',          label: 'Friendly Fire',        type: 'bool' },
+    { cvar: 'g_teamForceBalance',     label: 'Team Balance',         type: 'bool', note: 'Auto-balance on join' },
+    { cvar: 'server_thrufloors',       label: 'Splash Through Walls', type: 'bool' },
+    { cvar: 'server_fastrail',         label: 'Fast Rail Switch',     type: 'bool', note: 'CPM only' },
+    { cvar: 'server_lgcooldown',       label: 'LG Cooldown',          type: 'bool', note: 'CPM only' },
+    { cvar: 'weapon_deaddrop',         label: 'Drop Weapon on Death', type: 'bool' },
+    { cvar: 'match_dropitems',         label: 'Allow Item Drop',      type: 'bool', note: 'TDM' },
+    { cvar: 'armor_q2style',           label: 'Q2-Style Armor',       type: 'bool' },
+    { cvar: 'match_mutespecs',         label: 'Mute Spectators',      type: 'bool' },
+    { cvar: 'g_allowVote',             label: 'Allow Voting',         type: 'bool' },
+    { cvar: 'map_rotate',              label: 'Map Rotation',         type: 'bool', note: 'Rotate through map list' },
+    { cvar: 'dmflags_noFallingDamage', label: 'No Falling Damage',    type: 'bool' },
+    { cvar: 'dmflags_noFootsteps',     label: 'No Footsteps',         type: 'bool' },
+  ];
+
   get activeToggles() {
     if (this.serverMode === 'osp') return this.ospToggles;
+    if (this.serverMode === 'cpma') return this.cpmaToggles;
     if (this.serverMode === 'excessiveplus') return this.eplusToggles;
     return [];
   }
 
   get settingsTitle(): string {
     if (this.serverMode === 'osp') return 'OSP Settings';
+    if (this.serverMode === 'cpma') return 'CPMA Settings';
     if (this.serverMode === 'excessiveplus') return 'E+ Settings';
     return 'Mod Settings';
   }
@@ -194,6 +223,15 @@ export class HomeComponent implements OnInit {
         () => this.refreshGametype()
       );
     }, 15000);
+  }
+
+  restartServer() {
+    if (!confirm('Restart the server? Current map will reload and scores will reset.')) return;
+    this.restartLoading = true;
+    this.rcon.sendCommand('map_restart', '').subscribe(
+      () => { this.restartLoading = false; },
+      () => { this.restartLoading = false; }
+    );
   }
 
   switchGametype(gt: {value: number, label: string, desc: string}) {

@@ -39,6 +39,13 @@
                   [matTooltip]="gt.desc">
             {{gt.label}}
           </button>
+          <button mat-raised-button
+                  color="warn"
+                  (click)="restartServer()"
+                  [disabled]="restartLoading"
+                  matTooltip="Restart current map (reloads map, resets scores)">
+            {{restartLoading ? 'Restarting...' : 'Restart'}}
+          </button>
         </div>
       </div>
     </mat-card-content>
