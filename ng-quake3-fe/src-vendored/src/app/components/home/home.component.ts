@@ -46,6 +46,7 @@ export class HomeComponent implements OnInit {
       { value: 1, label: 'Duel', desc: '1v1 Tournament' },
       { value: 3, label: 'TDM', desc: 'Team Deathmatch' },
       { value: 4, label: 'CTF', desc: 'Capture The Flag' },
+      { value: 7, label: 'CA', desc: 'Clan Arena — round-based, all weapons, no self-damage' },
       { value: 8, label: 'FreezeTag', desc: 'Freeze enemies, thaw teammates' },
     ],
   };

@@ -2,11 +2,15 @@ export function parseStatus() {
     return function(rconData) {
         let resObj = {players : []};
         if (rconData) {
+            // Multi-packet RCON responses prepend "print\n" to each UDP packet.
+            // Stripping all instances rejoins lines split across packet boundaries.
+            rconData = rconData.replace(/print\n/g, '');
             rconData = rconData.replace(/ {2,}/g, ' ');
             const rconArr = rconData.split('\n');
-            resObj.currentMap = rconArr[1].split(' ')[1];
-            for (let i = 4; i <rconArr.length ; i++) {
+            resObj.currentMap = rconArr[0].split(' ')[1];
+            for (let i = 3; i <rconArr.length ; i++) {
                 let row = rconArr[i].trim().split(' ');
+                if (row.length < 5) continue;
                 let player = {};
                 player.cl = row.splice(0,1)[0];
                 player.score = row.splice(0,1)[0];
@@ -14,7 +18,6 @@ export function parseStatus() {
                 player.rate = row.splice(-1,1)[0];
                 player.address = row.splice(-1,1)[0];
                 player.name = row.join(' ');
-                // resObj.players.push(_.zipObject(rconArr[2].split(' '), rconArr[i].trim().split(' ')));
                 resObj.players.push(player);
             }
             resObj.raw = rconData;
