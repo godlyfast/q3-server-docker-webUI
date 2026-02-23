@@ -93,9 +93,7 @@ cpma3          0  6
 // === LvL Community Maps (4.45-4.85 rated) ===
 rustgrad           2  10
 q3gwdm1            2  8
-trespass           2  10
 phantq3dm3_rev     2  8
-hydra              2  10
 phantq3dm6_mc      2  8
 solitude           2  8
 bst3dm1            2  8
@@ -222,7 +220,6 @@ reqkitchen         2  12
 facer2d            4  16
 
 // === LvL Top Rated Maps (4.5-4.85) ===
-moteof_final       2  8
 chiropterata       2  8
 13tokay            2  8
 13tomb             2  8
@@ -231,8 +228,6 @@ rota3ctf1          4  16
 q3gwdm2            2  8
 akutatourney8      0  4
 gas-st             2  10
-goldleaf           2  8
-zastavka           2  10
 shibam             2  8
 rota3dm4           2  8
 akutadm3           2  8
