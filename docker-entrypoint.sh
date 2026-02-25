@@ -26,6 +26,13 @@ else
   GAME_ARGS="+exec server.cfg +vstr r1"
 fi
 
+# Remove stale engine config — q3config_server.cfg persists RCON-changed
+# cvars across container restarts, overriding server.cfg values.
+HOMEDIR="/home/ioq3srv/.q3a"
+for mod in baseq3 osp cpma excessiveplus; do
+  rm -f "$HOMEDIR/$mod/q3config_server.cfg"
+done
+
 if [ -n "$RCON_PASSWORD" ]; then
   sed -i "s/__RCON_PASSWORD__/$RCON_PASSWORD/" "$CFG"
 fi

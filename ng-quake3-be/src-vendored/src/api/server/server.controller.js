@@ -9,7 +9,6 @@ const DEFAULT_MODE = 'baseq3';
 
 const OSP_TOGGLES = {
   'hook_enable':       { values: ['0', '1'] },
-  'server_freezetag':  { values: ['0', '1', '2'] },
   'server_promode':    { values: ['0', '1'] },
   'match_hurtself':    { values: ['0', '1'] },
   'g_friendlyFire':    { values: ['0', '1'] },
@@ -26,7 +25,6 @@ const CPMA_TOGGLES = {
   'server_gameplay':    { values: ['VQ3', 'CPM'] },
   'g_instagib':         { values: ['0', '1'] },
   'hook_enable':        { values: ['0', '1'] },
-  'server_freezetag':   { values: ['0', '1', '2'] },
   'match_hurtself':     { values: ['0', '1'] },
   'g_friendlyFire':     { values: ['0', '1'] },
   'g_teamForceBalance': { values: ['0', '1'] },

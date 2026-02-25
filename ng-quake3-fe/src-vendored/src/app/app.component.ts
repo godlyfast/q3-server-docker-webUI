@@ -12,13 +12,15 @@ export class AppComponent implements OnInit {
   title = 'Quake WebUI';
   rconData: RconStatus;
   mapSrc = './assets/quake-3-icon.png';
+  currentMap = '';
 
   constructor(private rcon: RconService) {}
 
   ngOnInit(): void {
     this.rcon.getStatus().subscribe(res => {
       this.rconData = res;
-      const image = this.rconData.currentMap ? `${this.rconData.currentMap}.jpg` : 'quake-3-icon.png';
+      this.currentMap = this.rconData.currentMap || '';
+      const image = this.currentMap ? `${this.currentMap}.jpg` : 'quake-3-icon.png';
       this.mapSrc = `./assets/images/${image}`;
     });
   }

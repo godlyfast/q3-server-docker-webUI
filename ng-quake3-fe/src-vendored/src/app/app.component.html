@@ -36,7 +36,9 @@
       <h1>
         {{ title }}
       </h1>
-      <img  class="app-central-pic" height="300" alt="Central Pic" [src]="mapSrc">
+      <img  class="app-central-pic" height="300" [alt]="currentMap" [src]="mapSrc"
+             (error)="mapSrc = './assets/quake-3-icon.png'">
+      <h3 *ngIf="currentMap" style="color: #aaa; margin-top: 10px;">{{ currentMap }}</h3>
     </div>
     <router-outlet></router-outlet>
   </mat-sidenav-content>

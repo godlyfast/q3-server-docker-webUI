@@ -33,6 +33,8 @@ export class HomeComponent implements OnInit {
       { value: 3, label: 'TDM', desc: 'Team Deathmatch' },
       { value: 4, label: 'CTF', desc: 'Capture The Flag' },
       { value: 5, label: 'CA', desc: 'Clan Arena — round-based, all weapons, no self-damage' },
+      { value: 6, label: 'FT (OSP)', desc: 'FreezeTag — OSP rules, team damage ON' },
+      { value: 7, label: 'FT (Vanilla)', desc: 'FreezeTag — classic rules, team damage OFF' },
     ],
     cpma: [
       { value: 0, label: 'FFA', desc: 'Free For All' },
@@ -40,6 +42,8 @@ export class HomeComponent implements OnInit {
       { value: 3, label: 'TDM', desc: 'Team Deathmatch' },
       { value: 4, label: 'CTF', desc: 'Capture The Flag' },
       { value: 5, label: 'CA', desc: 'Clan Arena — round-based, no self-damage' },
+      { value: 6, label: 'FT (CPMA)', desc: 'FreezeTag — CPMA rules' },
+      { value: 7, label: 'FT (Vanilla)', desc: 'FreezeTag — classic rules' },
     ],
     excessiveplus: [
       { value: 0, label: 'FFA', desc: 'Free For All' },
@@ -51,6 +55,18 @@ export class HomeComponent implements OnInit {
     ],
   };
   currentGametype: number = -1;
+
+  // Maps virtual gametype IDs to engine cvars for OSP/CPMA
+  // FreezeTag uses g_gametype 3 (TDM) + server_freezetag 1|2
+  private ospGametypeCvars: {[gt: number]: {g_gametype: number, server_freezetag: number}} = {
+    0: { g_gametype: 0, server_freezetag: 0 },
+    1: { g_gametype: 1, server_freezetag: 0 },
+    3: { g_gametype: 3, server_freezetag: 0 },
+    4: { g_gametype: 4, server_freezetag: 0 },
+    5: { g_gametype: 5, server_freezetag: 0 },
+    6: { g_gametype: 3, server_freezetag: 1 },
+    7: { g_gametype: 3, server_freezetag: 2 },
+  };
 
   initialLoading: boolean = true;
   playersLoading: boolean = true;
@@ -69,9 +85,6 @@ export class HomeComponent implements OnInit {
 
   ospToggles = [
     { cvar: 'hook_enable',             label: 'Grappling Hook',       type: 'bool' },
-    { cvar: 'server_freezetag',        label: 'FreezeTag',            type: 'multi',
-      options: [{v:'0',l:'Off'},{v:'1',l:'OSP'},{v:'2',l:'Vanilla'}],
-      note: 'Requires TDM gametype' },
     { cvar: 'server_promode',          label: 'ProMode Physics',      type: 'bool' },
     { cvar: 'match_hurtself',          label: 'Self Damage',          type: 'bool' },
     { cvar: 'g_friendlyFire',          label: 'Friendly Fire',        type: 'bool' },
@@ -121,9 +134,6 @@ export class HomeComponent implements OnInit {
       note: 'VQ3=vanilla, CPM=promode air control' },
     { cvar: 'g_instagib',              label: 'InstaGib',              type: 'bool', note: 'One-hit railgun kills' },
     { cvar: 'hook_enable',             label: 'Grappling Hook',       type: 'bool' },
-    { cvar: 'server_freezetag',        label: 'FreezeTag',            type: 'multi',
-      options: [{v:'0',l:'Off'},{v:'1',l:'CPMA'},{v:'2',l:'Vanilla'}],
-      note: 'Requires TDM gametype' },
     { cvar: 'match_hurtself',          label: 'Self Damage',          type: 'bool' },
     { cvar: 'g_friendlyFire',          label: 'Friendly Fire',        type: 'bool' },
     { cvar: 'g_teamForceBalance',     label: 'Team Balance',         type: 'bool', note: 'Auto-balance on join' },
@@ -178,7 +188,16 @@ export class HomeComponent implements OnInit {
     });
     this.rcon.getServerInfo().subscribe(vars => {
       const gt = vars.find(v => v.name === 'g_gametype');
-      if (gt) this.currentGametype = parseInt(gt.value, 10);
+      const ft = vars.find(v => v.name === 'server_freezetag');
+      if (gt) {
+        let gametype = parseInt(gt.value, 10);
+        // FreezeTag reports as g_gametype 3 + server_freezetag 1|2
+        if (gametype === 3 && ft) {
+          if (ft.value === '1') gametype = 6;
+          else if (ft.value === '2') gametype = 7;
+        }
+        this.currentGametype = gametype;
+      }
     });
   }
 
@@ -215,7 +234,13 @@ export class HomeComponent implements OnInit {
         vars => {
           const gt = vars.find(v => v.name === 'g_gametype');
           if (gt) {
-            this.currentGametype = parseInt(gt.value, 10);
+            let gametype = parseInt(gt.value, 10);
+            const ft = vars.find(v => v.name === 'server_freezetag');
+            if (gametype === 3 && ft) {
+              if (ft.value === '1') gametype = 6;
+              else if (ft.value === '2') gametype = 7;
+            }
+            this.currentGametype = gametype;
           } else {
             this.refreshGametype();
           }
@@ -237,10 +262,25 @@ export class HomeComponent implements OnInit {
   switchGametype(gt: {value: number, label: string, desc: string}) {
     if (gt.value === this.currentGametype) return;
     if (!confirm(`Switch to ${gt.label} (${gt.desc})? Current map will restart.`)) return;
-    this.rcon.sendCommand('g_gametype', gt.value.toString()).subscribe(() => {
-      this.currentGametype = gt.value;
-      this.rcon.sendCommand('map_restart', '').subscribe();
-    });
+
+    const cvars = this.ospGametypeCvars[gt.value];
+    if ((this.serverMode === 'osp' || this.serverMode === 'cpma') && cvars) {
+      // OSP/CPMA: set g_gametype + server_freezetag, then map_restart
+      this.rcon.sendCommand('g_gametype', cvars.g_gametype.toString()).subscribe(() => {
+        this.rcon.sendCommand('server_freezetag', cvars.server_freezetag.toString()).subscribe(() => {
+          this.currentGametype = gt.value;
+          this.rcon.sendCommand('map_restart', '').subscribe(() => {
+            this.refreshOspSettings(true);
+          });
+        });
+      });
+    } else {
+      // baseq3/E+: raw g_gametype + map_restart
+      this.rcon.sendCommand('g_gametype', gt.value.toString()).subscribe(() => {
+        this.currentGametype = gt.value;
+        this.rcon.sendCommand('map_restart', '').subscribe();
+      });
+    }
   }
 
   refreshInstagib(force: boolean = false) {
