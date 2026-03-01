@@ -10,6 +10,7 @@ let rcon = new Q3RCon({
 });
 
 let emitter;
+let pending = false;
 
 export class RconEvents extends EventEmitter {}
 
@@ -19,9 +20,16 @@ export function registerEvents(emt) {
     return emitter;
 }
 
-function  emitStatusEvent() {
+function emitStatusEvent() {
+    if (pending) return;
+    pending = true;
+    const timeout = setTimeout(() => {
+        pending = false;
+    }, 3000);
     rcon.send('status', function(response) {
+        clearTimeout(timeout);
+        pending = false;
         let res = parseStatus()(response);
-        emitter.emit('status',res)
+        emitter.emit('status', res);
     });
 }

@@ -22,14 +22,19 @@ const rcon = new Q3RCon({
 
 function rconP(cmd) {
     return new Promise((resolve, reject) => {
+        const timeout = setTimeout(() => {
+            resolve(null);
+        }, 3000);
         try {
             rcon.send(cmd, function(response) {
+                clearTimeout(timeout);
                 resolve(response);
             });
         } catch (e) {
-            reject(e)
+            clearTimeout(timeout);
+            reject(e);
         }
-    })
+    });
 }
 
 function handleError(res, statusCode) {
