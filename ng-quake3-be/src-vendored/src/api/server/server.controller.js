@@ -113,6 +113,57 @@ export function setMode(req, res) {
   res.json({ mode, restarting: true });
 }
 
+const OSP_MODE_START_FILE = '/shared/osp-mode-start';
+const VALID_OSP_MODES = [0, 1, 2, 3, 4, 5, 6, 7];
+
+export function getOspGametype(req, res) {
+  const mode = readCurrentMode();
+  if (mode !== 'osp') {
+    return res.json({ supported: false, ospMode: 0 });
+  }
+  let ospMode = 0;
+  try {
+    if (fs.existsSync(OSP_MODE_START_FILE)) {
+      ospMode = parseInt(fs.readFileSync(OSP_MODE_START_FILE, 'utf8').trim(), 10) || 0;
+    }
+  } catch (e) {}
+  res.json({ supported: true, ospMode });
+}
+
+export function setOspGametype(req, res) {
+  const ospMode = req.body && req.body.ospMode;
+  if (ospMode === undefined || !VALID_OSP_MODES.includes(ospMode)) {
+    return res.status(400).json({ error: `Invalid OSP mode. Must be one of: ${VALID_OSP_MODES.join(', ')}` });
+  }
+
+  const mode = readCurrentMode();
+  if (mode !== 'osp') {
+    return res.status(400).json({ error: 'OSP gametype switching only available in OSP mode' });
+  }
+
+  try {
+    fs.writeFileSync(OSP_MODE_START_FILE, ospMode.toString(), 'utf8');
+  } catch (e) {
+    console.error('Failed to write OSP mode start:', e.message);
+    return res.status(500).json({ error: 'Failed to write OSP mode start file' });
+  }
+
+  // Full server restart — OSP reads mode_start during initialization,
+  // which triggers complete mode setup including bot AI
+  rcon.send('quit', function () {});
+
+  // OSP team modes start in warmup (match_readypercent 100 = all must /ready).
+  // Disable the competition ready-up system so maps start immediately on a
+  // public bot server, then force-start the first match with allready.
+  if (ospMode >= 3) {
+    setTimeout(() => rconSend('match_readypercent 0'), 15000);
+    setTimeout(() => rconSend('allready'), 16000);
+    setTimeout(() => rconSend('allready'), 21000);
+  }
+
+  res.json({ ospMode, restarting: true });
+}
+
 function readCurrentMode() {
   try {
     if (fs.existsSync(MODE_FILE)) {
@@ -348,3 +399,24 @@ export function setSetting(req, res) {
     res.json({ cvar, value });
   });
 }
+
+// On startup, if OSP is in a team mode (mode_start >= 3), disable
+// the competition ready-up system and force-start the match.
+// The game server starts before the backend, so it's already in warmup.
+(function initOspTeamMode() {
+  const mode = readCurrentMode();
+  if (mode !== 'osp') return;
+  let ospMode = 0;
+  try {
+    if (fs.existsSync(OSP_MODE_START_FILE)) {
+      ospMode = parseInt(fs.readFileSync(OSP_MODE_START_FILE, 'utf8').trim(), 10) || 0;
+    }
+  } catch (e) {}
+  if (ospMode >= 3) {
+    console.log(`OSP team mode ${ospMode} detected at startup — will send match_readypercent 0 + allready`);
+    setTimeout(() => rconSend('bot_minplayers 3'), 5000);
+    setTimeout(() => rconSend('match_readypercent 0'), 5000);
+    setTimeout(() => rconSend('allready'), 6000);
+    setTimeout(() => rconSend('allready'), 11000);
+  }
+})();

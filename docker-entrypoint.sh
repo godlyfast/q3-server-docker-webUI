@@ -20,7 +20,17 @@ elif [ "$MODE" = "excessiveplus" ]; then
   GAME_ARGS="+set fs_game excessiveplus +exec server.cfg"
 elif [ "$MODE" = "osp" ]; then
   CFG="/home/ioq3srv/.q3a/osp/server.cfg"
-  GAME_ARGS="+set fs_game osp +exec server.cfg +vstr r1"
+  # Read OSP internal mode (0=FFA,1=1v1,3=TDM,4=CTF,5=CA,6=FT-OSP,7=FT-Vanilla)
+  # mode_start MUST be on the command line AFTER +exec server.cfg to override the
+  # cfg default. OSP reads mode_start during the first map load and does full mode
+  # initialization including bot AI (e.g. FreezeTag thaw AI by Fergus Dog).
+  OSP_MODE="0"
+  [ -f "/shared/osp-mode-start" ] && OSP_MODE=$(cat "/shared/osp-mode-start")
+  # IMPORTANT: use +mode_start (without "set" prefix) so it's added to the command
+  # buffer AFTER +exec server.cfg. Q3's Com_AddStartupCommands() skips "+set" commands
+  # (they're consumed early by Com_StartupVariable), so "+set mode_start 6" would be
+  # overridden by the cfg's "set mode_start 0". "+mode_start 6" survives in the buffer.
+  GAME_ARGS="+set fs_game osp +exec server.cfg +mode_start $OSP_MODE +vstr r1"
 else
   CFG="/home/ioq3srv/.q3a/baseq3/server.cfg"
   GAME_ARGS="+exec server.cfg +vstr r1"

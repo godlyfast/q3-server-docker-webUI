@@ -261,21 +261,43 @@ export class HomeComponent implements OnInit {
 
   switchGametype(gt: {value: number, label: string, desc: string}) {
     if (gt.value === this.currentGametype) return;
-    if (!confirm(`Switch to ${gt.label} (${gt.desc})? Current map will restart.`)) return;
 
-    const cvars = this.ospGametypeCvars[gt.value];
-    if ((this.serverMode === 'osp' || this.serverMode === 'cpma') && cvars) {
-      // OSP/CPMA: set g_gametype + server_freezetag, then map_restart
-      this.rcon.sendCommand('g_gametype', cvars.g_gametype.toString()).subscribe(() => {
-        this.rcon.sendCommand('server_freezetag', cvars.server_freezetag.toString()).subscribe(() => {
+    if (this.serverMode === 'osp') {
+      // OSP: use mode_start + full server restart for proper mode initialization
+      // (required for bot AI — e.g. FreezeTag thaw AI only activates via mode system)
+      if (!confirm(`Switch to ${gt.label} (${gt.desc})? Server will restart (~10s).`)) return;
+      this.modeLoading = true;
+      this.currentGametype = -1;
+      this.instagibChecked = false;
+      this.settingsChecked = false;
+      this.rcon.invalidateCache();
+      this.rcon.setOspGametype(gt.value).subscribe(
+        () => {
           this.currentGametype = gt.value;
-          this.rcon.sendCommand('map_restart', '').subscribe(() => {
-            this.refreshOspSettings(true);
+          this.modeLoading = false;
+          this.refreshGametype();
+          this.refreshInstagib();
+          this.refreshOspSettings();
+        },
+        () => { this.modeLoading = false; }
+      );
+    } else if (this.serverMode === 'cpma') {
+      // CPMA: set g_gametype + server_freezetag via RCON + map_restart
+      if (!confirm(`Switch to ${gt.label} (${gt.desc})? Current map will restart.`)) return;
+      const cvars = this.ospGametypeCvars[gt.value];
+      if (cvars) {
+        this.rcon.sendCommand('g_gametype', cvars.g_gametype.toString()).subscribe(() => {
+          this.rcon.sendCommand('server_freezetag', cvars.server_freezetag.toString()).subscribe(() => {
+            this.currentGametype = gt.value;
+            this.rcon.sendCommand('map_restart', '').subscribe(() => {
+              this.refreshOspSettings(true);
+            });
           });
         });
-      });
+      }
     } else {
       // baseq3/E+: raw g_gametype + map_restart
+      if (!confirm(`Switch to ${gt.label} (${gt.desc})? Current map will restart.`)) return;
       this.rcon.sendCommand('g_gametype', gt.value.toString()).subscribe(() => {
         this.currentGametype = gt.value;
         this.rcon.sendCommand('map_restart', '').subscribe();

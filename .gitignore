@@ -1,6 +1,5 @@
 # Game data (too large for git, copied from Steam at build time)
-build/*.pk3
-build/cpma/*.pk3
+build/
 z-cpma-*.pk3
 excessiveplus-pk3s/
 osp-mod/
@@ -8,7 +7,13 @@ ng-quake3-fe/downloads/*.pk3
 ng-quake3-fe/downloads/cpma/*.pk3
 ng-quake3-fe/downloads/excessiveplus/*.pk3
 ng-quake3-fe/downloads/osp/*.pk3
+ng-quake3-fe/downloads/generations/*.pk3
+ng-quake3-fe/downloads/pkarena/*.pk3
+ng-quake3-fe/downloads/ufreeze/*.pk3
 ng-quake3-fe/downloads/*.zip
+generations-mod/*.pk3
+pkarena-mod/*.pk3
+ufreeze-mod/*.pk3
 
 # Node modules (installed at build time)
 node_modules/

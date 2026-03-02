@@ -11,5 +11,7 @@ router.get('/instagib', controller.getInstagib);
 router.post('/instagib', controller.setInstagib);
 router.get('/settings', controller.getSettings);
 router.post('/settings', controller.setSetting);
+router.get('/osp-gametype', controller.getOspGametype);
+router.post('/osp-gametype', controller.setOspGametype);
 
 module.exports = router;

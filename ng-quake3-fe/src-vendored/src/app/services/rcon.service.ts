@@ -81,6 +81,10 @@ export class RconService {
     );
   }
 
+  public setOspGametype(ospMode: number): Observable<{ospMode: number, restarting: boolean}> {
+    return this.httpClient.post<{ospMode: number, restarting: boolean}>('/api/server/osp-gametype', {ospMode});
+  }
+
   public invalidateCache(): void {
     this.settingsCache = null;
     this.instagibCache = null;
